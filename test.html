@@ -15,8 +15,6 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     
     module("Model");
     
-    
-    
     test("creating a new review", function(){
       var review = o_O(function(){
         // validates_presence_of('title');
@@ -25,8 +23,6 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       var myReview = review({title: "Biscuit", content: "Some Content"})
       equals(myReview.title, 'Biscuit', 'Title should be Biscuit')
     })
-    
-    test("creating a new review with validations")
 
   });
   </script>
