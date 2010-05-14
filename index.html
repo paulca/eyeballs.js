@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Meview</title>
+  </head>
+  <body>
+    <form data-model="review">
+      <label for="review-title">Title</label><input type="text" name="title" value="" id="review-title">
+      <label for="review-content">Review</label><input type="text" name="review-content" value="" id="review-content">
+      <input type="submit" name="commit" value="Save" id="comimt">
+    </form>
+    
+    <div id="reviews">
+      
+    </div>
+    <div class="review">
+      <h1>Title</h1>
+      <p>This is the review.</p>
+    </div>
+  </body>
+  <script src="jquery-1.4.2.min.js"></script>
+  <script src="binder.js"></script>
+  <script src="models/review.js"></script>
+  <script src="controllers/reviews_controller.js"></script>
+</html>
