@@ -25,6 +25,12 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       review = new Review({title: 'hello'})
       equals('hello', review.title, "Review title should be hello")
     })
+    
+    test("test errors", function(){
+      review = new Review()
+      review.save()
+      equals(2, review.errors.length, "should have error on title and contents")
+    })
 
   });
   </script>
