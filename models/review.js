@@ -1,5 +1,6 @@
-// var review = o_O(function(){
-//   console.log(that.validates_presence_of)
-//   // validates_presence_of('title');
-//   // validates_presence_of('content');
-// });
+Model.review = function(attributes){
+  var that = o_O(attributes);
+  that.validates_presence_of('title');
+  that.validates_presence_of('content');
+  return that;
+}

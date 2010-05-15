@@ -1,9 +1,21 @@
 $(function(){
   $('form[data-model=review]').submit(function(){
-    review = new Review();
-    review.title = $("#review-title").val();
-    review.content = $('#review-content').val();
-    review.save();
+    try{
+      myReview = Model.review();
+      myReview.title = $("#review-title").val();
+      myReview.content = $('#review-content').val();
+      if(myReview.save())
+      {
+        console.log('ok!')
+      }
+      else
+      {
+        console.log(myReview.errors)
+      }
+    }
+    catch(e){
+      console.log(e)
+    }
     return false;
   });
 })

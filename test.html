@@ -5,8 +5,6 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
 <head>
   <script src="jquery-1.4.2.min.js"></script>
   <script src="o_O.js"></script>
-  <script src="models/review.js"></script>
-  <script src="controllers/reviews_controller.js"></script>
   <link rel="stylesheet" href="lib/qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="lib/qunit.js"></script>
 
@@ -15,7 +13,7 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     
     module("Model");
     
-    var review = function(attributes){
+    Model.review = function(attributes){
       var that = o_O(attributes);
       that.validates_presence_of('title');
       that.validates_presence_of('content');
@@ -23,12 +21,12 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     }
     
     test("creating a new review", function(){
-      var myReview = review({title: "Biscuit", content: "Some Content"});
+      var myReview = Model.review({title: "Biscuit", content: "Some Content"});
       equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
     });
     
     test('creating a new review with validations', function(){
-      var myReview = review();
+      var myReview = Model.review();
       myReview.save()
       equals(myReview.errors.length, 2, "it should have errors on each field")
     })
