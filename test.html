@@ -15,13 +15,22 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     
     module("Model");
     
+    var review = function(attributes){
+      var that = o_O(attributes);
+      that.validates_presence_of('title');
+      that.validates_presence_of('content');
+      return that;
+    }
+    
     test("creating a new review", function(){
-      var review = o_O(function(){
-        // validates_presence_of('title');
-        // validates_presence_of('content');
-      });
-      var myReview = review({title: "Biscuit", content: "Some Content"})
-      equals(myReview.title, 'Biscuit', 'Title should be Biscuit')
+      var myReview = review({title: "Biscuit", content: "Some Content"});
+      equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
+    });
+    
+    test('creating a new review with validations', function(){
+      var myReview = review();
+      myReview.save()
+      equals(myReview.errors.length, 2, "it should have errors on each field")
     })
 
   });
