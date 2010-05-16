@@ -9,27 +9,28 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
 <script type="text/javascript" src="lib/qunit.js"></script>
 
   <script>
+  var Review = o_O(function(that){
+    that.validates_presence_of('title');
+    that.validates_presence_of('content');
+    return that;
+  });
+
   $(document).ready(function(){
     
-    module("Model");
+    module("Creating a review");
     
-    Model.review = function(attributes){
-      var that = o_O(attributes);
-      that.validates_presence_of('title');
-      that.validates_presence_of('content');
-      return that;
-    }
-    
-    test("creating a new review", function(){
-      var myReview = Model.review({title: "Biscuit", content: "Some Content"});
+    test('a valid review', 1, function(){
+      var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
+      myReview.save();
       equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
     });
     
-    test('creating a new review with validations', function(){
-      var myReview = Model.review();
-      myReview.save()
-      equals(myReview.errors.length, 2, "it should have errors on each field")
-    })
+    test('an invalid review',1, function(){
+      var myReview = Review.initialize();
+      myReview.save();
+      console.log(myReview.title)
+      equals(myReview.errors.length, 2, "should have 2 errors");
+    });
 
   });
   </script>
