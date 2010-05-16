@@ -1,14 +1,14 @@
 var ReviewsController = {
   create: function(){
-    review = Review.initialize(Form.attributes($(this)));
+    review = Review.initialize(o_O.form.attributes($(this)));
     if(review.save())
     {
       console.log('saving!');
     }
-    // else
-    // {
-    //   console.log(review.errors)
-    // }
+    else
+    {
+      console.log(review.errors)
+    }
   }
 }
 

@@ -11,12 +11,13 @@ var o_O = function(callback){
   
   instance_methods = {
     save: function(){
+      this.errors = [];
       for(i = 0; i < this.validations.presence.length; i++)
       {
         var field = this.validations.presence[i];
         if(this[field] == '' || this[field] == null)
         {
-         this.errors.push(field + " should be present")
+         this.errors.push({field: field, type: 'presence', message: field + ' should be present'})
         }
       }
       if(this.errors.length == 0)
