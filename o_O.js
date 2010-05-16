@@ -59,3 +59,14 @@ o_O.form = {
 }
 
 o_O.templates = {}
+
+o_O.get_template = function(template, callback){
+  if(o_O.templates[template])
+  {
+    callback(o_O.templates[template]);
+  }
+  else
+  {
+    $.get('views/' + template + '.html.mustache', callback);
+  }
+}

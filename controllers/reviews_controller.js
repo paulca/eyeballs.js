@@ -3,7 +3,7 @@ var ReviewsController = {
     review = Review.initialize(o_O.form.attributes($(this)));
     if(review.save())
     {
-      $.get('views/reviews/_review.html.mustache', function(template){ 
+      o_O.get_template('reviews/_review', function(template){ 
         new_review = Mustache.to_html(template, review);
         $('div#reviews').append(new_review);
       });
@@ -12,6 +12,10 @@ var ReviewsController = {
     {
       console.log('ah! ah! ah!');
     }
+    $(this).find('input').val('');
+  },
+  edit: function(){
+    
   },
   destroy: function(){
     if(confirm('Are You sure?'))
@@ -21,8 +25,8 @@ var ReviewsController = {
   }
 }
 
-$('form[data-action=reviews-create]').live('submit',ReviewsController.create);
+$('form[data-action=reviews-create]').live('submit', ReviewsController.create);
 $('form[data-action=reviews-create]').live('submit', function(){ return false });
 
-$('a[data-action=reviews-destroy]').live('click',ReviewsController.destroy);
+$('a[data-action=reviews-destroy]').live('click', ReviewsController.destroy);
 $('a[data-action=reviews-destroy]').live('click', function(){ return false });
