@@ -30,6 +30,13 @@ var o_O = function(callback){
         return false;
       }
     },
+    update_attributes: function(attributes){
+      for(var attribute in attributes)
+      {
+        this[attribute] = attributes[attribute];
+      }
+      return this.save();
+    },
     errors: [],
     validations: class_methods.validations
   }
@@ -40,14 +47,15 @@ var o_O = function(callback){
       for ( var method in instance_methods ) {
         attributes[method] = instance_methods[method];
       }
+      attributes['id'] = o_O.uuid();
       return attributes;
     },
     find: function(id){
       var object = {};
       template = $('[data-id=' + id + ']');
-      return o_O.find_attributes(template, function(field){
+      return this.initialize(o_O.find_attributes(template, function(field){
         return field.text();
-      });
+      }));
     }
   }
   
@@ -84,3 +92,18 @@ o_O.get_template = function(template, callback){
     $.get('views/' + template + '.html.mustache', callback);
   }
 }
+
+o_O._uuid_default_prefix = '';
+
+o_O._uuidlet = function () {
+  return(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+};
+
+o_O.uuid = function (p) {
+  if (typeof(p) == 'object' && typeof(p.prefix) == 'string') {
+    o_O._uuid_default_prefix = p.prefix;
+  } else {
+    p = p || o_O._uuid_default_prefix || '';
+    return(p+o_O._uuidlet()+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+o_O._uuidlet()+o_O._uuidlet());
+  };
+};

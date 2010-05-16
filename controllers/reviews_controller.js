@@ -15,11 +15,27 @@ var ReviewsController = {
     }
   },
   edit: function(){
-    review = Review.find($(this).parents('div.revew'))
-    get_template('reviews/edit', function(template){
-      edit_review = Mustache.to_html(template)
-      $(this).parents('div.review:first').replaceWith(template)
+    review_div = $(this).parents('div.review');
+    review = Review.find(review_div.attr('data-id'));
+    o_O.get_template('reviews/edit', function(template){
+      edit_review = Mustache.to_html(template, review);
+      review_div.replaceWith(edit_review)
     })
+  },
+  update: function(){
+    edit_review_div = $(this).parents('div.edit-review');
+    review = Review.find($(this).attr('data-id'))
+    if(review.update_attributes(o_O.form.attributes($(this))))
+    {
+      o_O.get_template('reviews/_review', function(template){ 
+        updated_review = Mustache.to_html(template, review);
+        edit_review_div.replaceWith(updated_review);
+      });
+    }
+    else
+    {
+      console.log(review.errors);
+    }
   },
   destroy: function(){
     if(confirm('Are You sure?'))
@@ -31,6 +47,9 @@ var ReviewsController = {
 
 $('form[data-action=reviews-create]').live('submit', ReviewsController.create);
 $('form[data-action=reviews-create]').live('submit', function(){ return false });
+
+$('a[data-action=reviews-edit]').live('click', ReviewsController.edit);
+$('a[data-action=reviews-edit]').live('click', function(){ return false });
 
 $('a[data-action=reviews-destroy]').live('click', ReviewsController.destroy);
 $('a[data-action=reviews-destroy]').live('click', function(){ return false });

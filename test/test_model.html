@@ -36,6 +36,19 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       equals(myReview.title, 'Yeah!', 'should pull in title');
       equals(myReview.content, 'Paris', 'should pull in content');
     })
+    
+    test('updating a review', 2, function(){
+      myReview = Review.find('paul');
+      myReview.update_attributes({title: 'No!', content: 'Dublin'});
+      equals(myReview.title, 'No!', 'should update the title');
+      equals(myReview.content, 'Dublin', 'should update the content');
+    })
+    
+    test('updating a review invalid', 1, function(){
+      myReview = Review.find('paul');
+      myReview.update_attributes({title: '', content: ''});
+      equals(myReview.errors.length, 2, "should have 2 errors");
+    })
 
   });
   </script>
