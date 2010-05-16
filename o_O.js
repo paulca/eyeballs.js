@@ -57,3 +57,5 @@ o_O.form = {
     return object;
   }
 }
+
+o_O.templates = {}

@@ -3,11 +3,14 @@ var ReviewsController = {
     review = Review.initialize(o_O.form.attributes($(this)));
     if(review.save())
     {
-      console.log('saving!');
+      $.get('views/reviews/_review.html.mustache', function(template){ 
+        new_review = Mustache.to_html(template, review);
+        $('div#reviews').append(new_review);
+      });
     }
     else
     {
-      console.log(review.errors)
+      console.log(review.errors);
     }
   }
 }
