@@ -10,9 +10,9 @@ var ReviewsController = {
     }
     else
     {
-      console.log('ah! ah! ah!');
+      console.log(review.errors);
     }
-    $(this).find('input').val('');
+    $(this).find('input[type=text], textarea').val('');
   },
   edit: function(){
     

@@ -17,7 +17,8 @@ var o_O = function(callback){
         var field = this.validations.presence[i];
         if(this[field] == '' || this[field] == null)
         {
-         this.errors.push({field: field, type: 'presence', message: field + ' should be present'})
+          var message = field + ' should be present';
+          this.errors.push({field: field, type: 'presence', message: message})
         }
       }
       if(this.errors.length == 0)
@@ -49,9 +50,9 @@ var o_O = function(callback){
 o_O.form = {
   attributes: function(form){
     var object = {};
-    for(i = 0; i<form.find('input[data-attribute]').length; i++)
+    for(i = 0; i<form.find('[data-attribute]').length; i++)
     {
-      field = $(form.find('input[data-attribute]')[i]);
+      field = $(form.find('[data-attribute]')[i]);
       object[field.attr('data-attribute')] = field.val();
     }
     return object;
