@@ -4,10 +4,10 @@
     <title>Meview</title>
   </head>
   <body>
-    <form data-model="review">
-      <label for="review-title">Title</label><input type="text" name="title" value="" id="review-title">
-      <label for="review-content">Review</label><input type="text" name="review-content" value="" id="review-content">
-      <input type="submit" name="commit" value="Save" id="comimt">
+    <form data-action="reviews-create">
+      <label for="review-title">Title</label><input type="text" name="title" value="" id="review-title" data-attribute="title">
+      <label for="review-content">Review</label><input type="text" name="review-content" value="" id="review-content" data-attribute="content">
+      <input type="submit" name="commit" value="Save" id="commit">
     </form>
     
     <div id="reviews">
