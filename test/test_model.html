@@ -12,6 +12,9 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
   var Review = o_O(function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
+    that.methods.title_numbered = function(review){
+      return '1. ' + this.title;
+    }
     return that;
   });
 
@@ -48,6 +51,11 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       myReview = Review.find('paul');
       myReview.update_attributes({title: '', content: ''});
       equals(myReview.errors.length, 2, "should have 2 errors");
+    })
+
+    test('defining methods should work',1, function(){
+      myReview = Review.initialize({title: 'Boom'})
+      equals(myReview.title_numbered(), '1. Boom', 'the method definition should work')
     })
 
   });

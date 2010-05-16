@@ -29,7 +29,6 @@ var ReviewsController = {
     {
       o_O.get_template('reviews/_review', function(template){ 
               updated_review = Mustache.to_html(template, review);
-              console.log(updated_review);
               edit_review_div.replaceWith(updated_review);
             });
     }

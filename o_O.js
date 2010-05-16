@@ -2,6 +2,7 @@ var o_O = function(callback){
   
   class_methods = {
     validations: {presence: []},
+    methods: {},
     validates_presence_of: function(field){
       this.validations.presence.push(field);
     }
@@ -40,6 +41,10 @@ var o_O = function(callback){
     errors: [],
     validations: class_methods.validations
   }
+  for(method in class_methods.methods)
+  {
+    instance_methods[method] = class_methods.methods[method]
+  }
   
   initializer_methods = {
     initialize: function(attributes){
@@ -48,6 +53,7 @@ var o_O = function(callback){
         attributes[method] = instance_methods[method];
       }
       attributes['id'] = o_O.uuid();
+      console.log(class_methods.methods)
       return attributes;
     },
     find: function(id){
