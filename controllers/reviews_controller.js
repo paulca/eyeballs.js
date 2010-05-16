@@ -7,15 +7,19 @@ var ReviewsController = {
         new_review = Mustache.to_html(template, review);
         $('div#reviews').append(new_review);
       });
+      $(this).find('input[type=text], textarea').val('');
     }
     else
     {
       console.log(review.errors);
     }
-    $(this).find('input[type=text], textarea').val('');
   },
   edit: function(){
-    
+    review = Review.find($(this).parents('div.revew'))
+    get_template('reviews/edit', function(template){
+      edit_review = Mustache.to_html(template)
+      $(this).parents('div.review:first').replaceWith(template)
+    })
   },
   destroy: function(){
     if(confirm('Are You sure?'))

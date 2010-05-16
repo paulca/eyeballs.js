@@ -41,21 +41,34 @@ var o_O = function(callback){
         attributes[method] = instance_methods[method];
       }
       return attributes;
+    },
+    find: function(id){
+      var object = {};
+      template = $('[data-id=' + id + ']');
+      return o_O.find_attributes(template, function(field){
+        return field.text();
+      });
     }
   }
   
   return initializer_methods;
 }
 
+o_O.find_attributes = function(template, callback){
+  var object = {};
+  for(i = 0; i<template.find('[data-attribute]').length; i++)
+  {
+    field = $(template.find('[data-attribute]')[i]);
+    object[field.attr('data-attribute')] = callback(field);
+  }
+  return object;
+}
+
 o_O.form = {
   attributes: function(form){
-    var object = {};
-    for(i = 0; i<form.find('[data-attribute]').length; i++)
-    {
-      field = $(form.find('[data-attribute]')[i]);
-      object[field.attr('data-attribute')] = field.val();
-    }
-    return object;
+    return o_O.find_attributes(form, function(field){
+      return field.val();
+    })
   }
 }
 

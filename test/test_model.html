@@ -30,6 +30,12 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       myReview.save();
       equals(myReview.errors.length, 2, "should have 2 errors");
     });
+    
+    test('editing a review', 2, function(){
+      myReview = Review.find('paul');
+      equals(myReview.title, 'Yeah!', 'should pull in title');
+      equals(myReview.content, 'Paris', 'should pull in content');
+    })
 
   });
   </script>
@@ -40,5 +46,10 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
  <h2 id="qunit-banner"></h2>
  <h2 id="qunit-userAgent"></h2>
  <ol id="qunit-tests"></ol>
+ 
+ <div data-id="paul">
+  <h1 data-attribute="title">Yeah!</h1>
+  <p data-attribute="content">Paris</p>
+ </div>
 </body>
 </html>
