@@ -52,8 +52,8 @@ var ReviewsController = {
   }
 }
 
-$('form[data-action=reviews-create]').live('submit', ReviewsController.create);
-$('form[data-action=reviews-create]').live('submit', function(){ return false });
+$('form[data-controller=reviews][data-action=create]').live('submit', ReviewsController.create);
+$('form[data-controller=reviews][data-action=create]').live('submit', function(){ return false });
 
 $('a[data-action=reviews-edit]').live('click', ReviewsController.edit);
 $('a[data-action=reviews-edit]').live('click', function(){ return false });
