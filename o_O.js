@@ -67,6 +67,14 @@ var o_O = function(callback){
           }
         }
       }
+      if(this.errors.length == 0)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     },
     errors: [],
     validations: class_methods.validations

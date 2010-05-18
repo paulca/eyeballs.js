@@ -11,7 +11,12 @@ var ReviewsController = {
     }
     else
     {
-      console.log(review.errors);
+      var error_message = '';
+      for(i = 0; i < review.errors.length; i++)
+      {
+        error_message = error_message + review.errors[i].message + "\n";
+      }
+      alert(error_message);
     }
   },
   edit: function(){

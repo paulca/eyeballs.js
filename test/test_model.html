@@ -23,10 +23,11 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     
     module("Creating a review");
     
-    test('a valid review', 1, function(){
+    test('a valid review', 2, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save();
       equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
+      equals(myReview.save(), true, 'save() should return true');
     });
     
     test('an invalid review',1, function(){
