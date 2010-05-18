@@ -10,7 +10,12 @@ var o_O = function(){
       {
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
         var action_event;
+        if($(selector).length == 0)
+        {
+          $('body').append($('<span data-controller=' + controller_name + ' data-action=' + action + ' data-temporary=true />'));
+        }
         $(selector).each(function(){
+          console.log(action)
           if($(this).attr('data-event'))
           {
             action_event = $(this).attr('data-event');
@@ -29,6 +34,7 @@ var o_O = function(){
           $(selector).live(action_event, controller[action]);
           $(selector).live(action_event, function(){ return false; });
         })
+        $('[data-temporary]').remove();
       }
     })
   }

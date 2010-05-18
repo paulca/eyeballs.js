@@ -18,6 +18,9 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     },
     other: function(){
       $(this).html('other!');
+    },
+    another: function(){
+      $(this).html('another!')
     }
   });
 
@@ -39,6 +42,17 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       $('div#myDiv').trigger('mouseover');
       equals($('div#myDiv').html(), 'other!', 'html should have been updated');
     });
+    
+    test("a new link", 1, function(){
+      new_element = $('<a id="anotherLink" data-controller="reviews" data-action="another">another link</a>')
+      $('div#anotherDiv').append(new_element);
+      $('a#anotherLink').trigger('click')
+      equals($('a#anotherLink').html(), 'another!', 'it should have some dynamic behavior')
+    })
+
+    test('cleaning up', 1, function(){
+      equals($('[data-temporary]').length, 0, "there shouldn't be any temporary elements left")
+    })
 
   });
   </script>
@@ -58,6 +72,9 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     test link
   </a>
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
+  <div id="anotherDiv">
+    
+  </div>
  </div>
 </body>
 </html>
