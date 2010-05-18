@@ -1,108 +1,144 @@
-var o_O = function(callback){
+var o_O = function(){
   
-  var class_methods, instance_methods, initializer_methods;
-  var validates_presence_of, validates_length_of;
-  
-  class_methods = {
-    validations: {presence: [], lengthliness: []},
-    methods: {},
-    validates_presence_of: function(field){
-      this.validations.presence.push({field: field});
-    },
-    validates_length_of: function(field, options){
-      options.field = field;
-      this.validations.lengthliness.push(options);
-    }
-  }
-  
-  var config = callback(class_methods);
-  
-  instance_methods = {
-    save: function(){
-      if(this.valid())
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
-    },
-    update_attributes: function(attributes){
-      for(var attribute in attributes)
-      {
-        this[attribute] = attributes[attribute];
-      }
-      return this.save();
-    },
-    valid: function(){
-      this.errors = [];
-      // validates_presence_of
-      for(i = 0; i < this.validations.presence.length; i++)
-      {
-        var field = this.validations.presence[i].field;
-        if(this[field] == '' || this[field] == null)
-        {
-          var message = field + ' should be present';
-          this.errors.push({field: field, type: 'presence', message: message})
-        }
-      }
-      // validates_length_of
-      for(i = 0; i < this.validations.lengthliness.length; i++)
-      {
-        var field = this.validations.lengthliness[i].field;
-        var max = this.validations.lengthliness[i].max
-        var min = this.validations.lengthliness[i].min
-        if(this[field])
-        {
-          if(max && this[field].length > max)
-          {
-            var message = field + ' should be less than ' + max + ' characters';
-            this.errors.push({field: field, type: 'length', message: message});
-          }
-          if(min && this[field].length < min)
-          {
-            var message = field + ' should be greater than ' + min + ' characters';
-            this.errors.push({field: field, type: 'length', message: message});
-          }
-        }
-      }
-      if(this.errors.length == 0)
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
-    },
-    errors: [],
-    validations: class_methods.validations
-  }
-  for(method in class_methods.methods)
+  if(typeof arguments[0] === 'string')
   {
-    instance_methods[method] = class_methods.methods[method]
-  }
-  
-  initializer_methods = {
-    initialize: function(attributes){
-      if(!attributes) { var attributes = {}; };
-      for ( var method in instance_methods ) {
-        attributes[method] = instance_methods[method];
+    var controller_name = arguments[0].replace('Controller', '').toLowerCase();
+    var controller = arguments[1];
+    
+    $(function(){
+      for(var action in controller)
+      {
+        $('[data-controller=' + controller_name + '][data-action=' + action + ']').each(function(){
+          if($(this).attr('data-event'))
+          {
+            $(this).bind($(this).attr('data-event'), controller[action])
+            $(this).bind($(this).attr('data-event'), function(){ return false; })
+          }
+          else
+          {
+            if($(this).is('form'))
+            {
+              $(this).submit(controller[action]);
+              $(this).submit(function(){ return false; });
+            }
+            else
+            {
+              $(this).click(controller[action]);
+              $(this).click(function(){ return false; });
+            }
+          }
+        })
       }
-      attributes['id'] = o_O.uuid();
-      return attributes;
-    },
-    find: function(id){
-      var object = {};
-      template = $('[data-id=' + id + ']');
-      return this.initialize(o_O.find_attributes(template, function(field){
-        return field.text();
-      }));
-    }
+    })
   }
+
+  if(typeof arguments[0] === 'function')
+  {
+    var callback = arguments[0];
+    var class_methods, instance_methods, initializer_methods;
+    var validates_presence_of, validates_length_of;
   
-  return initializer_methods;
+    class_methods = {
+      validations: {presence: [], lengthliness: []},
+      methods: {},
+      validates_presence_of: function(field){
+        this.validations.presence.push({field: field});
+      },
+      validates_length_of: function(field, options){
+        options.field = field;
+        this.validations.lengthliness.push(options);
+      }
+    }
+  
+    var config = callback(class_methods);
+  
+    instance_methods = {
+      save: function(){
+        if(this.valid())
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      },
+      update_attributes: function(attributes){
+        for(var attribute in attributes)
+        {
+          this[attribute] = attributes[attribute];
+        }
+        return this.save();
+      },
+      valid: function(){
+        this.errors = [];
+        // validates_presence_of
+        for(i = 0; i < this.validations.presence.length; i++)
+        {
+          var field = this.validations.presence[i].field;
+          if(this[field] == '' || this[field] == null)
+          {
+            var message = field + ' should be present';
+            this.errors.push({field: field, type: 'presence', message: message})
+          }
+        }
+        // validates_length_of
+        for(i = 0; i < this.validations.lengthliness.length; i++)
+        {
+          var field = this.validations.lengthliness[i].field;
+          var max = this.validations.lengthliness[i].max
+          var min = this.validations.lengthliness[i].min
+          if(this[field])
+          {
+            if(max && this[field].length > max)
+            {
+              var message = field + ' should be less than ' + max + ' characters';
+              this.errors.push({field: field, type: 'length', message: message});
+            }
+            if(min && this[field].length < min)
+            {
+              var message = field + ' should be greater than ' + min + ' characters';
+              this.errors.push({field: field, type: 'length', message: message});
+            }
+          }
+        }
+        if(this.errors.length == 0)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      },
+      errors: [],
+      validations: class_methods.validations
+    }
+    for(method in class_methods.methods)
+    {
+      instance_methods[method] = class_methods.methods[method]
+    }
+  
+    initializer_methods = {
+      initialize: function(attributes){
+        if(!attributes) { var attributes = {}; };
+        for ( var method in instance_methods ) {
+          attributes[method] = instance_methods[method];
+        }
+        attributes['id'] = o_O.uuid();
+        return attributes;
+      },
+      find: function(id){
+        var object = {};
+        template = $('[data-id=' + id + ']');
+        return this.initialize(o_O.find_attributes(template, function(field){
+          return field.text();
+        }));
+      }
+    }
+  
+    return initializer_methods;
+  }
 }
 
 o_O.find_attributes = function(template, callback){
