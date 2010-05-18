@@ -1,10 +1,17 @@
 var o_O = function(callback){
   
+  var class_methods, instance_methods, initializer_methods;
+  var validates_presence_of, validates_length_of;
+  
   class_methods = {
-    validations: {presence: []},
+    validations: {presence: [], lengthliness: []},
     methods: {},
     validates_presence_of: function(field){
-      this.validations.presence.push(field);
+      this.validations.presence.push({field: field});
+    },
+    validates_length_of: function(field, options){
+      options.field = field;
+      this.validations.lengthliness.push(options);
     }
   }
   
@@ -12,17 +19,7 @@ var o_O = function(callback){
   
   instance_methods = {
     save: function(){
-      this.errors = [];
-      for(i = 0; i < this.validations.presence.length; i++)
-      {
-        var field = this.validations.presence[i];
-        if(this[field] == '' || this[field] == null)
-        {
-          var message = field + ' should be present';
-          this.errors.push({field: field, type: 'presence', message: message})
-        }
-      }
-      if(this.errors.length == 0)
+      if(this.valid())
       {
         return true;
       }
@@ -37,6 +34,34 @@ var o_O = function(callback){
         this[attribute] = attributes[attribute];
       }
       return this.save();
+    },
+    valid: function(){
+      this.errors = [];
+      // validates_presence_of
+      for(i = 0; i < this.validations.presence.length; i++)
+      {
+        var field = this.validations.presence[i].field;
+        if(this[field] == '' || this[field] == null)
+        {
+          var message = field + ' should be present';
+          this.errors.push({field: field, type: 'presence', message: message})
+        }
+      }
+      // validates_length_of
+      for(i = 0; i < this.validations.lengthliness.length; i++)
+      {
+        var field = this.validations.lengthliness[i].field;
+        var max = this.validations.lengthliness[i].max
+        var min = this.validations.lengthliness[i].min
+        if(this[field])
+        {
+          if(max && this[field].length > max)
+          {
+            var message = field + ' should be less than ' + max + ' characters';
+            this.errors.push({field: field, type: 'length', message: message})
+          }
+        }
+      }
     },
     errors: [],
     validations: class_methods.validations
@@ -53,7 +78,6 @@ var o_O = function(callback){
         attributes[method] = instance_methods[method];
       }
       attributes['id'] = o_O.uuid();
-      console.log(class_methods.methods)
       return attributes;
     },
     find: function(id){
@@ -95,7 +119,10 @@ o_O.get_template = function(template, callback){
   }
   else
   {
-    $.get('views/' + template + '.html.mustache', callback);
+    $.get('views/' + template + '.html.mustache', function(response){
+      o_O.templates[template] = response;
+      callback(response);
+    });
   }
 }
 

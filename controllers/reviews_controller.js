@@ -30,7 +30,7 @@ var ReviewsController = {
       o_O.get_template('reviews/_review', function(template){ 
               updated_review = Mustache.to_html(template, review);
               edit_review_div.replaceWith(updated_review);
-            });
+            }); 
     }
     else
     {
@@ -40,7 +40,9 @@ var ReviewsController = {
   destroy: function(){
     if(confirm('Are You sure?'))
     {
-      $(this).parents('div.review:first').remove();
+      $(this).parents('div.review:first').slideToggle(function(){
+        $(this).remove();
+      });
     }
   }
 }

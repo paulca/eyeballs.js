@@ -12,7 +12,8 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
   var Review = o_O(function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
-    that.methods.title_numbered = function(review){
+    that.validates_length_of('title', {max: 15});
+    that.methods.title_numbered = function(){
       return '1. ' + this.title;
     }
     return that;
@@ -56,6 +57,14 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
     test('defining methods should work',1, function(){
       myReview = Review.initialize({title: 'Boom'})
       equals(myReview.title_numbered(), '1. Boom', 'the method definition should work')
+    })
+    
+    test('validates length of', 3, function(){
+      myReview = Review.initialize({title: "finger baby babylon babe face", content: "something"});
+      myReview.save();
+      equals(myReview.errors.length, 1, "should have an errror");
+      equals(myReview.errors[0].field, 'title', 'should be on title');
+      equals(myReview.errors[0].type, 'length', 'should be length')
     })
 
   });
