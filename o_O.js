@@ -8,25 +8,26 @@ var o_O = function(){
     $(function(){
       for(var action in controller)
       {
-        $('[data-controller=' + controller_name + '][data-action=' + action + ']').each(function(){
+        var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
+        var action_event;
+        $(selector).each(function(){
           if($(this).attr('data-event'))
           {
-            $(this).bind($(this).attr('data-event'), controller[action])
-            $(this).bind($(this).attr('data-event'), function(){ return false; })
+            action_event = $(this).attr('data-event');
           }
           else
           {
             if($(this).is('form'))
             {
-              $(this).submit(controller[action]);
-              $(this).submit(function(){ return false; });
+              action_event = 'submit';
             }
             else
             {
-              $(this).click(controller[action]);
-              $(this).click(function(){ return false; });
+              action_event = 'click';
             }
           }
+          $(selector).live(action_event, controller[action]);
+          $(selector).live(action_event, function(){ return false; });
         })
       }
     })

@@ -1,4 +1,4 @@
-var ReviewsController = {
+o_O('ReviewsController', {
   create: function(){
     review = Review.initialize(o_O.form.attributes($(this)));
     if(review.save())
@@ -50,7 +50,7 @@ var ReviewsController = {
       });
     }
   }
-}
+});
 
 $('form[data-controller=reviews][data-action=create]').live('submit', ReviewsController.create);
 $('form[data-controller=reviews][data-action=create]').live('submit', function(){ return false });
