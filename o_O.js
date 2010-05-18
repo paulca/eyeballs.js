@@ -58,7 +58,12 @@ var o_O = function(callback){
           if(max && this[field].length > max)
           {
             var message = field + ' should be less than ' + max + ' characters';
-            this.errors.push({field: field, type: 'length', message: message})
+            this.errors.push({field: field, type: 'length', message: message});
+          }
+          if(min && this[field].length < min)
+          {
+            var message = field + ' should be greater than ' + min + ' characters';
+            this.errors.push({field: field, type: 'length', message: message});
           }
         }
       }

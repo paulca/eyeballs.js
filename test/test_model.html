@@ -12,7 +12,7 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
   var Review = o_O(function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
-    that.validates_length_of('title', {max: 15});
+    that.validates_length_of('title', {min: 5, max: 15});
     that.methods.title_numbered = function(){
       return '1. ' + this.title;
     }
@@ -59,12 +59,17 @@ file:///Users/paul/Dropbox/Sites/meview/meview/test.html
       equals(myReview.title_numbered(), '1. Boom', 'the method definition should work')
     })
     
-    test('validates length of', 3, function(){
+    test('validates length of', 6, function(){
       myReview = Review.initialize({title: "finger baby babylon babe face", content: "something"});
       myReview.save();
-      equals(myReview.errors.length, 1, "should have an errror");
+      equals(myReview.errors.length, 1, "should have an error");
       equals(myReview.errors[0].field, 'title', 'should be on title');
       equals(myReview.errors[0].type, 'length', 'should be length')
+      equals(myReview.errors[0].message, 'title should be less than 15 characters', 'should have an error message')
+      myReview.title = 'the'
+      myReview.save();
+      equals(myReview.errors.length, 1, "should still only have one error");
+      equals(myReview.errors[0].message, 'title should be greater than 5 characters', 'should have an error message')
     })
 
   });
