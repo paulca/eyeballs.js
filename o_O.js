@@ -15,7 +15,6 @@ var o_O = function(){
           $('body').append($('<span data-controller=' + controller_name + ' data-action=' + action + ' data-temporary=true />'));
         }
         $(selector).each(function(){
-          console.log(action)
           if($(this).attr('data-event'))
           {
             action_event = $(this).attr('data-event');
