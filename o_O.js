@@ -12,7 +12,16 @@ var o_O = function(){
         var action_event;
         if($(selector).length == 0)
         {
-          $('body').append($('<span data-controller=' + controller_name + ' data-action=' + action + ' data-temporary=true />'));
+          var element;
+          if(action == 'update' || action == 'create')
+          {
+            element = 'form';
+          }
+          else
+          {
+            element = 'span';
+          }
+          $('body').append($('<' + element + ' data-controller=' + controller_name + ' data-action=' + action + ' data-temporary=true />'));
         }
         $(selector).each(function(){
           if($(this).attr('data-event'))
