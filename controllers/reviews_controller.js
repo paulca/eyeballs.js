@@ -24,17 +24,25 @@ o_O('ReviewsController', {
     review = Review.find(review_div.attr('data-id'));
     o_O.get_template('reviews/edit', function(template){
       edit_review = Mustache.to_html(template, review);
-      review_div.replaceWith(edit_review);
+      review_div.hide().after(edit_review);
     });
+  },
+  cancel_edit: function(){
+    edit_review_div = $(this).parents('div.edit-review');
+    review_div = edit_review_div.prev('div.review:first');
+    edit_review_div.remove();
+    review_div.show();
   },
   update: function(){
     edit_review_div = $(this).parents('div.edit-review');
+    review_div = edit_review_div.prev('div.review:first');
     review = Review.find($(this).attr('data-id'));
     if(review.update_attributes(o_O.form.attributes($(this))))
     {
       o_O.get_template('reviews/_review', function(template){ 
               updated_review = Mustache.to_html(template, review);
               edit_review_div.replaceWith(updated_review);
+              review_div.remove();
             }); 
     }
     else
@@ -49,5 +57,8 @@ o_O('ReviewsController', {
         $(this).remove();
       });
     }
+  },
+  boopty: function(){
+    alert('BOOPTY!');
   }
 });

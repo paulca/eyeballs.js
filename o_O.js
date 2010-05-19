@@ -18,8 +18,9 @@ var o_O = function(){
       {
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
         $(selector).livequery(function(){
-          $(this).bind(action_event($(this)), controller[action]);
-          $(this).bind(action_event($(this)), function(){ return false; });
+          var element = $(this)
+          $(this).bind(action_event(element), controller[element.attr('data-action')]);
+          $(this).bind(action_event(element), function(){ return false; });
         })
       }
     })
