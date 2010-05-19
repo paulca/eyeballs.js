@@ -1,7 +1,15 @@
 var o_O = function(){
-  
+
   if(typeof arguments[0] === 'string')
   {
+    var action_event = function(object){
+      if(object.attr('data-event'))
+      {
+        return object.attr('data-event');
+      }
+      return (object.is('form')) ? 'submit' : 'click';
+    }
+
     var controller_name = arguments[0].replace('Controller', '').toLowerCase();
     var controller = arguments[1];
     
@@ -9,18 +17,9 @@ var o_O = function(){
       for(var action in controller)
       {
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
-        var action_event;
         $(selector).livequery(function(){
-          if($(this).attr('data-event'))
-          {
-            action_event = $(this).attr('data-event');
-          }
-          else
-          {
-            action_event = ($(this).is('form')) ? 'submit' : action_event = 'click';
-          }
-          $(this).bind(action_event, controller[action]);
-          $(this).bind(action_event, function(){ return false; });
+          $(this).bind(action_event($(this)), controller[action]);
+          $(this).bind(action_event($(this)), function(){ return false; });
         })
       }
     })
