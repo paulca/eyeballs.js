@@ -10,39 +10,26 @@ var o_O = function(){
       {
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
         var action_event;
-        if($(selector).length == 0)
-        {
-          var element;
-          if(action == 'update' || action == 'create')
-          {
-            element = 'form';
-          }
-          else
-          {
-            element = 'span';
-          }
-          $('body').append($('<' + element + ' data-controller=' + controller_name + ' data-action=' + action + ' data-temporary=true />'));
-        }
-        $(selector).each(function(){
+        $(selector).livequery(function(){
           if($(this).attr('data-event'))
           {
-            action_event = $(this).attr('data-event');
+            $(this).bind($(this).attr('data-event'), controller[action]);
+            $(this).bind($(this).attr('data-event'), function(){ return false; });
           }
           else
           {
             if($(this).is('form'))
             {
-              action_event = 'submit';
+              $(this).bind('submit', controller[action]);
+              $(this).bind('submit', function(){ return false; });
             }
             else
             {
-              action_event = 'click';
+              $(this).bind('click', controller[action]);
+              $(this).bind('click', function(){ return false; });
             }
           }
-          $(selector).live(action_event, controller[action]);
-          $(selector).live(action_event, function(){ return false; });
         })
-        $('[data-temporary]').remove();
       }
     })
   }

@@ -1,4 +1,4 @@
-var ReviewsController = {
+o_O('ReviewsController', {
   create: function(){
     review = Review.initialize(o_O.form.attributes($(this)));
     if(review.save())
@@ -24,12 +24,12 @@ var ReviewsController = {
     review = Review.find(review_div.attr('data-id'));
     o_O.get_template('reviews/edit', function(template){
       edit_review = Mustache.to_html(template, review);
-      review_div.replaceWith(edit_review)
+      review_div.replaceWith(edit_review);
     });
   },
   update: function(){
     edit_review_div = $(this).parents('div.edit-review');
-    review = Review.find($(this).attr('data-id'))
+    review = Review.find($(this).attr('data-id'));
     if(review.update_attributes(o_O.form.attributes($(this))))
     {
       o_O.get_template('reviews/_review', function(template){ 
@@ -50,5 +50,4 @@ var ReviewsController = {
       });
     }
   }
-}
-o_O('ReviewsController', ReviewsController);
+});
