@@ -13,22 +13,14 @@ var o_O = function(){
         $(selector).livequery(function(){
           if($(this).attr('data-event'))
           {
-            $(this).bind($(this).attr('data-event'), controller[action]);
-            $(this).bind($(this).attr('data-event'), function(){ return false; });
+            action_event = $(this).attr('data-event');
           }
           else
           {
-            if($(this).is('form'))
-            {
-              $(this).bind('submit', controller[action]);
-              $(this).bind('submit', function(){ return false; });
-            }
-            else
-            {
-              $(this).bind('click', controller[action]);
-              $(this).bind('click', function(){ return false; });
-            }
+            action_event = ($(this).is('form')) ? 'submit' : action_event = 'click';
           }
+          $(this).bind(action_event, controller[action]);
+          $(this).bind(action_event, function(){ return false; });
         })
       }
     })
