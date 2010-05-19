@@ -21,6 +21,9 @@
     },
     another: function(){
       $(this).html('another!')
+    },
+    check: function(){
+      
     }
   });
 
@@ -54,8 +57,9 @@
       })
     }, 100);
 
-    test('cleaning up', 1, function(){
-      equals($('[data-temporary]').length, 0, "there shouldn't be any temporary elements left")
+    test('should allow default behavior', 1, function(){
+      $('input#myCheckbox').trigger('click');
+      equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
     })
 
   });
@@ -79,6 +83,7 @@
   <div id="anotherDiv">
     
   </div>
+  <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
  </div>
 </body>
 </html>

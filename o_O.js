@@ -20,7 +20,10 @@ var o_O = function(){
         $(selector).livequery(function(){
           var element = $(this)
           $(this).bind(action_event(element), controller[element.attr('data-action')]);
-          $(this).bind(action_event(element), function(){ return false; });
+          if(!($(this).attr('data-default')))
+          {
+            $(this).bind(action_event(element), function(){ return false; });
+          }
         })
       }
     })
@@ -145,13 +148,11 @@ o_O.find_attributes = function(template, callback){
   return object;
 }
 
-o_O.form = {
-  attributes: function(form){
+o_O.params = function(form){
     return o_O.find_attributes(form, function(field){
       return field.val();
-    })
+    });
   }
-}
 
 o_O.templates = {}
 

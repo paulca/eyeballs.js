@@ -1,6 +1,6 @@
 o_O('ReviewsController', {
   create: function(){
-    review = Review.initialize(o_O.form.attributes($(this)));
+    review = Review.initialize(o_O.params($(this)));
     if(review.save())
     {
       o_O.get_template('reviews/_review', function(template){ 
