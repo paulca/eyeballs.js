@@ -24,7 +24,7 @@
       $(this).html('another!')
     },
     check: function(){
-      
+      $(this).val('bacon')
     },
     shortcut: function(){
       $(this).html('shortcut!')
@@ -69,6 +69,12 @@
       equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
     })
     
+    test('should allow default behavior with data-bind', 2, function(){
+      $('input#myOtherCheckbox').trigger('click');
+      equals($('input#myOtherCheckbox:checked').val(), 'bacon', "check box value should change")
+      equals($('input#myOtherCheckbox:checked').length, 1, "check box should be checked")
+    })
+    
     test('should bind on shortcuts',2, function(){
       $('div#shortcut').trigger('click');
       equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
@@ -101,6 +107,7 @@
     
   </div>
   <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
+  <input id="myOtherCheckbox" data-bind="+click:reviews/check" type="checkbox" value="toast">
  </div>
 </body>
 </html>

@@ -25,20 +25,21 @@ o_O.controller = {
         })
       }
       $('[data-bind]').livequery(function(){
-        var binders = $(this).attr('data-bind').match(/[^ :]+[: ]+[^ \/]+[ \/]+[^ ;]+[ ;]?/g)
+        var binders = $(this).attr('data-bind').match(/[\+]?[^ :]+[: ]+[^ \/]+[ \/]+[^ ;]+[ ;]?/g)
         if(binders.length > 0)
         {
           for(i = 0; i < binders.length; i++)
           {
             var rule = binders[i];
-            var parts = rule.match(/([^ :]+)[: ]+([^ \/]+)[ \/]+([^ ;]+)[ ;]?/);
-            var this_action_event = parts[1];
-            var this_controller_name = parts[2];
-            var this_action = parts[3];
+            var parts = rule.match(/([\+]?)([^ :]+)[: ]+([^ \/]+)[ \/]+([^ ;]+)[ ;]?/);
+            var default_bit = parts[1];
+            var this_action_event = parts[2];
+            var this_controller_name = parts[3];
+            var this_action = parts[4];
             if(this_controller_name == controller_name)
             {
               $(this).bind(this_action_event,controller[this_action]);
-              if(!($(this).attr('data-default')))
+              if(default_bit != '+')
               {
                 $(this).bind(this_action_event, function(){ return false; });
               }
