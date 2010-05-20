@@ -2,41 +2,23 @@ var o_O = function(){
 
   if(typeof arguments[0] === 'string')
   {
-    var action_event = function(object){
-      if(object.attr('data-event'))
-      {
-        return object.attr('data-event');
-      }
-      return (object.is('form')) ? 'submit' : 'click';
-    }
-
-    var controller_name = arguments[0].replace('Controller', '').toLowerCase();
-    var controller = arguments[1];
-    
-    $(function(){
-      for(var action in controller)
-      {
-        var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
-        $(selector).livequery(function(){
-          var element = $(this)
-          $(this).bind(action_event(element), controller[element.attr('data-action')]);
-          if(!($(this).attr('data-default')))
-          {
-            $(this).bind(action_event(element), function(){ return false; });
-          }
-        })
-      }
-    })
+    o_O.controller.initialize(arguments[0], arguments[1])
   }
 
   if(typeof arguments[0] === 'function')
   {
-    var callback = arguments[0];
+    return o_O.model.initialize(arguments[0])
+  }
+}
+
+o_O.model = {
+  initialize: function(callback){
+    var callback = callback;
     var class_methods, instance_methods, initializer_methods;
     var validates_presence_of, validates_length_of;
   
     class_methods = {
-      validations: {presence: [], lengthliness: []},
+      validations: {presence: [], lengthliness: [], custom: []},
       methods: {},
       validates_presence_of: function(field){
         this.validations.presence.push({field: field});
@@ -44,6 +26,9 @@ var o_O = function(){
       validates_length_of: function(field, options){
         options.field = field;
         this.validations.lengthliness.push(options);
+      },
+      validates: function(validation){
+        this.validations.custom.push(validation)
       }
     }
   
@@ -69,36 +54,9 @@ var o_O = function(){
       },
       valid: function(){
         this.errors = [];
-        // validates_presence_of
-        for(i = 0; i < this.validations.presence.length; i++)
-        {
-          var field = this.validations.presence[i].field;
-          if(this[field] == '' || this[field] == null)
-          {
-            var message = field + ' should be present';
-            this.errors.push({field: field, type: 'presence', message: message})
-          }
-        }
-        // validates_length_of
-        for(i = 0; i < this.validations.lengthliness.length; i++)
-        {
-          var field = this.validations.lengthliness[i].field;
-          var max = this.validations.lengthliness[i].max
-          var min = this.validations.lengthliness[i].min
-          if(this[field])
-          {
-            if(max && this[field].length > max)
-            {
-              var message = field + ' should be less than ' + max + ' characters';
-              this.errors.push({field: field, type: 'length', message: message});
-            }
-            if(min && this[field].length < min)
-            {
-              var message = field + ' should be greater than ' + min + ' characters';
-              this.errors.push({field: field, type: 'length', message: message});
-            }
-          }
-        }
+        
+        o_O.validations.run(this);
+
         if(this.errors.length == 0)
         {
           return true;
@@ -138,21 +96,51 @@ var o_O = function(){
   }
 }
 
-o_O.find_attributes = function(template, callback){
-  var object = {};
-  for(i = 0; i<template.find('[data-attribute]').length; i++)
-  {
-    field = $(template.find('[data-attribute]')[i]);
-    object[field.attr('data-attribute')] = callback(field);
+o_O.validations = {
+  run: function(object){
+    this.run_custom_validations(object);
+    this.run_length_validations(object);
+    this.run_presence_validations(object);
+  },
+  run_custom_validations: function(object){
+    for(i = 0; i < object.validations.custom.length; i++)
+    {
+      object.validations.custom[i](object);
+    }
+  },
+  run_length_validations: function(object){
+    for(i = 0; i < object.validations.lengthliness.length; i++)
+    {
+      var field = object.validations.lengthliness[i].field;
+      var max = object.validations.lengthliness[i].max
+      var min = object.validations.lengthliness[i].min
+      if(object[field])
+      {
+        if(max && object[field].length > max)
+        {
+          var message = field + ' should be less than ' + max + ' characters';
+          object.errors.push({field: field, type: 'length', message: message});
+        }
+        if(min && object[field].length < min)
+        {
+          var message = field + ' should be greater than ' + min + ' characters';
+          object.errors.push({field: field, type: 'length', message: message});
+        }
+      }
+    }
+  },
+  run_presence_validations: function(object){
+    for(i = 0; i < object.validations.presence.length; i++)
+    {
+      var field = object.validations.presence[i].field;
+      if(object[field] == '' || object[field] == null)
+      {
+        var message = field + ' should be present';
+        object.errors.push({field: field, type: 'presence', message: message})
+      }
+    }
   }
-  return object;
 }
-
-o_O.params = function(form){
-    return o_O.find_attributes(form, function(field){
-      return field.val();
-    });
-  }
 
 o_O.templates = {}
 

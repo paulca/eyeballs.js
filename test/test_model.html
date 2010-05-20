@@ -4,6 +4,7 @@
 <head>
   <script src="../jquery-1.4.2.min.js"></script>
   <script src="../o_O.js"></script>
+  <script src="../jquery.o_O.js"></script>
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
 
@@ -12,6 +13,12 @@
     that.validates_presence_of('title');
     that.validates_presence_of('content');
     that.validates_length_of('title', {min: 5, max: 15});
+    that.validates(function(review){
+      if(review.score != 99 && review.test === true)
+      {
+        review.errors.push({message: 'Score should be 99'})
+      }
+    })
     that.methods.title_numbered = function(){
       return '1. ' + this.title;
     }
@@ -20,7 +27,7 @@
 
   $(document).ready(function(){
     
-    module("Creating a review");
+    module("Models");
     
     test('a valid review', 2, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
@@ -56,8 +63,8 @@
 
     test('defining methods should work',1, function(){
       myReview = Review.initialize({title: 'Boom'})
-      equals(myReview.title_numbered(), '1. Boom', 'the method definition should work')
-    })
+      equals(myReview.title_numbered(), '1. Boom', 'the method definition should work');
+    });
     
     test('validates length of', 6, function(){
       myReview = Review.initialize({title: "finger baby babylon babe face", content: "something"});
@@ -70,6 +77,16 @@
       myReview.save();
       equals(myReview.errors.length, 1, "should still only have one error");
       equals(myReview.errors[0].message, 'title should be greater than 5 characters', 'should have an error message')
+    });
+    
+    test('custom validation', 3, function(){
+      myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+      myReview.save();
+      equals(myReview.errors.length, 1, "should have an error");
+      equals(myReview.errors[0].message, 'Score should be 99', "should give me my custom error message");
+      myReview.score = 99;
+      myReview.save()
+      equals(myReview.errors.length, 0, "should have no errors");
     })
 
   });
