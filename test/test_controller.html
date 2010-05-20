@@ -28,6 +28,9 @@
     },
     shortcut: function(){
       $(this).html('shortcut!')
+    },
+    multi: function(){
+      $(this).html($(this).html() + ' multi!')
     }
   });
 
@@ -66,9 +69,11 @@
       equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
     })
     
-    test('should bind on shortcuts',1, function(){
+    test('should bind on shortcuts',2, function(){
       $('div#shortcut').trigger('click');
       equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
+      $('div#shortcut').trigger('mouseover');
+      equals($("div#shortcut").html(), 'shortcut! multi!', 'it should bind multiple events')
     })
 
   });
@@ -89,7 +94,7 @@
     test link
   </a>
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
-  <div id="shortcut" data-bind="click:reviews/shortcut">
+  <div id="shortcut" data-bind="click:reviews/shortcut; mouseenter:reviews/multi">
     I'm a shortcut
   </div>
   <div id="anotherDiv">
