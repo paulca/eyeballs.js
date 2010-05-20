@@ -16,7 +16,7 @@ o_O.controller = {
       {
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
         $(selector).livequery(function(){
-          var element = $(this)
+          var element = $(this);
           $(this).bind(action_event(element), controller[element.attr('data-action')]);
           if(!($(this).attr('data-default')))
           {
@@ -24,6 +24,20 @@ o_O.controller = {
           }
         })
       }
+      $('[data-bind]').livequery(function(){
+        var parts = $(this).attr('data-bind').match(/^([^:]*):([^\/]*)\/(.*)$/);
+        var this_action_event = parts[1];
+        var this_controller_name = parts[2];
+        var this_action = parts[3];
+        if(this_controller_name == controller_name && this_action == action)
+        {
+          $(this).bind(this_action_event,controller[action]);
+          if(!($(this).attr('data-default')))
+          {
+            $(this).bind(this_action_event, function(){ return false; });
+          }
+        }
+      });
     })
   }
 }

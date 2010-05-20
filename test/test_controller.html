@@ -25,6 +25,9 @@
     },
     check: function(){
       
+    },
+    shortcut: function(){
+      $(this).html('shortcut!')
     }
   });
 
@@ -62,6 +65,11 @@
       $('input#myCheckbox').trigger('click');
       equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
     })
+    
+    test('should bind on shortcuts',1, function(){
+      $('div#shortcut').trigger('click');
+      equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
+    })
 
   });
   </script>
@@ -69,9 +77,9 @@
 </head>
 <body>
   <h1 id="qunit-header">Controller Tests</h1>
- <h2 id="qunit-banner"></h2>
- <h2 id="qunit-userAgent"></h2>
- <ol id="qunit-tests"></ol>
+  <h2 id="qunit-banner"></h2>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
  
  <div data-id="paul">
   <form id="myForm" data-controller="reviews" data-action="create">
@@ -81,6 +89,9 @@
     test link
   </a>
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
+  <div id="shortcut" data-bind="click:reviews/shortcut">
+    I'm a shortcut
+  </div>
   <div id="anotherDiv">
     
   </div>
