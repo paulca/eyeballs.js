@@ -38,11 +38,11 @@ o_O.model = {
       save: function(){
         if(this.valid())
         {
-          return true;
+          return this;
         }
         else
         {
-          return false;
+          return this;
         }
       },
       update_attributes: function(attributes){

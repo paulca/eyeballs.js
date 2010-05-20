@@ -29,11 +29,12 @@
     
     module("Models");
     
-    test('a valid review', 2, function(){
+    test('a valid review', 3, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save();
       equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
-      equals(myReview.save(), true, 'save() should return true');
+      equals(myReview.valid(), true, 'valid() should return true');
+      equals(myReview.save().title, 'Biscuit', 'save() should return object');
     });
     
     test('an invalid review',1, function(){
