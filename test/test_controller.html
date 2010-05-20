@@ -43,9 +43,19 @@
       equals($('form#myForm').html(), 'created!', 'html should have been updated');
     });
     
+    // test('submitting an auto-bound form with data-bind shortcut', 1, function(){
+    //   $('form#myShortcutForm').trigger('submit');
+    //   equals($('form#myShortcutForm').html(), 'created!', 'html should have been updated');
+    // });
+    
     test('clicking an auto-bound link', 1, function(){
       $('a#myLink').trigger('click');
       equals($('a#myLink').html(), 'shown!', 'html should have been updated');
+    });
+    
+    test('clicking an auto-bound link with data-bind shortcut', 1, function(){
+      $('a#myShortcutLink').trigger('click');
+      equals($('a#myShortcutLink').html(), 'shown!', 'html should have been updated');
     });
     
     test('hovering a custom bound element', 1, function(){
@@ -96,9 +106,19 @@
   <form id="myForm" data-controller="reviews" data-action="create">
     test form
   </form>
+  
+  <form id="myShortcutForm" data-bind="reviews/create">
+    test form
+  </form>
+  
   <a id="myLink" data-controller="reviews" data-action="show">
     test link
   </a>
+  
+  <a id="myShortcutLink" data-bind="reviews/show">
+    test link
+  </a>
+
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
   <div id="shortcut" data-bind="click:reviews/shortcut; mouseenter:reviews/multi">
     I'm a shortcut
