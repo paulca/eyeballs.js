@@ -41,6 +41,14 @@
       equals(Review.all()[0].title, 'Local, baby', 'It should pull in everything')
       localStorage.clear();
     })
+    
+    test('deleting', 2, function(){
+      var review = Review.initialize({title: 'Doomed!'});
+      review.save();
+      equals(localStorage.length, 1, 'local storage should be used');
+      review.destroy();
+      equals(localStorage.length, 0, 'local storage should be empty!');
+    })
 
   });
   </script>

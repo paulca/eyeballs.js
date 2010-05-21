@@ -43,6 +43,13 @@ o_O.model = {
   
     instance_methods = {
       adapter: o_O.model.adapter,
+      destroy: function(){
+        if(this.adapter)
+        {
+          this.adapter.destroy(this);
+        }
+        return this;
+      },
       model_name: model_name,
       save: function(){
         if(this.valid())

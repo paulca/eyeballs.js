@@ -15,6 +15,9 @@ if(typeof localStorage === 'object')
       }
       return all_objects;
     },
+    destroy: function(object){
+      localStorage.removeItem(object.id);
+    },
     save: function(object)
     {
       object._model_name = object.model_name;
