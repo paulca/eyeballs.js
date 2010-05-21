@@ -4,8 +4,12 @@ if(typeof localStorage === 'object')
   o_O.localstorage = {
     save: function(object)
     {
-      console.log(object.id);
+      object._type = object.model_name;
       localStorage.setItem(object.id, object.to_json());
+    },
+    find: function(id)
+    {
+      return JSON.parse(localStorage.getItem(id));
     }
   }
 }

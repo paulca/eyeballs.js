@@ -43,6 +43,7 @@ o_O.model = {
   
     instance_methods = {
       adapter: o_O.model.adapter,
+      model_name: model_name,
       save: function(){
         if(this.valid())
         {
@@ -97,6 +98,7 @@ o_O.model = {
     }
   
     initializer_methods = {
+      adapter: o_O.model.adapter,
       initialize: function(attributes){
         if(!attributes) { var attributes = {}; };
         var initialized_attributes = [];
@@ -112,11 +114,18 @@ o_O.model = {
         return attributes;
       },
       find: function(id){
-        var object = {};
-        template = $('[data-id=' + id + ']');
-        return this.initialize(o_O.find_attributes(template, function(field){
-          return field.text();
-        }));
+        if(this.adapter)
+        {
+          return this.initialize(this.adapter.find(id));
+        }
+        else
+        {
+          var object = {};
+          template = $('[data-id=' + id + ']');
+          return this.initialize(o_O.find_attributes(template, function(field){
+            return field.text();
+          }));
+        }
       }
     }
   

@@ -25,7 +25,14 @@
       var review = Review.initialize({title: 'Magic!'})
       review.save();
       equals(JSON.parse(localStorage.getItem(review.id)).title, 'Magic!', 'it should have saved to local storage');
+      localStorage.clear();
     });
+    
+    test('pulling something in', 1, function(){
+      var review = Review.initialize({title: 'More Magic!'})
+      review.save();
+      equals(Review.find(review.id).title, 'More Magic!', 'should be able to find stuff in local storage')
+    })
 
   });
   </script>
