@@ -233,3 +233,12 @@ o_O.uuid = function (p) {
     return(p+o_O._uuidlet()+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+"-"+o_O._uuidlet()+o_O._uuidlet()+o_O._uuidlet());
   };
 };
+
+o_O.alert_errors = function(object){
+  var error_message = '';
+  for(i = 0; i < object.errors.length; i++)
+  {
+    error_message = error_message + object.errors[i].message + "\n";
+  }
+  alert(error_message);
+}

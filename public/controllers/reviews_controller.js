@@ -23,12 +23,7 @@ o_O('ReviewsController', {
     }
     else
     {
-      var error_message = '';
-      for(i = 0; i < review.errors.length; i++)
-      {
-        error_message = error_message + review.errors[i].message + "\n";
-      }
-      alert(error_message);
+      o_O.alert_errors(review);
     }
   },
   edit: function(){
@@ -49,7 +44,7 @@ o_O('ReviewsController', {
     edit_review_div = $(this).parents('div.edit-review');
     review_div = edit_review_div.prev('div.review:first');
     review = Review.find($(this).attr('data-id'));
-    if(review.update_attributes(o_O.params($(this))))
+    if(review.update_attributes(o_O.params($(this))).valid())
     {
       o_O.get_template('reviews/_review', review, function(data, template){ 
         updated_review = Mustache.to_html(template, data);
@@ -59,7 +54,7 @@ o_O('ReviewsController', {
     }
     else
     {
-      console.log(review.errors);
+      o_O.alert_errors(review);
     }
   },
   destroy: function(){
