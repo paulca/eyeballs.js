@@ -1,18 +1,25 @@
 var o_O = function(){
 
-  if(typeof arguments[0] === 'string')
+  if(typeof arguments[1] === 'object')
   {
-    o_O.controller.initialize(arguments[0], arguments[1])
+    var controller_name = arguments[0];
+    o_O.controller.initialize(controller_name, arguments[1])
   }
 
-  if(typeof arguments[0] === 'function')
+  if(typeof arguments[1] === 'function')
   {
-    return o_O.model.initialize(arguments[0])
+    var model_name = arguments[0];
+    var model_initializer = arguments[1];
+    var object_to_bind_to = arguments[2];
+    bind_to = (object_to_bind_to) ? object_to_bind_to : window;
+    bind_to[model_name] = o_O.model.initialize(model_name, model_initializer);
+    return bind_to[model_name];
   }
 }
 
 o_O.model = {
-  initialize: function(callback){
+  adapter: false,
+  initialize: function(model_name, callback){
     var callback = callback;
     var class_methods, instance_methods, initializer_methods;
     var validates_presence_of, validates_length_of;
@@ -35,15 +42,30 @@ o_O.model = {
     var config = callback(class_methods);
   
     instance_methods = {
+      adapter: o_O.model.adapter,
       save: function(){
         if(this.valid())
         {
+          if(this.adapter)
+          {
+            this.adapter.save(this);
+          }
           return this;
         }
         else
         {
           return this;
         }
+      },
+      to_json: function(){
+        var serialized_object = {};
+        for(var i = 0; i < this.attributes.length; i++);
+        {
+          var index = i - 1;
+          var attribute_name = this.attributes[index];
+          serialized_object[this.attributes[index]] = this[this.attributes[index]];
+        }
+        return JSON.stringify(serialized_object);
       },
       update_attributes: function(attributes){
         for(var attribute in attributes)
@@ -77,6 +99,12 @@ o_O.model = {
     initializer_methods = {
       initialize: function(attributes){
         if(!attributes) { var attributes = {}; };
+        var initialized_attributes = [];
+        for( var attribute in attributes )
+        {
+          initialized_attributes.push(attribute);
+        }
+        attributes['attributes'] = initialized_attributes;
         for ( var method in instance_methods ) {
           attributes[method] = instance_methods[method];
         }
@@ -103,13 +131,13 @@ o_O.validations = {
     this.run_presence_validations(object);
   },
   run_custom_validations: function(object){
-    for(i = 0; i < object.validations.custom.length; i++)
+    for(var i = 0; i < object.validations.custom.length; i++)
     {
       object.validations.custom[i](object);
     }
   },
   run_length_validations: function(object){
-    for(i = 0; i < object.validations.lengthliness.length; i++)
+    for(var i = 0; i < object.validations.lengthliness.length; i++)
     {
       var field = object.validations.lengthliness[i].field;
       var max = object.validations.lengthliness[i].max
@@ -130,7 +158,7 @@ o_O.validations = {
     }
   },
   run_presence_validations: function(object){
-    for(i = 0; i < object.validations.presence.length; i++)
+    for(var i = 0; i < object.validations.presence.length; i++)
     {
       var field = object.validations.presence[i].field;
       if(object[field] == '' || object[field] == null)

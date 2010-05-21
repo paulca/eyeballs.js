@@ -9,7 +9,7 @@
 <script type="text/javascript" src="qunit.js"></script>
 
   <script>
-  var Review = o_O(function(that){
+  o_O('Review', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
     that.validates_length_of('title', {min: 5, max: 15});
@@ -24,10 +24,24 @@
     }
     return that;
   });
+  
+  var MyApp = {};
+  o_O('TestModel', function(){}, MyApp);
+  
 
   $(document).ready(function(){
     
     module("Models");
+    
+    test('binding to a non-global object', 1, function(){
+      var test_model = MyApp.TestModel.initialize({title: 'Delicious'})
+      equals(test_model.title, 'Delicious', 'should just work as normal')
+    })
+
+    test('serialization',1, function(){
+      var myReview = Review.initialize({title: 'Groovy'})
+      equals(myReview.to_json(), '{"title":"Groovy"}', 'should serialize nicely')
+    })
     
     test('a valid review', 3, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});

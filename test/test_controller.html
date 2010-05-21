@@ -43,10 +43,10 @@
       equals($('form#myForm').html(), 'created!', 'html should have been updated');
     });
     
-    // test('submitting an auto-bound form with data-bind shortcut', 1, function(){
-    //   $('form#myShortcutForm').trigger('submit');
-    //   equals($('form#myShortcutForm').html(), 'created!', 'html should have been updated');
-    // });
+    test('submitting an auto-bound form with data-bind shortcut', 1, function(){
+      $('form#myShortcutForm').trigger('submit');
+      equals($('form#myShortcutForm').html(), 'created!', 'html should have been updated');
+    });
     
     test('clicking an auto-bound link', 1, function(){
       $('a#myLink').trigger('click');
