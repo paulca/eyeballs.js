@@ -1,15 +1,22 @@
 o_O('ReviewsController', {
   index: function(){
     reviews = Review.all();
-    alert('whoop!');
+    for(var id in reviews)
+    {
+      var review = reviews[id];
+      o_O.get_template('reviews/_review', review, function(data, template){ 
+        new_review = Mustache.to_html(template, data);
+        $('div#reviews').append(new_review);
+      });
+    }
   },
   create: function(){
     review = Review.initialize(o_O.params($(this)));
     if(review.valid())
     {
       review.save();
-      o_O.get_template('reviews/_review', function(template){ 
-        new_review = Mustache.to_html(template, review);
+      o_O.get_template('reviews/_review', review, function(data, template){ 
+        new_review = Mustache.to_html(template, data);
         $('div#reviews').append(new_review);
       });
       $(this).find('input[type=text], textarea').val('');
@@ -27,8 +34,8 @@ o_O('ReviewsController', {
   edit: function(){
     review_div = $(this).parents('div.review');
     review = Review.find(review_div.attr('data-id'));
-    o_O.get_template('reviews/edit', function(template){
-      edit_review = Mustache.to_html(template, review);
+    o_O.get_template('reviews/edit', review, function(data, template){
+      edit_review = Mustache.to_html(template, data);
       review_div.hide().after(edit_review);
     });
   },
@@ -44,11 +51,11 @@ o_O('ReviewsController', {
     review = Review.find($(this).attr('data-id'));
     if(review.update_attributes(o_O.params($(this))))
     {
-      o_O.get_template('reviews/_review', function(template){ 
-              updated_review = Mustache.to_html(template, review);
-              edit_review_div.replaceWith(updated_review);
-              review_div.remove();
-            }); 
+      o_O.get_template('reviews/_review', review, function(data, template){ 
+        updated_review = Mustache.to_html(template, data);
+        edit_review_div.replaceWith(updated_review);
+        review_div.remove();
+      }); 
     }
     else
     {
@@ -59,6 +66,8 @@ o_O('ReviewsController', {
     if(confirm('Are You sure?'))
     {
       $(this).parents('div.review:first').slideToggle(function(){
+        review = Review.find($(this).attr('data-id'));
+        review.destroy();
         $(this).remove();
       });
     }

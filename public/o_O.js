@@ -205,16 +205,16 @@ o_O.validations = {
 
 o_O.templates = {}
 
-o_O.get_template = function(template, callback){
+o_O.get_template = function(template, data, callback){
   if(o_O.templates[template])
   {
-    callback(o_O.templates[template]);
+    callback(data, o_O.templates[template]);
   }
   else
   {
     $.get('views/' + template + '.html.mustache', function(response){
       o_O.templates[template] = response;
-      callback(response);
+      callback(data, response);
     });
   }
 }
