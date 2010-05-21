@@ -1,6 +1,7 @@
 o_O('ReviewsController', {
   index: function(){
     reviews = Review.all();
+    alert('whoop!');
   },
   create: function(){
     review = Review.initialize(o_O.params($(this)));
