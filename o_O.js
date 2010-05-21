@@ -66,6 +66,7 @@ o_O.model = {
           var attribute_name = this.attributes[index];
           serialized_object[this.attributes[index]] = this[this.attributes[index]];
         }
+        serialized_object._model_name = this.model_name;
         return JSON.stringify(serialized_object);
       },
       update_attributes: function(attributes){
@@ -99,6 +100,12 @@ o_O.model = {
   
     initializer_methods = {
       adapter: o_O.model.adapter,
+      all: function(){
+        if(this.adapter)
+        {
+          return this.adapter.all(model_name);
+        }
+      },
       initialize: function(attributes){
         if(!attributes) { var attributes = {}; };
         var initialized_attributes = [];
@@ -126,7 +133,8 @@ o_O.model = {
             return field.text();
           }));
         }
-      }
+      },
+      model_name: model_name
     }
   
     return initializer_methods;
