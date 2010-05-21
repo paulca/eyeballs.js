@@ -28,10 +28,12 @@
       localStorage.clear();
     });
     
-    test('pulling something in', 1, function(){
+    test('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'})
       review.save();
-      equals(Review.find(review.id).title, 'More Magic!', 'should be able to find stuff in local storage')
+      found_review = Review.find(review.id);
+      equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
+      equals(found_review.id, review.id, 'should persist the id')
       localStorage.clear();
     })
     

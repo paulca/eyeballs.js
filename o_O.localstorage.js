@@ -25,7 +25,9 @@ if(typeof localStorage === 'object')
     },
     find: function(id)
     {
-      return JSON.parse(localStorage.getItem(id));
+      object = JSON.parse(localStorage.getItem(id));
+      object.id = id;
+      return object;
     }
   }
 }

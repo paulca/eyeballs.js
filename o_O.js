@@ -124,7 +124,10 @@ o_O.model = {
         for ( var method in instance_methods ) {
           attributes[method] = instance_methods[method];
         }
-        attributes['id'] = o_O.uuid();
+        if(!attributes['id'])
+        {
+          attributes['id'] = o_O.uuid();
+        }
         return attributes;
       },
       find: function(id){
