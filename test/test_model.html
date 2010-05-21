@@ -39,7 +39,12 @@
 
     test('serialization',1, function(){
       var myReview = Review.initialize({title: 'Groovy'})
-      equals(myReview.to_json(), '{"title":"Groovy"}', 'should serialize nicely')
+      equals(myReview.to_json(), '{"title":"Groovy","_model_name":"Review"}', 'should serialize nicely')
+    })
+    
+    test('useful attributes',2, function(){
+      equals(Review.model_name, 'Review', 'should give me a model name');
+      equals(Review.table_name, 'reviews', 'should give me a table name');
     })
     
     test('a valid review', 3, function(){

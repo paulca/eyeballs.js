@@ -1,8 +1,12 @@
 o_O('ReviewsController', {
+  index: function(){
+    reviews = Review.all();
+  },
   create: function(){
     review = Review.initialize(o_O.params($(this)));
     if(review.valid())
     {
+      review.save();
       o_O.get_template('reviews/_review', function(template){ 
         new_review = Mustache.to_html(template, review);
         $('div#reviews').append(new_review);

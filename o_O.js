@@ -23,6 +23,7 @@ o_O.model = {
     var callback = callback;
     var class_methods, instance_methods, initializer_methods;
     var validates_presence_of, validates_length_of;
+    var table_name = model_name.toLowerCase() + 's';
   
     class_methods = {
       validations: {presence: [], lengthliness: [], custom: []},
@@ -65,6 +66,7 @@ o_O.model = {
           return this;
         }
       },
+      table_name: table_name,
       to_json: function(){
         var serialized_object = {};
         for(var i = 0; i < this.attributes.length; i++);
@@ -144,7 +146,8 @@ o_O.model = {
           }));
         }
       },
-      model_name: model_name
+      model_name: model_name,
+      table_name: table_name
     }
   
     return initializer_methods;
