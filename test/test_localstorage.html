@@ -24,7 +24,8 @@
     test('storing a basic basic thing', 1, function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save();
-      equals(JSON.parse(localStorage.getItem(review.id)).title, 'Magic!', 'it should have saved to local storage');
+      var all_reviews = JSON.parse(localStorage.getItem('reviews'));
+      equals(all_reviews[review.id].title, 'Magic!', 'it should have saved to local storage');
       localStorage.clear();
     });
     
@@ -49,7 +50,8 @@
       review.save();
       equals(localStorage.length, 1, 'local storage should be used');
       review.destroy();
-      equals(localStorage.length, 0, 'local storage should be empty!');
+      equals(localStorage.getItem('reviews'), '{}', 'local storage should be empty!');
+      localStorage.clear();
     })
 
   });

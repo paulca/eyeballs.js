@@ -112,7 +112,7 @@ o_O.model = {
       all: function(){
         if(this.adapter)
         {
-          return this.adapter.all(model_name);
+          return this.adapter.all(this);
         }
       },
       initialize: function(attributes){
@@ -135,7 +135,7 @@ o_O.model = {
       find: function(id){
         if(this.adapter)
         {
-          return this.initialize(this.adapter.find(id));
+          return this.initialize(this.adapter.find(this, id));
         }
         else
         {

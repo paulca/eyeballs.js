@@ -2,30 +2,41 @@ if(typeof localStorage === 'object')
 {
   // We're storing locally, baby!
   o_O.localstorage = {
-    all: function(model_name){
+    all: function(model){
       var all_objects = []
-      for(var i = 0; i < localStorage.length; i++)
+      for(var record in this.table(model))
       {
-        var key = localStorage.key(i);
-        var object = JSON.parse(localStorage.getItem(key))
-        if(object._model_name === model_name)
-        {
-          all_objects.push(object)
-        }
+        all_objects.push(this.table(model)[record]);
       }
       return all_objects;
     },
     destroy: function(object){
-      localStorage.removeItem(object.id);
+      var table = this.table(object)
+      delete table[object.id]
+      localStorage.setItem(object.table_name, JSON.stringify(table))
     },
     save: function(object)
     {
-      object._model_name = object.model_name;
-      localStorage.setItem(object.id, object.to_json());
+      var all = this.table(object)
+      all[object.id] = object;
+      localStorage.setItem(object.table_name, JSON.stringify(all))
     },
-    find: function(id)
+    table: function(object)
     {
-      object = JSON.parse(localStorage.getItem(id));
+      var all;
+      var stored_all = localStorage.getItem(object.table_name);
+      if(stored_all == null)
+      {
+        return {};
+      }
+      else
+      {
+        return JSON.parse(stored_all);
+      }
+    },
+    find: function(model, id)
+    {
+      var object = this.table(model)[id]
       object.id = id;
       return object;
     }
