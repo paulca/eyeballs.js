@@ -12,6 +12,7 @@
       <label for="review-content">Review</label><br />
       <textarea name="content" data-attribute="content"></textarea><br />
       <input type="submit" name="commit" value="Save">
+      
     </form>
     
     <div id="reviews">
@@ -29,4 +30,9 @@
   </script>
   <script src="models/review.js"></script>
   <script src="controllers/reviews_controller.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      ReviewsController.index();
+    })
+  </script>
 </html>

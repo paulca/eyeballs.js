@@ -51,7 +51,8 @@ o_O.controller = {
           }
         }
       });
-    })
+    });
+    return controller;
   }
 }
 

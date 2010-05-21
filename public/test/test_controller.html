@@ -38,6 +38,10 @@
     
     module("Controller");
     
+    test('bind to global',1,function(){
+      equals(typeof ReviewsController, 'object', 'ReviewsController should be an object')
+    })
+    
     test('submitting an auto-bound form', 1, function(){
       $('form#myForm').trigger('submit');
       equals($('form#myForm').html(), 'created!', 'html should have been updated');
