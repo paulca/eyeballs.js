@@ -9,9 +9,9 @@ The syntax is intended to be familiar to anyone who is comfortable with Rails, b
 Models
 ======
 
-You define a model by passing a function to the eyeballs ( o_O ) function. As inspired by Rails, model definitions are capitalised. Note, however, that the new prefix is not used.
+You define a model by passing a name and function to the eyeballs ( o_O ) function (pronounced 'eep eep'). As inspired by Rails, model definitions are capitalised. Note, however, that the new prefix is not used.
 
-    var Post = o_O(function(post){ })
+    o_O('Post', function(post){ })
 
 You can now initialize an individual post:
 
@@ -22,7 +22,7 @@ Not very exciting.
 
 However, if you're familiar with Rails, you'll be familiar with the wonderful syntax for adding validations to your models. eyeballs.js lets you add validations to your models as follows:
 
-    var Post = o_O(function(post){
+    o_O('Post', function(post){
       post.validates_presence_of('title)
     })
 
@@ -39,7 +39,7 @@ and so on, so forth. This will be very familiar to those who use Rails.
 
 You can also add your own validations, again, similar to how Rails does things:
 
-    var Post = o_O(function(post){
+    o_O('Post', function(post){
       post.validates(function(post){
         if(post.title != 'Awesome')
         {
@@ -55,7 +55,7 @@ You can also add your own validations, again, similar to how Rails does things:
 
 And if you want to add your own methods:
 
-    var Post = o_O(function(post){
+    o_O('Post', function(post){
       post.methods.title_downcased: function(){
         this.title.toLowerCase();
       }

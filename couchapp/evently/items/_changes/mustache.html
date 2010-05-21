@@ -1,0 +1,18 @@
+<p>Customize this format here: <tt>ddoc.evently.items._changes.mustache</tt></p>
+<h3>Recent Messages</h3>
+<ul>
+  {{#items}}
+    <li>
+      <div class="avatar">
+        {{#gravatar_url}}<img src="{{gravatar_url}}"/>{{/gravatar_url}}
+        <div class="name">
+          {{nickname}}
+        </div>
+      </div>
+      <p>{{message}}</p>
+      <div style="clear:left;"></div>
+    </li>
+  {{/items}}
+</ul>
+<p><em>Protip:</em> If you setup continuous replication between this database and a remote one, this list will reflect remote changes in near real-time.</p>
+<p>This would be a good place to add pagination.</p>

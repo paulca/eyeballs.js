@@ -1,0 +1,14 @@
+<p>Most applications will customize this template (<tt>ddoc.evently.profile.profileReady.mustache</tt>) for user input.</p>
+
+<div class="avatar">
+  {{#gravatar_url}}<img src="{{gravatar_url}}"/>{{/gravatar_url}}
+  <div class="name">
+    {{name}}
+  </div>
+</div>
+
+<form>
+  <label>New message from {{nickname}}: <input type="text" name="message" size=60 value=""></label>
+</form>
+
+<div style="clear:left;"></div>

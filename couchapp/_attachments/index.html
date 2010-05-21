@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="http://meview/jquery-1.4.2.min.js"></script>
+  <script src="http://meview/jquery.livequery.js"></script>
+  <script src="/_utils/script/jquery.couch.js"></script>
+  
+  <script src="http://meview/o_O.js"></script>
+  <script src="http://meview/jquery.o_O.couchdb.js"></script>
+  <script src="http://meview/jquery.o_O.js"></script>
+  <link rel="stylesheet" href="http://meview/test/qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://meview/test/qunit.js"></script>
+
+  <script>
+  
+
+  $(document).ready(function(){
+    
+    o_O.model.adapter = o_O.couchdb;
+    o_O.model.adapter.settings = {
+      database: 'eyeballs_testing',
+      user: 'paul',
+      password: 'monkeys'
+    }
+    
+    module("CouchDB Test (with jQuery)", {setup: function(){
+      // $.ajax({type: 'PUT', url: '/' + o_O.model.adapter.settings.database}).send()
+    }, teardown: function(){
+      // $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database}).send()
+    }});
+    
+    o_O('Review', function(){})
+    
+    test('storing a basic basic thing', 1, function(){
+      var review = Review.initialize({title: 'Magic!'})
+      review.save();
+      var url = '/' + o_O.model.adapter.settings.database + '/' + review.id;
+      var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
+      var object = JSON.parse(response);
+      equals(object.title, 'Magic!', 'it should have saved to local storage');
+    });
+    
+    test('pulling something in', 2, function(){
+      var review = Review.initialize({title: 'More Magic!'})
+      review.save();
+      found_review = Review.find(review.id);
+      equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
+      equals(found_review.id, review.id, 'should persist the id')
+    })
+    
+    test('getting all', 1, function(){
+      var review = Review.initialize({title: 'Local, baby'})
+      review.save();
+      equals(Review.all()[0].title, 'Local, baby', 'It should pull in everything')
+    })
+    
+    test('deleting', 2, function(){
+      var review = Review.initialize({title: 'Doomed!'});
+      review.save();
+      equals(localStorage.length, 1, 'local storage should be used');
+      review.destroy();
+      equals(localStorage.getItem('reviews'), '{}', 'local storage should be empty!');
+    })
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">CouchDB Tests (with jQuery)</h1>
+  <h2 id="qunit-banner"></h2>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+</body>
+</html>
