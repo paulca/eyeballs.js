@@ -70,9 +70,9 @@
     test('deleting', 2, function(){
       var review = Review.initialize({title: 'Doomed!'});
       review.save();
-      equals(localStorage.length, 1, 'local storage should be used');
+      equals(Review.all().length, 1, 'It should create the doc');
       review.destroy();
-      equals(localStorage.getItem('reviews'), '{}', 'local storage should be empty!');
+      equals(Review.all().length, 0, 'It should delete the doc');
     })
 
   });

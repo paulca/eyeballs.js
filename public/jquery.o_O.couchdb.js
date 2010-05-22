@@ -44,7 +44,11 @@ o_O.couchdb = {
     return all_documents;
   },
   destroy: function(object){
-    
+    var database = o_O.model.adapter.settings.database;
+    var current = this.find(object, object.id);
+    var url = '/' + o_O.model.adapter.settings.database + '/' + object.id;
+    $.couch.db(database).removeDoc(current);
+    return object;
   },
   save: function(object)
   {
