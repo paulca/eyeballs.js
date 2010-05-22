@@ -32,13 +32,14 @@
     
     o_O('Review', function(){})
     
-    test('storing a basic basic thing', 1, function(){
+    test('storing a basic basic thing', 2, function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save();
       var url = '/' + o_O.model.adapter.settings.database + '/' + review.id;
       var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
       var object = JSON.parse(response);
       equals(object.title, 'Magic!', 'it should have saved to local storage');
+      equals(object.model_name, 'Review', 'it should have saved the model name too');
     });
     
     test('pulling something in', 2, function(){

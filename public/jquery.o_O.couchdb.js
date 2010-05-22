@@ -15,6 +15,7 @@ o_O.couchdb = {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
     object_to_save._id = object.id;
+    object_to_save.model_name = object.model_name;
     $.couch.db(database).saveDoc(object_to_save);
   },
   table: function(object)
