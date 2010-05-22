@@ -25,7 +25,6 @@ o_O.couchdb = {
          }
       }
       $.couch.db(database).saveDoc(design_doc)
-      // $.ajax({type: 'PUT', data: JSON.stringify(design_doc), aync: false, url: ddoc_url});
       var response = $.ajax({url: all_url, type: 'GET', async: false}).responseText;
     }
     else
@@ -47,7 +46,7 @@ o_O.couchdb = {
     var database = o_O.model.adapter.settings.database;
     var current = this.find(object, object.id);
     var url = '/' + o_O.model.adapter.settings.database + '/' + object.id;
-    $.couch.db(database).removeDoc(current);
+    $.ajax({type: 'DELETE', url: '/' + database + '/' + object.id + '?rev=' + current._rev, async: false});
     return object;
   },
   save: function(object)

@@ -26,17 +26,16 @@
     $.couch.login({name: 'paul', password: 'monkeys'})
     
     module("CouchDB Test (with jQuery)", {setup: function(){
-      
+      try{
+        $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
+      }
+      catch(e){}
       try{
         $.ajax({type: 'PUT', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
       }
       catch(e){}
       
     }, teardown: function(){
-      try{
-        $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
-      }
-      catch(e){}
     }});
     
     o_O('Review', function(){})
@@ -72,15 +71,6 @@
       review.save();
       equals(Review.all().length, 1, 'It should create the doc');
       review.destroy();
-      function pausecomp(millis) 
-      {
-      var date = new Date();
-      var curDate = null;
-
-      do { curDate = new Date(); } 
-      while(curDate-date < millis);
-      }
-      pausecomp(100);
       equals(Review.all().length, 0, 'It should delete the doc');
     })
 
