@@ -45,6 +45,7 @@
       var review = Review.initialize({title: 'More Magic!'})
       review.save();
       found_review = Review.find(review.id);
+      console.log(found_review);
       equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
       equals(found_review.id, review.id, 'should persist the id')
     })

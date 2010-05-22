@@ -23,6 +23,10 @@ o_O.couchdb = {
   },
   find: function(model, id)
   {
-    
+    var url = '/' + o_O.model.adapter.settings.database + '/' + id;
+    var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
+    var object = JSON.parse(response);
+    object.id = id;
+    return object;
   }
 }
