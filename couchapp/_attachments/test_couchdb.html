@@ -23,16 +23,25 @@
       user: 'paul',
       password: 'monkeys'
     }
+    $.couch.login({name: 'paul', password: 'monkeys'})
     
     module("CouchDB Test (with jQuery)", {setup: function(){
-      // $.ajax({type: 'PUT', url: '/' + o_O.model.adapter.settings.database}).send()
+      
+      try{
+        $.ajax({type: 'PUT', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
+      }
+      catch(e){}
+      
     }, teardown: function(){
-      // $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database}).send()
+      try{
+        $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
+      }
+      catch(e){}
     }});
     
     o_O('Review', function(){})
     
-    test('storing a basic basic thing', 2, function(){
+    test('storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save();
       var url = '/' + o_O.model.adapter.settings.database + '/' + review.id;
@@ -40,21 +49,22 @@
       var object = JSON.parse(response);
       equals(object.title, 'Magic!', 'it should have saved to local storage');
       equals(object.model_name, 'Review', 'it should have saved the model name too');
+      equals(object._id, review.id, 'it should persist the id');
     });
     
     test('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'})
       review.save();
       found_review = Review.find(review.id);
-      console.log(found_review);
       equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
       equals(found_review.id, review.id, 'should persist the id')
     })
     
-    test('getting all', 1, function(){
+    test('getting all', 2, function(){
       var review = Review.initialize({title: 'Local, baby'})
       review.save();
       equals(Review.all()[0].title, 'Local, baby', 'It should pull in everything')
+      equals(Review.all()[0].id, review.id, 'It should persist the id')
     })
     
     test('deleting', 2, function(){
