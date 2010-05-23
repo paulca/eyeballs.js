@@ -68,19 +68,30 @@
       });
     })
     
-    test('getting all', 2, function(){
+    asyncTest('getting all', 2, function(){
       var review = Review.initialize({title: 'Local, baby'})
-      review.save();
-      equals(Review.all()[0].title, 'Local, baby', 'It should pull in everything')
-      equals(Review.all()[0].id, review.id, 'It should persist the id')
+      review.save(function(saved_review){
+        Review.all(function(documents){
+          equals(documents[0].title, 'Local, baby', 'It should pull in everything')
+          equals(documents[0].id, review.id, 'It should persist the id')
+          start();
+        })
+      });
     })
     
-    test('deleting', 2, function(){
+    asyncTest('deleting', 2, function(){
       var review = Review.initialize({title: 'Doomed!'});
-      review.save();
-      equals(Review.all().length, 1, 'It should create the doc');
-      review.destroy();
-      equals(Review.all().length, 0, 'It should have deleted the doc')
+      review.save(function(){
+        Review.all(function(documents){
+          equals(documents.length, 1, 'It should create the doc');
+          review.destroy(function(destroyed_review){
+            Review.all(function(documents){
+              equals(documents.length, 0, 'It should have deleted the doc')
+              start()
+            })
+          });
+        })
+      });
     })
 
   });

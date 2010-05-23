@@ -112,10 +112,10 @@ o_O.model = {
   
     initializer_methods = {
       adapter: o_O.model.adapter,
-      all: function(){
+      all: function(callback){
         if(this.adapter)
         {
-          return this.adapter.all(this);
+          return this.adapter.all(this, callback);
         }
       },
       initialize: function(attributes){
