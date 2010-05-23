@@ -23,7 +23,11 @@
       user: 'paul',
       password: 'monkeys'
     }
-    $.couch.login({name: 'paul', password: 'monkeys'})
+    $.couch.login({name: 'paul', password: 'monkeys'});
+    var connection = $.couch.db(o_O.model.adapter.settings.database)
+    $.ajaxSetup ({ 
+      cache: false 
+    });
     
     module("CouchDB Test (with jQuery)", {setup: function(){
       try{
@@ -71,7 +75,7 @@
       review.save();
       equals(Review.all().length, 1, 'It should create the doc');
       review.destroy();
-      equals(Review.all().length, 0, 'It should delete the doc');
+      equals(Review.all().length, 0, 'It should have deleted the doc')
     })
 
   });

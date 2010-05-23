@@ -42,11 +42,21 @@ o_O.couchdb = {
         }
     return all_documents;
   },
-  destroy: function(object){
+  destroy: function(object, callback){
     var database = o_O.model.adapter.settings.database;
     var current = this.find(object, object.id);
     var url = '/' + o_O.model.adapter.settings.database + '/' + object.id;
-    $.ajax({type: 'DELETE', url: '/' + database + '/' + object.id + '?rev=' + current._rev, async: false});
+    $.ajax({
+              type: 'DELETE',
+              url: '/' + database + '/' + object.id + '?rev=' + current._rev,
+              success: function(data){
+                         var response = JSON.parse(data);
+                           if(typeof callback === 'function')
+                           {
+                             callback(response);
+                           }
+                         }
+    });
     return object;
   },
   save: function(object)

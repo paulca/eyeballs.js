@@ -47,10 +47,10 @@ o_O.model = {
   
     instance_methods = {
       adapter: o_O.model.adapter,
-      destroy: function(){
+      destroy: function(callback){
         if(this.adapter)
         {
-          this.adapter.destroy(this);
+          this.adapter.destroy(this, callback);
         }
         return this;
       },
