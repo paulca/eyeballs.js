@@ -10,7 +10,7 @@ o_O.couchdb = {
     
     var ddoc_url = '/' + parts.join('/');
     var all_url = '/' + parts.join('/') + '/_view/all';
-    var response = $.ajax({url: all_url, type: 'GET', async: false}).responseText;
+    var response = $.ajax({url: all_url, type: 'GET'}).responseText;
     var responseObject = JSON.parse(response);
     if(responseObject.error === 'not_found')
     {
@@ -25,7 +25,7 @@ o_O.couchdb = {
          }
       }
       $.couch.db(database).saveDoc(design_doc)
-      var response = $.ajax({url: all_url, type: 'GET', async: false}).responseText;
+      var response = $.ajax({url: all_url, type: 'GET'}).responseText;
     }
     else
     {
@@ -33,13 +33,13 @@ o_O.couchdb = {
     }
     
     var documents = JSON.parse(response).rows;
-        var all_documents = []
-        for(var i = 0; i < documents.length; i++)
-        {
-          var document = documents[i];
-          document.value.id = document.id
-          all_documents.push(document.value);
-        }
+    var all_documents = []
+    for(var i = 0; i < documents.length; i++)
+    {
+      var document = documents[i];
+      document.value.id = document.id
+      all_documents.push(document.value);
+    }
     return all_documents;
   },
   destroy: function(object, callback){
@@ -59,7 +59,7 @@ o_O.couchdb = {
     });
     return object;
   },
-  save: function(object)
+  save: function(object, callback)
   {
     var database = o_O.model.adapter.settings.database;
     var object_to_save = {}
@@ -69,7 +69,14 @@ o_O.couchdb = {
     }
     object_to_save._id = object.id;
     object_to_save.model_name = object.model_name;
-    $.couch.db(database).saveDoc(object_to_save);
+    $.couch.db(database).saveDoc(object_to_save, { 
+      success:function(document){
+        if(typeof callback === 'function')
+        {
+          callback(object_to_save);
+        }
+      }
+    });
   },
   table: function(object)
   {
@@ -78,7 +85,7 @@ o_O.couchdb = {
   find: function(model, id)
   {
     var url = '/' + o_O.model.adapter.settings.database + '/' + id;
-    var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
+    var response = $.ajax({url: url, type: 'GET'}).responseText;
     var object = JSON.parse(response);
     object.id = id;
     return object;

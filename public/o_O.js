@@ -55,12 +55,12 @@ o_O.model = {
         return this;
       },
       model_name: model_name,
-      save: function(){
+      save: function(callback){
         if(this.valid())
         {
           if(this.adapter)
           {
-            this.adapter.save(this);
+            this.adapter.save(this, callback);
           }
           return this;
         }
