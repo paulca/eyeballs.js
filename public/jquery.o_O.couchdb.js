@@ -29,7 +29,8 @@ o_O.couchdb = {
            "language": "javascript",
            "views": {
                "all": {
-                   "map": "function(doc) {\n  if(doc.model_name === '" + model.model_name + "')\n    emit(null, doc);\n}"
+                   "map": "function(doc) {\n  if(doc.model_name === \
+                     '" + model.model_name + "')\n    emit(null, doc);\n}"
                }
            }
         }
