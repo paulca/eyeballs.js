@@ -69,7 +69,7 @@
     })
     
     asyncTest('getting all', 2, function(){
-      var review = Review.initialize({title: 'Local, baby'})
+      var review = Review.initialize({title: 'Local, baby'});
       review.save(function(saved_review){
         Review.all(function(documents){
           equals(documents[0].title, 'Local, baby', 'It should pull in everything')
@@ -78,6 +78,18 @@
         })
       });
     })
+    
+    asyncTest('updating', 1, function(){
+      var review = Review.initialize({title: 'Doomed!'});
+      review.save(function(saved_review){
+        saved_review.update_attributes({title: 'Tennessee'}, function(){
+          Review.find(saved_review.id, function(found_review){
+            equals(found_review.title, 'Tennessee', 'Title should have been updated');
+            start();
+          });
+        });
+      });
+    });
     
     asyncTest('deleting', 2, function(){
       var review = Review.initialize({title: 'Doomed!'});

@@ -68,6 +68,8 @@ o_O.couchdb = {
   {
     var database = o_O.model.adapter.settings.database;
     var object_to_save = {}
+    
+    // we only want the attributes, not all extra model data
     for(var i = 0; i < object.attributes.length; i++)
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
@@ -75,10 +77,13 @@ o_O.couchdb = {
     object_to_save._id = object.id;
     object_to_save.model_name = object.model_name;
     $.couch.db(database).saveDoc(object_to_save, { 
-      success:function(document){
+      success:function(response){
+        object_to_save._rev = response.rev;
+        object_to_save._id = response.id;
+        object_to_save.id = response.id;
         if(typeof callback === 'function')
         {
-          callback(object_to_save);
+          callback(o_O.models[object.model_name].initialize(object_to_save));
         }
       }
     });
@@ -94,13 +99,8 @@ o_O.couchdb = {
       document.id = id;
       if(typeof callback === 'function')
       {
-        callback(document);
+        callback(o_O.models[model.model_name].initialize(document));
       }
     }});
-    
-    // var response = $.ajax({url: url, type: 'GET'}).responseText;
-    // var object = JSON.parse(response);
-    // object.id = id;
-    // return object;
   }
 }

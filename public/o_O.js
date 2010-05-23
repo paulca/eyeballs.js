@@ -16,6 +16,11 @@ var o_O = function(){
     var model_name = arguments[0];
     var model_initializer = arguments[1];
     bind_to[model_name] = o_O.model.initialize(model_name, model_initializer);
+    if(typeof o_O.models !== 'object')
+    {
+      o_O.models = {};
+    }
+    o_O.models[model_name] = bind_to[model_name];
     return bind_to[model_name];
   }
 }
@@ -81,12 +86,12 @@ o_O.model = {
         serialized_object._model_name = this.model_name;
         return JSON.stringify(serialized_object);
       },
-      update_attributes: function(attributes){
+      update_attributes: function(attributes, callback){
         for(var attribute in attributes)
         {
           this[attribute] = attributes[attribute];
         }
-        return this.save();
+        this.save(callback);
       },
       valid: function(){
         this.errors = [];
