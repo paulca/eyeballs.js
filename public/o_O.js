@@ -143,7 +143,13 @@ o_O.model = {
       find: function(id, callback){
         if(this.adapter)
         {
-          return this.initialize(this.adapter.find(this, id, callback));
+          model = this;
+          this.adapter.find(this, id, function(found_object){
+            if(typeof callback === 'function')
+            {
+              callback(model.initialize(found_object));
+            }
+          });
         }
         else
         {
