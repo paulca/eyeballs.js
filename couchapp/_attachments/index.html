@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Meview</title>
+  </head>
+  <body>
+    <form data-controller="reviews" data-action="create">
+      <label for="review-title">Title</label><br />
+      <input type="text" name="title" value="" data-attribute="title"><br />
+      <label for="review-content">Review</label><br />
+      <textarea name="content" data-attribute="content"></textarea><br />
+      <input type="submit" name="commit" value="Save">
+      
+    </form>
+    
+    <div id="reviews">
+      
+    </div>
+  </body>
+  <script src="http://meview/jquery-1.4.2.min.js"></script>
+  <script src="http://meview/jquery.livequery.js"></script>
+  <script src="/_utils/script/jquery.couch.js"></script>
+  <script src="http://meview/mustache.js"></script>
+  <script src="http://meview/o_O.js"></script>
+  <script src="http://meview/jquery.o_O.js"></script>
+  <script src="http://meview/jquery.o_O.couchdb.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    o_O.config.template_path = '/eyeballs_test/_design/couchapp/views'
+    o_O.model.adapter = o_O.couchdb;
+    o_O.model.adapter.settings = {
+      database: 'eyeballs_test',
+      user: 'paul',
+      password: 'monkeys'
+    }
+    $.couch.login({name: 'paul', password: 'monkeys'});
+  </script>
+  <script src="http://meview/models/review.js"></script>
+  <script src="http://meview/controllers/reviews_controller.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      ReviewsController.index();
+    })
+  </script>
+</html>

@@ -1,0 +1,9 @@
+<div class="edit-review">
+  <form data-id="{{id}}" data-controller="reviews" data-action="update">
+    <label for="review-title">Title</label><br />
+    <input type="text" name="title" value="{{title}}" data-attribute="title"><br />
+    <label for="review-content">Review</label><br />
+    <textarea name="content" data-attribute="content">{{content}}</textarea><br />
+    <input type="submit" name="commit" value="Save"> or <a href="#" data-controller="reviews" data-action="cancel_edit">Cancel</a>
+  </form>
+</div>

@@ -223,6 +223,7 @@ o_O.validations = {
   }
 }
 
+o_O.config = {}
 o_O.templates = {}
 
 o_O.get_template = function(template, data, callback){
@@ -232,7 +233,16 @@ o_O.get_template = function(template, data, callback){
   }
   else
   {
-    $.get('views/' + template + '.html.mustache', function(response){
+    var url;
+    if(o_O.config.template_path)
+    {
+      url = o_O.config.template_path + '/';
+    }
+    else
+    {
+      url = 'views/'
+    }
+    $.get(url + template + '.html.mustache', function(response){
       o_O.templates[template] = response;
       callback(data, response);
     });

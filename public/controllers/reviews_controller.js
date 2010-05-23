@@ -19,7 +19,7 @@ o_O('ReviewsController', {
       review.save(function(review){
         o_O.get_template('reviews/_review', review, function(data, template){ 
           new_review = Mustache.to_html(template, data);
-          $('div#reviews').append(new_review);
+          $('div#reviews').prepend(new_review);
         });
         form.find('input[type=text], textarea').val('');
       });
