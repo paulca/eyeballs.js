@@ -83,7 +83,7 @@ o_O.couchdb = {
         object_to_save.id = response.id;
         if(typeof callback === 'function')
         {
-          callback(o_O.models[object.model_name].initialize(object_to_save));
+          callback(object_to_save);
         }
       }
     });
@@ -99,7 +99,7 @@ o_O.couchdb = {
       document.id = id;
       if(typeof callback === 'function')
       {
-        callback(o_O.models[model.model_name].initialize(document));
+        callback(document);
       }
     }});
   }

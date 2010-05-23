@@ -1,8 +1,8 @@
 var o_O = function(){
 
   var bind_to;
-  bind_to = (object_to_bind_to) ? object_to_bind_to : window;
   var object_to_bind_to = arguments[2];
+  bind_to = (object_to_bind_to) ? object_to_bind_to : window;
 
   if(typeof arguments[1] === 'object')
   {
@@ -13,14 +13,17 @@ var o_O = function(){
 
   if(typeof arguments[1] === 'function')
   {
+    
     var model_name = arguments[0];
     var model_initializer = arguments[1];
     bind_to[model_name] = o_O.model.initialize(model_name, model_initializer);
+    
     if(typeof o_O.models !== 'object')
     {
       o_O.models = {};
     }
     o_O.models[model_name] = bind_to[model_name];
+    
     return bind_to[model_name];
   }
 }
@@ -65,7 +68,13 @@ o_O.model = {
         {
           if(this.adapter)
           {
-            this.adapter.save(this, callback);
+            var model = this;
+            this.adapter.save(this, function(returned_object){
+              if(typeof callback === 'function')
+              {
+                callback(o_O.models[model.model_name].initialize(returned_object))
+              }
+            });
           }
           return this;
         }
@@ -143,11 +152,11 @@ o_O.model = {
       find: function(id, callback){
         if(this.adapter)
         {
-          model = this;
-          this.adapter.find(this, id, function(found_object){
+          var model = this;
+          this.adapter.find(this, id, function(returned_object){
             if(typeof callback === 'function')
             {
-              callback(model.initialize(found_object));
+              callback(model.initialize(returned_object));
             }
           });
         }
