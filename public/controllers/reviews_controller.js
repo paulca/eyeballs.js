@@ -12,7 +12,8 @@ o_O('ReviewsController', {
     });
   },
   create: function(){
-    review = Review.initialize(o_O.params($(this)));
+    var review = Review.initialize(o_O.params($(this)));
+    var form = $(this);
     if(review.valid())
     {
       review.save(function(review){
@@ -20,7 +21,7 @@ o_O('ReviewsController', {
           new_review = Mustache.to_html(template, data);
           $('div#reviews').append(new_review);
         });
-        $(this).find('input[type=text], textarea').val('');
+        form.find('input[type=text], textarea').val('');
       });
     }
     else
@@ -46,13 +47,14 @@ o_O('ReviewsController', {
   update: function(){
     edit_review_div = $(this).parents('div.edit-review');
     review_div = edit_review_div.prev('div.review:first');
-    Review.find($(this).attr('data-id'), function(review){
+    var form = $(this)
+    Review.find(form.attr('data-id'), function(review){
       if(review.valid())
       {
-        review.update_attributes(o_O.params($(this)), function(review){
-          o_O.get_template('reviews/_review', review, function(data, template){ 
-            updated_review = Mustache.to_html(template, data);
-            edit_review_div.replaceWith(updated_review);
+        review.update_attributes(o_O.params(form), function(updated_review){
+          o_O.get_template('reviews/_review', updated_review, function(data, template){ 
+            var template = Mustache.to_html(template, data);
+            edit_review_div.replaceWith(template);
             review_div.remove();
           });
         })
