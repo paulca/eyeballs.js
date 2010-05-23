@@ -82,12 +82,20 @@ o_O.couchdb = {
   {
     
   },
-  find: function(model, id)
+  find: function(model, id, callback)
   {
-    var url = '/' + o_O.model.adapter.settings.database + '/' + id;
-    var response = $.ajax({url: url, type: 'GET'}).responseText;
-    var object = JSON.parse(response);
-    object.id = id;
-    return object;
+    var database = o_O.model.adapter.settings.database;
+    $.couch.db(database).openDoc(id, {success: function(document){
+      document.id = id;
+      if(typeof callback === 'function')
+      {
+        callback(document);
+      }
+    }});
+    
+    // var response = $.ajax({url: url, type: 'GET'}).responseText;
+    // var object = JSON.parse(response);
+    // object.id = id;
+    // return object;
   }
 }

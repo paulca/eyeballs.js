@@ -53,16 +53,19 @@
         equals(object.title, 'Magic!', 'it should have saved to couchdb');
         equals(object.model_name, 'Review', 'it should have saved the model name too');
         equals(object._id, review.id, 'it should persist the id');
-        start(1000);
+        start();
       });
     });
     
-    test('pulling something in', 2, function(){
-      var review = Review.initialize({title: 'More Magic!'})
-      review.save();
-      found_review = Review.find(review.id);
-      equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
-      equals(found_review.id, review.id, 'should persist the id')
+    asyncTest('pulling something in', 2, function(){
+      var review = Review.initialize({title: 'More Magic!'});
+      review.save(function(){
+        found_review = Review.find(review.id, function(found_review){
+          equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
+          equals(found_review.id, review.id, 'should persist the id')
+          start();
+        });
+      });
     })
     
     test('getting all', 2, function(){

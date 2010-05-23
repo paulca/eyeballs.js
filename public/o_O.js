@@ -135,10 +135,10 @@ o_O.model = {
         }
         return attributes;
       },
-      find: function(id){
+      find: function(id, callback){
         if(this.adapter)
         {
-          return this.initialize(this.adapter.find(this, id));
+          return this.initialize(this.adapter.find(this, id, callback));
         }
         else
         {
