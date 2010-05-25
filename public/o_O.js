@@ -121,7 +121,7 @@ o_O.model = {
     }
   
     initializer_methods = {
-      adapter: o_O.model.adapter,
+      adapter: o_O.dom,
       all: function(callback){
         if(this.adapter)
         {
@@ -149,7 +149,7 @@ o_O.model = {
         if(this.adapter)
         {
           var model = this;
-          this.adapter.find(this, id, function(returned_object){
+          return this.adapter.find(this, id, function(returned_object){
             if(typeof callback === 'function')
             {
               callback(model.initialize(returned_object));

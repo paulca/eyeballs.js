@@ -2,8 +2,9 @@ o_O.dom = {
   save: function(object, callback){
     if(typeof callback === 'function')
     {
-      callback(object)
+      callback(object);
     }
+    return object;
   },
   all: function(model, callback){
     var output = [];
@@ -24,13 +25,13 @@ o_O.dom = {
   },
   find: function(model, id, callback){
     var template = $('[data-model=' + model.model_name + '][data-id=' + id + ']');
+    var new_object;
     if(typeof callback === 'function')
     {
-      
-      var new_object = model.initialize(o_O.find_attributes(template, function(field){return field.text();}));
+      new_object = model.initialize(o_O.find_attributes(template, function(field){return field.text();}));
       new_object.id = id;
-    //   console.log(new_object)
       callback(new_object);
     }
+    return new_object;
   }
 }
