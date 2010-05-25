@@ -29,7 +29,7 @@ var o_O = function(){
 }
 
 o_O.model = {
-  adapter: false,
+  adapter: o_O.dom,
   initialize: function(model_name, callback){
     var callback = callback;
     var class_methods, instance_methods, initializer_methods;
@@ -76,10 +76,6 @@ o_O.model = {
               }
             });
           }
-          return this;
-        }
-        else
-        {
           return this;
         }
       },
@@ -159,14 +155,6 @@ o_O.model = {
               callback(model.initialize(returned_object));
             }
           });
-        }
-        else
-        {
-          var object = {};
-          template = $('[data-id=' + id + ']');
-          return this.initialize(o_O.find_attributes(template, function(field){
-            return field.text();
-          }));
         }
       },
       model_name: model_name,

@@ -1,7 +1,15 @@
 o_O('ReviewsController', {
   index: function(){
-    @reviews = Review.all();
-    o_O.render();
+    Review.all(function(reviews){
+      for(var id in reviews)
+      {
+        var review = reviews[id];
+        o_O.get_template('reviews/_review', review, function(data, template){ 
+          new_review = Mustache.to_html(template, data);
+          $('div#reviews').append(new_review);
+        });
+      }
+    });
   },
   create: function(){
     var review = Review.initialize(o_O.params($(this)));

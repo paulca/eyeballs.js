@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="../jquery-1.4.2.min.js"></script>
+  <script src="../o_O.js"></script>
+  <script src="../jquery.o_O.js"></script>
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="qunit.js"></script>
+
+  <script>
+  o_O('Review', function(that){
+    that.validates_presence_of('title');
+    that.validates_presence_of('content');
+    that.validates_length_of('title', {min: 5, max: 15});
+    that.validates(function(review){
+      if(review.score != 99 && review.test === true)
+      {
+        review.errors.push({message: 'Score should be 99'})
+      }
+    })
+    that.methods.title_numbered = function(){
+      return '1. ' + this.title;
+    }
+    return that;
+  });
+
+  $(document).ready(function(){
+    
+    module("Models");
+    
+    
+    asyncTest('a valid review', 3, function(){
+      var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
+      myReview.save(function(review){
+        console.log('badabing')
+        equals(review.title, 'Biscuit', 'Title should be Biscuit');
+        equals(review.valid(), true, 'valid() should return true');
+        equals(review.save().title, 'Biscuit', 'save() should return object');
+        start();
+      });
+    });
+    
+    // test('an invalid review',1, function(){
+    //   var myReview = Review.initialize();
+    //   myReview.save();
+    //   equals(myReview.errors.length, 2, "should have 2 errors");
+    // });
+    // 
+    // test('editing a review', 2, function(){
+    //   myReview = Review.find('paul');
+    //   equals(myReview.title, 'Yeah!', 'should pull in title');
+    //   equals(myReview.content, 'Paris', 'should pull in content');
+    // })
+    // 
+    // test('updating a review', 2, function(){
+    //   myReview = Review.find('paul');
+    //   myReview.update_attributes({title: 'No!', content: 'Dublin'});
+    //   equals(myReview.title, 'No!', 'should update the title');
+    //   equals(myReview.content, 'Dublin', 'should update the content');
+    // })
+    // 
+    // test('updating a review invalid', 1, function(){
+    //   myReview = Review.find('paul');
+    //   myReview.update_attributes({title: '', content: ''});
+    //   equals(myReview.errors.length, 2, "should have 2 errors");
+    // })
+    // 
+    // test('defining methods should work',1, function(){
+    //   myReview = Review.initialize({title: 'Boom'})
+    //   equals(myReview.title_numbered(), '1. Boom', 'the method definition should work');
+    // });
+    // 
+    // test('validates length of', 6, function(){
+    //   myReview = Review.initialize({title: "finger baby babylon babe face", content: "something"});
+    //   myReview.save();
+    //   equals(myReview.errors.length, 1, "should have an error");
+    //   equals(myReview.errors[0].field, 'title', 'should be on title');
+    //   equals(myReview.errors[0].type, 'length', 'should be length')
+    //   equals(myReview.errors[0].message, 'title should be less than 15 characters', 'should have an error message')
+    //   myReview.title = 'the'
+    //   myReview.save();
+    //   equals(myReview.errors.length, 1, "should still only have one error");
+    //   equals(myReview.errors[0].message, 'title should be greater than 5 characters', 'should have an error message')
+    // });
+    // 
+    // test('custom validation', 3, function(){
+    //   myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+    //   myReview.save();
+    //   equals(myReview.errors.length, 1, "should have an error");
+    //   equals(myReview.errors[0].message, 'Score should be 99', "should give me my custom error message");
+    //   myReview.score = 99;
+    //   myReview.save()
+    //   equals(myReview.errors.length, 0, "should have no errors");
+    // })
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">Model Tests (with callbacks)</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ 
+ <div data-id="paul">
+  <h1 data-attribute="title">Yeah!</h1>
+  <p data-attribute="content">Paris</p>
+ </div>
+</body>
+</html>

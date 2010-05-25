@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="../jquery-1.4.2.min.js"></script>
+  <script src="../jquery.livequery.js"></script>
+  <script src="../o_O.js"></script>
+  <script src="../jquery.o_O.dom.js"></script>
+  <script src="../jquery.o_O.js"></script>
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="qunit.js"></script>
+
+  <script>
+  
+
+  $(document).ready(function(){
+    
+    module("DOM Test",{
+      setup: function(){
+        localStorage.clear();
+      }
+    });
+    
+    o_O.model.adapter = o_O.dom;
+    
+    o_O('Review', function(){})
+    
+    asyncTest('storing a basic basic thing', 1, function(){
+      var review = Review.initialize({title: 'Magic!'})
+      review.save(function(saved_review){
+        equals(saved_review.title, 'Magic!', 'Should save the title')
+        start();
+      });
+    });
+    
+    asyncTest('pulling something in', 2, function(){
+      Review.find('big-whoop', function(found_review){
+        equals(found_review.title, 'Whoop!', 'should be able to find stuff in the dom')
+        equals(found_review.id, 'big-whoop', 'should persist the id')
+        start();
+      });
+    })
+    
+    asyncTest('getting all', 1, function(){
+        Review.all(function(all_reviews){
+          equals(all_reviews[0].title, 'Whoop!', 'It should pull in everything')
+          start();
+        })
+    })
+    
+    o_O('Deletable', function(){})
+    
+    asyncTest('deleting', 1, function(){
+      Deletable.find('delete-me', function(delete_me){
+        delete_me.destroy(function(){
+          equals($('[data-id=delete-me]').length, 0, 'it should have been deleted')
+          start();
+        })
+      });
+    })
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">DOM Tests</h1>
+  <h2 id="qunit-banner"></h2>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+  
+  <div data-id="big-whoop" data-model="Review">
+    <h1 data-attribute="title">Whoop!</h1>
+    <p data-attribute="content">Awesome!</p>
+  </div>
+  
+  <div data-id="delete-me" data-model="Deletable">
+    Nice!
+  </div>
+</body>
+</html>
