@@ -29,7 +29,7 @@ var o_O = function(){
 }
 
 o_O.model = {
-  adapter: o_O.dom,
+  adapter: false,
   initialize: function(model_name, callback){
     var callback = callback;
     var class_methods, instance_methods, initializer_methods;
@@ -52,7 +52,6 @@ o_O.model = {
     }
   
     var config = callback(class_methods);
-  
     instance_methods = {
       adapter: o_O.model.adapter,
       destroy: function(callback){
@@ -69,14 +68,30 @@ o_O.model = {
           if(this.adapter)
           {
             var model = this;
+            if(typeof callback === 'object' && typeof callback.loading === 'function')
+            {
+              callback.loading();
+            }
             this.adapter.save(this, function(returned_object){
+              var initialized_object = o_O.models[model.model_name].initialize(returned_object)
               if(typeof callback === 'function')
               {
-                callback(o_O.models[model.model_name].initialize(returned_object))
+                callback(initialized_object)
+              }
+              else if(typeof callback === 'object' && typeof callback.success === 'function')
+              {
+                callback.success(initialized_object)
               }
             });
           }
           return this;
+        }
+        else
+        {
+          if(typeof callback === 'object' && typeof callback.invalid === 'function')
+          {
+            callback.invalid(this);
+          }
         }
       },
       table_name: table_name,
@@ -121,7 +136,7 @@ o_O.model = {
     }
   
     initializer_methods = {
-      adapter: o_O.dom,
+      adapter: o_O.model.adapter,
       all: function(callback){
         if(this.adapter)
         {

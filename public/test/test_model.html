@@ -10,6 +10,9 @@
 <script type="text/javascript" src="qunit.js"></script>
 
   <script>
+  
+  o_O.model.adapter = o_O.dom;
+  
   o_O('Review', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
