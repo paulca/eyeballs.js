@@ -52,16 +52,29 @@ o_O.model = {
     }
   
     var run_callback = function(callback, method, args){
-      if(typeof callback === 'function')
-      {
-        run_callback(callback, args);
+      try{
+        if(typeof callback === 'function')
+        {
+          run_callback(callback, args);
+        }
+        if(typeof callback === 'object' && typeof callback[method] === 'function')
+        {
+          callback[method](args);
+        }
       }
-      if(typeof callback === 'object' && typeof callback[method] === 'function')
+      catch(e)
       {
-        callback[method](args);
+        if(typeof console === 'object')
+        {
+          console.log(e);
+        }
+        else
+        {
+          alert(e);
+        }
       }
-    }
-  
+    }  
+
     var config = callback(class_methods);
     instance_methods = {
       adapter: o_O.model.adapter,
