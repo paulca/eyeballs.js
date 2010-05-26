@@ -71,3 +71,43 @@ o_O.params = function(form){
       return field.val();
     });
   }
+  
+o_O.render = function(template, data, options){
+  o_O.get_template(template, data, function(data, template){ 
+    var rendered = Mustache.to_html(template, data);
+    if(typeof options === 'object')
+    {
+      if(options.append)
+      {
+        $(options.append).append(rendered);
+      }
+      if(options.prepend)
+      {
+        $(options.prepend).prepend(rendered);
+      }
+    }
+  });
+}
+
+o_O.get_template = function(template, data, callback){
+  if(o_O.templates[template])
+  {
+    callback(data, o_O.templates[template]);
+  }
+  else
+  {
+    var url;
+    if(o_O.config.template_path)
+    {
+      url = o_O.config.template_path + '/';
+    }
+    else
+    {
+      url = 'views/'
+    }
+    $.get(url + template + '.html.mustache', function(response){
+      o_O.templates[template] = response;
+      callback(data, response);
+    });
+  }
+}

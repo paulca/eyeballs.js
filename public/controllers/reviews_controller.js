@@ -4,30 +4,22 @@ o_O('ReviewsController', {
       for(var id in reviews)
       {
         var review = reviews[id];
-        o_O.get_template('reviews/_review', review, function(data, template){ 
-          new_review = Mustache.to_html(template, data);
-          $('div#reviews').append(new_review);
-        });
+        o_O.render('reviews/_review', review, {append: 'div#reviews'})
       }
     });
   },
   create: function(){
     var review = Review.initialize(o_O.params($(this)));
     var form = $(this);
-    if(review.valid())
-    {
-      review.save(function(review){
-        o_O.get_template('reviews/_review', review, function(data, template){ 
-          new_review = Mustache.to_html(template, data);
-          $('div#reviews').prepend(new_review);
-        });
+    review.save({
+      invalid: function(review){
+        o_O.alert_errors(review);
+      },
+      success: function(review){
+        o_O.render('reviews/_review', review, {prepend: 'div#reviews'})
         form.find('input[type=text], textarea').val('');
-      });
-    }
-    else
-    {
-      o_O.alert_errors(review);
-    }
+      }
+    })
   },
   edit: function(){
     review_div = $(this).parents('div.review');

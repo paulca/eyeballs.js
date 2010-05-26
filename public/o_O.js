@@ -51,26 +51,31 @@ o_O.model = {
       }
     }
   
+    var run_callback = function(callback, method, args){
+      if(typeof callback === 'function')
+      {
+        run_callback(callback, args);
+      }
+      if(typeof callback === 'object' && typeof callback[method] === 'function')
+      {
+        callback[method](args);
+      }
+    }
+  
     var config = callback(class_methods);
     instance_methods = {
       adapter: o_O.model.adapter,
       destroy: function(callback){
-        if(typeof callback === 'object' && typeof callback.loading === 'function')
-        {
-          callback.loading();
-        }
+        run_callback(callback, 'loading', this)
         if(this.adapter)
         {
           this.adapter.destroy(this, function(returned_object){
-            if(typeof callback === 'function')
-            {
-              callback(returned_object)
-            }
-            else if(typeof callback === 'object' && typeof callback.success === 'function')
-            {
-              callback.success(returned_object)
-            }
+            run_callback(callback, 'success', returned_object);
           });
+        }
+        else
+        {
+          run_callback(callback, 'success', this)
         }
         return this;
       },
@@ -78,33 +83,24 @@ o_O.model = {
       save: function(callback){
         if(this.valid())
         {
+          run_callback(callback, 'loading');
           if(this.adapter)
           {
             var model = this;
-            if(typeof callback === 'object' && typeof callback.loading === 'function')
-            {
-              callback.loading();
-            }
             this.adapter.save(this, function(returned_object){
               var initialized_object = o_O.models[model.model_name].initialize(returned_object)
-              if(typeof callback === 'function')
-              {
-                callback(initialized_object)
-              }
-              else if(typeof callback === 'object' && typeof callback.success === 'function')
-              {
-                callback.success(initialized_object)
-              }
+              run_callback(callback, 'success', initialized_object)
             });
+          }
+          else
+          {
+            run_callback(callback, 'success', 'initialized_object')
           }
           return this;
         }
         else
         {
-          if(typeof callback === 'object' && typeof callback.invalid === 'function')
-          {
-            callback.invalid(this);
-          }
+          run_callback(callback, 'invalid')
         }
       },
       table_name: table_name,
@@ -241,29 +237,6 @@ o_O.validations = {
 
 o_O.config = {}
 o_O.templates = {}
-
-o_O.get_template = function(template, data, callback){
-  if(o_O.templates[template])
-  {
-    callback(data, o_O.templates[template]);
-  }
-  else
-  {
-    var url;
-    if(o_O.config.template_path)
-    {
-      url = o_O.config.template_path + '/';
-    }
-    else
-    {
-      url = 'views/'
-    }
-    $.get(url + template + '.html.mustache', function(response){
-      o_O.templates[template] = response;
-      callback(data, response);
-    });
-  }
-}
 
 o_O._uuid_default_prefix = '';
 
