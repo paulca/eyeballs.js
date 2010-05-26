@@ -51,6 +51,12 @@
       equals(Review.table_name, 'reviews', 'should give me a table name');
     })
     
+    test('multiple initialization', 1, function(){
+      a = Review.initialize()
+      b = Review.initialize()
+      equals(a.id == b.id, false, 'they should have different ids')
+    })
+    
     test('a valid review', 3, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save();

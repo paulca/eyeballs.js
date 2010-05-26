@@ -94,13 +94,13 @@ o_O.model = {
           }
           else
           {
-            run_callback(callback, 'success', 'initialized_object')
+            run_callback(callback, 'success', this)
           }
           return this;
         }
         else
         {
-          run_callback(callback, 'invalid')
+          run_callback(callback, 'invalid', this)
         }
       },
       table_name: table_name,
