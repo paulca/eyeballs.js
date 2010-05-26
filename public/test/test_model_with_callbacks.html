@@ -48,14 +48,14 @@
       var myReview = Review.initialize();
       myReview.save({
         success:function(){
-          ok('should not call the success callback');
+          ok(false, 'should not call the success callback');
         },
         invalid: function(){
           ok('should call the invalid callback');
           start();
         },
         loading: function(){
-          ok('should not call the loading callback');
+          ok(false, 'should not call the loading callback');
         }
       });
     });
@@ -68,7 +68,7 @@
               start();
             },
             invalid: function(){
-              ok('should not cal the invalid callback');
+              ok(false, 'should not cal the invalid callback');
             },
             loading: function(){
               ok('should call the loading callback');
@@ -80,14 +80,14 @@
               var myReview = Review.initialize();
               myReview.update_attributes({}, {
                 success: function(){
-                  ok('should call the success callback');
+                  ok(false, 'should not call the success callback');
                 },
                 invalid: function(){
-                  ok('should not cal the invalid callback');
+                  ok(true, 'should call the invalid callback');
                   start();
                 },
                 loading: function(){
-                  ok('should call the loading callback');
+                  ok(false, 'should not call the loading callback');
                 }
               });
             })

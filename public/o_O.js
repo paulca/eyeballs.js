@@ -83,7 +83,7 @@ o_O.model = {
       save: function(callback){
         if(this.valid())
         {
-          run_callback(callback, 'loading');
+          run_callback(callback, 'loading', this);
           if(this.adapter)
           {
             var model = this;

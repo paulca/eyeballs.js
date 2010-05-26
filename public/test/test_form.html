@@ -19,9 +19,9 @@
     
     module("Forms");
     
-    test('getting form attributes', 1, function(){
-      var form = 
+    test('getting form attributes', 2, function(){
       equals(o_O.params($('form#test-form')).title, 'Biscuit', 'form attributes should come in nicely')
+      equals(o_O.params($('form#test-form')).selection, "1", 'should work with checkboxes')
     });
 
   });
@@ -35,6 +35,8 @@
  <ol id="qunit-tests"></ol>
  <form id="test-form">
   <input type="title" data-attribute="title" type="text" value="Biscuit">
+  <input type="radio" data-attribute="selection" value="1" checked>
+  <input type="radio" data-attribute="selection" value="-1">
  </form>
 </body>
 </html>
