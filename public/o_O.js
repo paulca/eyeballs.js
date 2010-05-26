@@ -55,9 +55,22 @@ o_O.model = {
     instance_methods = {
       adapter: o_O.model.adapter,
       destroy: function(callback){
+        if(typeof callback === 'object' && typeof callback.loading === 'function')
+        {
+          callback.loading();
+        }
         if(this.adapter)
         {
-          this.adapter.destroy(this, callback);
+          this.adapter.destroy(this, function(returned_object){
+            if(typeof callback === 'function')
+            {
+              callback(returned_object)
+            }
+            else if(typeof callback === 'object' && typeof callback.success === 'function')
+            {
+              callback.success(returned_object)
+            }
+          });
         }
         return this;
       },

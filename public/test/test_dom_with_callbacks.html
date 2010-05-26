@@ -47,7 +47,7 @@
       });
     });
     
-    test('an invalid review',1, function(){
+    asyncTest('an invalid review',1, function(){
       var myReview = Review.initialize();
       myReview.save({
         success:function(){
@@ -62,53 +62,50 @@
         }
       });
     });
-    // 
-    // test('editing a review', 2, function(){
-    //   myReview = Review.find('paul');
-    //   equals(myReview.title, 'Yeah!', 'should pull in title');
-    //   equals(myReview.content, 'Paris', 'should pull in content');
-    // })
-    // 
-    // test('updating a review', 2, function(){
-    //   myReview = Review.find('paul');
-    //   myReview.update_attributes({title: 'No!', content: 'Dublin'});
-    //   equals(myReview.title, 'No!', 'should update the title');
-    //   equals(myReview.content, 'Dublin', 'should update the content');
-    // })
-    // 
-    // test('updating a review invalid', 1, function(){
-    //   myReview = Review.find('paul');
-    //   myReview.update_attributes({title: '', content: ''});
-    //   equals(myReview.errors.length, 2, "should have 2 errors");
-    // })
-    // 
-    // test('defining methods should work',1, function(){
-    //   myReview = Review.initialize({title: 'Boom'})
-    //   equals(myReview.title_numbered(), '1. Boom', 'the method definition should work');
-    // });
-    // 
-    // test('validates length of', 6, function(){
-    //   myReview = Review.initialize({title: "finger baby babylon babe face", content: "something"});
-    //   myReview.save();
-    //   equals(myReview.errors.length, 1, "should have an error");
-    //   equals(myReview.errors[0].field, 'title', 'should be on title');
-    //   equals(myReview.errors[0].type, 'length', 'should be length')
-    //   equals(myReview.errors[0].message, 'title should be less than 15 characters', 'should have an error message')
-    //   myReview.title = 'the'
-    //   myReview.save();
-    //   equals(myReview.errors.length, 1, "should still only have one error");
-    //   equals(myReview.errors[0].message, 'title should be greater than 5 characters', 'should have an error message')
-    // });
-    // 
-    // test('custom validation', 3, function(){
-    //   myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
-    //   myReview.save();
-    //   equals(myReview.errors.length, 1, "should have an error");
-    //   equals(myReview.errors[0].message, 'Score should be 99', "should give me my custom error message");
-    //   myReview.score = 99;
-    //   myReview.save()
-    //   equals(myReview.errors.length, 0, "should have no errors");
-    // })
+    
+    asyncTest('updating a review', 2, function(){
+          var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
+          myReview.update_attributes({title: 'No! is it', content: 'Dublin'}, {
+            success: function(){
+              ok('should call the success callback');
+              start();
+            },
+            invalid: function(){
+              ok('should not cal the invalid callback');
+            },
+            loading: function(){
+              ok('should call the loading callback');
+            }
+          });
+        })
+
+        asyncTest('updating an invalid review', 1, function(){
+              var myReview = Review.initialize();
+              myReview.update_attributes({}, {
+                success: function(){
+                  ok('should call the success callback');
+                },
+                invalid: function(){
+                  ok('should not cal the invalid callback');
+                  start();
+                },
+                loading: function(){
+                  ok('should call the loading callback');
+                }
+              });
+            })
+
+      test('destroying a review', 2, function(){
+        var myReview = Review.initialize();
+        myReview.destroy({
+          loading: function(){
+            ok('loading should be run');
+          },
+          success: function(){
+            ok('success should be run');
+          }
+        })
+      })
 
   });
   </script>
