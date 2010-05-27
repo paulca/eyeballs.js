@@ -53,9 +53,9 @@ o_O.model = {
   
     var run_callback = function(callback, method, args){
       try{
-        if(typeof callback === 'function')
+        if(typeof callback === 'function' && method === 'success')
         {
-          run_callback(callback, args);
+          callback(args);
         }
         if(typeof callback === 'object' && typeof callback[method] === 'function')
         {
@@ -101,19 +101,19 @@ o_O.model = {
           {
             var model = this;
             this.adapter.save(this, function(returned_object){
-              var initialized_object = o_O.models[model.model_name].initialize(returned_object)
-              run_callback(callback, 'success', initialized_object)
+              var initialized_object = o_O.models[model.model_name].initialize(returned_object);
+              run_callback(callback, 'success', initialized_object);
             });
           }
           else
           {
-            run_callback(callback, 'success', this)
+            run_callback(callback, 'success', this);
           }
           return this;
         }
         else
         {
-          run_callback(callback, 'invalid', this)
+          run_callback(callback, 'invalid', this);
         }
       },
       table_name: table_name,

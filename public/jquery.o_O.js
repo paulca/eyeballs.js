@@ -13,7 +13,7 @@ o_O.controller = {
 
     $(function(){
       for(var action in controller)
-      {
+      {        
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
         $(selector).livequery(function(){
           var element = $(this);

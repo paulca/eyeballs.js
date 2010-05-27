@@ -7,7 +7,7 @@
   <script src="/_utils/script/jquery.couch.js"></script>
   
   <script src="http://meview/o_O.js"></script>
-  <script src="http://meview/jquery.o_O.couchdb.js"></script>
+  <script src="http://meview/jquery.o_O.rails.js"></script>
   <script src="http://meview/jquery.o_O.js"></script>
   <link rel="stylesheet" href="http://meview/test/qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="http://meview/test/qunit.js"></script>
@@ -17,14 +17,7 @@
 
   $(document).ready(function(){
     
-    o_O.model.adapter = o_O.couchdb;
-    o_O.model.adapter.settings = {
-      database: 'eyeballs_testing',
-      user: 'paul',
-      password: 'monkeys'
-    }
-    $.couch.login({name: 'paul', password: 'monkeys'});
-    var connection = $.couch.db(o_O.model.adapter.settings.database)
+    o_O.model.adapter = o_O.rails;
     $.ajaxSetup ({ 
       cache: false 
     });
@@ -46,16 +39,14 @@
     
     asyncTest('storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
-      review.save(function(saved_review){
+      review.save(function(){
         var url = '/' + o_O.model.adapter.settings.database + '/' + review.id;
-        var document = connection.openDoc(review.id, {}, {
-          success:function(doc){
-            equals(review.title, doc.title, 'title should match');
-            equals(review.id, doc._id, "ids should match");
-            equals(doc.model_name, 'Review', 'should save the model name');
-            start();
-          }
-        })
+        var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
+        var object = JSON.parse(response);
+        equals(object.title, 'Magic!', 'it should have saved to couchdb');
+        equals(object.model_name, 'Review', 'it should have saved the model name too');
+        equals(object._id, review.id, 'it should persist the id');
+        start();
       });
     });
     

@@ -1,5 +1,5 @@
-// We're relaxing, baby!
-o_O.couchdb = {
+// REST & Rails, woop!
+o_O.rails = {
   all: function(model, callback){
     
     var database = o_O.model.adapter.settings.database;
@@ -55,7 +55,7 @@ o_O.couchdb = {
       $.ajax({
                 type: 'DELETE',
                 url: '/' + database + '/' + object.id + '?rev=' + found._rev,
-                complete: function(data){
+                success: function(data){
                            var response = JSON.parse(data);
                              if(typeof callback === 'function')
                              {
