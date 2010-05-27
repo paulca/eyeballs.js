@@ -55,7 +55,7 @@ o_O.couchdb = {
       $.ajax({
                 type: 'DELETE',
                 url: '/' + database + '/' + object.id + '?rev=' + found._rev,
-                complete: function(data){
+                success: function(data){
                            var response = JSON.parse(data);
                              if(typeof callback === 'function')
                              {
