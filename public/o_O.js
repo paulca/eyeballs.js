@@ -180,6 +180,10 @@ o_O.model = {
         {
           attributes['id'] = o_O.uuid();
         }
+        if(!attributes['new_record'])
+        {
+          attributes['new_record'] = true;
+        }
         return attributes;
       },
       find: function(id, callback){

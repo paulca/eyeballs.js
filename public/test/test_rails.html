@@ -18,34 +18,17 @@
   $(document).ready(function(){
     
     o_O.model.adapter = o_O.rails;
-    $.ajaxSetup ({ 
-      cache: false 
-    });
     
-    module("CouchDB Test (with jQuery)", {setup: function(){
-      try{
-        $.ajax({type: 'DELETE', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
-      }
-      catch(e){}
-      try{
-        $.ajax({type: 'PUT', url: '/' + o_O.model.adapter.settings.database, async: false}).send()
-      }
-      catch(e){}
-      
-    }, teardown: function(){
-    }});
+    module("Rails Test (with jQuery)");
     
     o_O('Review', function(){})
     
     asyncTest('storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
-      review.save(function(){
-        var url = '/' + o_O.model.adapter.settings.database + '/' + review.id;
-        var response = $.ajax({url: url, type: 'GET', async: false}).responseText;
-        var object = JSON.parse(response);
-        equals(object.title, 'Magic!', 'it should have saved to couchdb');
-        equals(object.model_name, 'Review', 'it should have saved the model name too');
-        equals(object._id, review.id, 'it should persist the id');
+      review.save(function(saved_review){
+        equals(saved_review.title, review.title, 'title should match');
+        equals(saved_review.id, '1', "Rails should give back the ID");
+        equals(saved_review.model_name, 'Review', 'should save the model name');
         start();
       });
     });
@@ -104,7 +87,7 @@
   
 </head>
 <body>
-  <h1 id="qunit-header">CouchDB Tests (with jQuery)</h1>
+  <h1 id="qunit-header">Rails Tests (with jQuery)</h1>
   <h2 id="qunit-banner"></h2>
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
