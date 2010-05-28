@@ -37,9 +37,12 @@ o_O.rails = {
   },
   find: function(model, id, callback)
   {
-    if(typeof callback === 'function')
-    {
-      callback(document);
-    }
+    $.get('/' + model.table_name + '/' + id, function(response){
+      var retrieved_object = JSON.parse(response);
+      if(typeof callback === 'function')
+      {
+        callback(retrieved_object);
+      }
+    })
   }
 }
