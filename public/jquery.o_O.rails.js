@@ -1,10 +1,13 @@
 // REST & Rails, woop!
 o_O.rails = {
   all: function(model, callback){
-    if(typeof callback === 'function')
-    {
-      callback(model);
-    }
+    $.get('/' + model.table_name, function(response){
+      var documents = JSON.parse(response);
+      if(typeof callback === 'function')
+      {
+        callback(documents);
+      }
+    })
   },
   destroy: function(object, callback){
     if(typeof callback === 'function')
