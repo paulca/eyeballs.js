@@ -102,6 +102,7 @@ o_O.model = {
             var model = this;
             this.adapter.save(this, function(returned_object){
               var initialized_object = o_O.models[model.model_name].initialize(returned_object);
+              initialized_object.new_record = false;
               run_callback(callback, 'success', initialized_object);
             });
           }
@@ -193,7 +194,12 @@ o_O.model = {
           return this.adapter.find(this, id, function(returned_object){
             if(typeof callback === 'function')
             {
-              callback(model.initialize(returned_object));
+              found_object = model.initialize(returned_object);
+              if(!found_object['new_record'])
+              {
+                found_object['new_record'] = false;
+              }
+              callback(found_object);
             }
           });
         }

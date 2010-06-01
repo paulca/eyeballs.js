@@ -38,7 +38,7 @@
       review.save(function(){
         found_review = Review.find(review.id, function(found_review){
           equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
-          equals(found_review.id, review.id, 'should persist the id')
+          equals(found_review.id, '1', 'should persist the id')
           start();
         });
       });
@@ -49,36 +49,39 @@
       review.save(function(saved_review){
         Review.all(function(documents){
           equals(documents[0].title, 'Local, baby', 'It should pull in everything')
-          equals(documents[0].id, review.id, 'It should persist the id')
+          equals(documents[0].id, '1', 'It should persist the id')
           start();
         })
+      });
+    })
+    
+    asyncTest('setting new_record attribute', 2, function(){
+      var review = Review.initialize()
+      equals(review.new_record, true, 'should be a new record review');
+      review.save(function(saved_review){
+        console.log(saved_review)
+        equals(saved_review.new_record, false, 'should not be a new record after')
+        start();
       });
     })
     
     asyncTest('updating', 1, function(){
       var review = Review.initialize({title: 'Doomed!'});
       review.save(function(saved_review){
-        saved_review.update_attributes({title: 'Tennessee'}, function(){
-          Review.find(saved_review.id, function(found_review){
-            equals(found_review.title, 'Tennessee', 'Title should have been updated');
-            start();
-          });
+        saved_review.update_attributes({title: 'Tennessee'}, function(saved_review){
+          equals(saved_review.title, 'Tennessee', 'Title should have been updated');
+          start();
         });
       });
     });
     
-    asyncTest('deleting', 2, function(){
+    asyncTest('deleting', 1, function(){
       var review = Review.initialize({title: 'Doomed!'});
-      review.save(function(){
-        Review.all(function(documents){
-          equals(documents.length, 1, 'It should create the doc');
-          review.destroy(function(destroyed_review){
-            Review.all(function(documents){
-              equals(documents.length, 0, 'It should have deleted the doc')
-              start()
-            })
-          });
-        })
+      review.save(function(saved_review){        
+        saved_review.destroy(function(destroyed_review){
+          equals(destroyed_review.destroyed, true, 'It should have deleted the doc')
+          start()
+        });
       });
     })
 

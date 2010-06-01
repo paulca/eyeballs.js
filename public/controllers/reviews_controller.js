@@ -11,7 +11,7 @@ o_O('ReviewsController', {
   create: function(){
     var review = Review.initialize(o_O.params($(this)));
     var form = $(this);
-    review.save({
+    review.save({o
       invalid: function(review){
         o_O.alert_errors(review);
       },

@@ -15,3 +15,11 @@ end
 get '/reviews/:id' do
   '{"id": "1", "title":"More Magic!"}'
 end
+
+put '/reviews/:id' do
+  '{"id": "1", "title":"Tennessee"}'
+end
+
+delete '/reviews/:id' do
+  '{"id": "1", "title":"Tennessee"}'
+end

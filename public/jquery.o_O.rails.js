@@ -10,10 +10,17 @@ o_O.rails = {
     })
   },
   destroy: function(object, callback){
-    if(typeof callback === 'function')
-    {
-      callback(response);
-    }
+    object.destroyed = true;
+    $.ajax({
+      type: 'DELETE',
+      url: '/' + object.table_name + '/' + object.id,
+      success: function(){
+        if(typeof callback === 'function')
+        {
+          callback(object);
+        }
+      }
+    })
   },
   save: function(object, callback)
   {
@@ -22,21 +29,30 @@ o_O.rails = {
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
-    $.post('/' + object.table_name, object_to_save, function(response){
+    var respond = function(response){
       var saved_object = JSON.parse(response);
       for(var attribute in saved_object)
       {
-        object[attribute] = saved_object[attribute];
+        object_to_save[attribute] = saved_object[attribute];
       }
+      object_to_save.new_record = false;
       if(typeof callback === 'function')
       {
-        callback(object);
+        callback(object_to_save);
       }
-    })
-  },
-  table: function(object)
-  {
-    
+    }
+    if(object.new_record)
+    {
+      $.post('/' + object.table_name, object_to_save, respond);
+    }
+    else
+    {
+      $.ajax({
+        type: 'PUT',
+        url: '/' + object.table_name + '/' + object.id,
+        success: respond
+      })
+    }
   },
   find: function(model, id, callback)
   {
@@ -44,6 +60,7 @@ o_O.rails = {
       var retrieved_object = JSON.parse(response);
       if(typeof callback === 'function')
       {
+        retrieved_object.new_record = false;
         callback(retrieved_object);
       }
     })
