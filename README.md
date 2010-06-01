@@ -240,7 +240,7 @@ The form that hooks up to this action is like this:
 
 The main things to note here are the way that the form binds automatically to the create action (using jQuery). Also, field elements have the "data-attribute" attributes ... the o\_O.params() function reads from these, returning a JSON object that can be passed to Review.initialize(...).
 
-Notice also `o\_O.alert_errors(...)` which displays an alert of all the errors on an invalid review.
+Notice also `o_O.alert_errors(...)` which displays an alert of all the errors on an invalid review.
 
 Finally, the o\_O.render function takes a template, which is a Mustache.js template stored in `views/`, the review object and a set of options.
 
