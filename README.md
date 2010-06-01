@@ -257,7 +257,7 @@ eyeballs.js uses QUnit for in-browser testing. Just load the files in the test d
 About me
 ========
 
-I'm Paul Campbell. I'm an avid Ruby on Rails and now, it seems, javascript web developer. Follow my ramblings at [http://www.pabcas.com](http://www.pabcas.com)
+I'm Paul Campbell. I'm an avid web developer. Follow my ramblings at [http://www.pabcas.com](http://www.pabcas.com)
 
 Follow me on Twitter [http://twitter.com/paulca](http://twitter.com/paulca)
 
