@@ -11,12 +11,12 @@ o_O('ReviewsController', {
   create: function(){
     var review = Review.initialize(o_O.params($(this)));
     var form = $(this);
-    review.save({o
+    review.save({
       invalid: function(review){
         o_O.alert_errors(review);
       },
       success: function(review){
-        o_O.render('reviews/_review', review, {prepend: 'div#reviews'})
+        o_O.render('reviews/_review', review, {prepend: 'div#reviews'});
         form.find('input[type=text], textarea').val('');
       }
     })
