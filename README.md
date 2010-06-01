@@ -84,7 +84,6 @@ However, if you're familiar with Rails, you'll be familiar with the wonderful sy
 Now, when you initialize a new Post, you can validate it, nice and easy:
 
     var post = Post.initialize()
-    post.valid()  # => false
     post.errors   # => [{
                   #     field: 'title',
                   #     message: 'title should be present',
@@ -104,9 +103,10 @@ You can also add your own validations, again, similar to how Rails does things:
     })
     
     var post = Post.initialize()
-    post.save()     # yep, there's a save method too!
-    post.errors   # => [{
-                  #     message: 'title should be present'}]
+    post.save(function(saved_post){
+      post.errors   # => [{
+                    #     message: 'title should be present'}]
+    })     # yep, there's a save method too!
 
 And if you want to add your own methods:
 
@@ -139,6 +139,8 @@ Finding, saving, updating and deleting. With callbacks? Easy peasy:
         alert('Saved, whoop!');
       }
     })
+    
+There's a strong emphasis on callbacks: since any persisting to backends should be done asynchronously.
 
 Controllers
 ===========
