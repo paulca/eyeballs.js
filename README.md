@@ -60,6 +60,25 @@ Wrapping that all up, to use eyeballs.js with the Rails adapter and jQuery:
   
 Badabing, badaboom! You're now ready to start creating some models and controllers.
 
+Generators
+==========
+
+If you install the eyeballs.js Ruby gem, you can use the eyeballs command to generator eyeballs.js apps, models and controllers:
+
+    gem install eyeballs.js
+    
+To create a new eyeball.js app:
+
+    eyeballs my\_new\_app
+
+This will create a new app in the my\_new\_app folder.
+
+When you're up and running, you can use the model and controller generators:
+
+    eyeballs generate model Post
+    eyeballs generate controller Posts
+
+These generators will install files to app/models and app/controllers relative to where you run the `eyeballs` command.
 
 Models
 ======
