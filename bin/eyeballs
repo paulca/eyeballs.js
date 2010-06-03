@@ -1,4 +1,16 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'eyeballs'
-Eyeballs.start
+
+if(ARGV.include?('generate'))
+  ARGV.delete('generate')
+  if(ARGV.include?('model'))
+    ARGV.delete('model')
+    Eyeballs::ModelGenerator.start
+  elsif(ARGV.include?('controller'))
+    ARGV.delete('model')
+    Eyeballs::ControllerGenerator.start
+  end
+else
+  Eyeballs::AppGenerator.start
+end
