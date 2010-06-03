@@ -2,17 +2,15 @@
                     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <script src="../jquery-1.4.2.min.js"></script>
-  <script src="../o_O.js"></script>
-  <script src="../jquery.o_O.js"></script>
-  <script src="../jquery.o_O.dom.js"></script>
+  <script src="../../dist/jquery-1.4.2.min.js"></script>
+  <script src="../../src/o_O.js"></script>
+  <script src="../../src/jquery.o_O.js"></script>
+  <script src="../../src/jquery.o_O.dom.js"></script>
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
 
-  <script>
-  
-  o_O.model.adapter = o_O.dom;
-  
+  <script>  
+
   o_O('Review', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
@@ -33,7 +31,6 @@
     
     module("Models");
     
-    
     asyncTest('a valid, successful model', 2, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save({
@@ -51,14 +48,14 @@
       var myReview = Review.initialize();
       myReview.save({
         success:function(){
-          ok('should not call the success callback');
+          ok(false, 'should not call the success callback');
         },
         invalid: function(){
           ok('should call the invalid callback');
           start();
         },
         loading: function(){
-          ok('should not call the loading callback');
+          ok(false, 'should not call the loading callback');
         }
       });
     });
@@ -71,7 +68,7 @@
               start();
             },
             invalid: function(){
-              ok('should not cal the invalid callback');
+              ok(false, 'should not cal the invalid callback');
             },
             loading: function(){
               ok('should call the loading callback');
@@ -83,14 +80,14 @@
               var myReview = Review.initialize();
               myReview.update_attributes({}, {
                 success: function(){
-                  ok('should call the success callback');
+                  ok(false, 'should not call the success callback');
                 },
                 invalid: function(){
-                  ok('should not cal the invalid callback');
+                  ok(true, 'should call the invalid callback');
                   start();
                 },
                 loading: function(){
-                  ok('should call the loading callback');
+                  ok(false, 'should not call the loading callback');
                 }
               });
             })
