@@ -1,8 +1,8 @@
 module Eyeballs
-  class ModelGenerator < Thor::Group
+  class ControllerGenerator < Thor::Group
     include Thor::Actions
   
-    desc "Creates a new eyeballs.js model"
+    desc "Creates a new eyeballs.js controller"
   
     argument :name
   
@@ -15,15 +15,15 @@ module Eyeballs
     end
   
     def greeting
-      $stdout.puts "Creating new eyeballs.js model #{name}"
+      $stdout.puts "Creating new eyeballs.js controller #{name}"
     end
   
     def build_the_model
-      template "templates/model.js", "app/models/#{name.downcase}.js"
+      template "templates/controller.js", "app/controllers/#{name.downcase}_controller.js"
     end
   
     def farewell
-      $stdout.puts "Your model is ready to rock!"
+      $stdout.puts "Your controller is ready to rule!"
     end
   end
 end

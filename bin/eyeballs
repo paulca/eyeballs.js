@@ -8,7 +8,7 @@ if(ARGV.include?('generate'))
     ARGV.delete('model')
     Eyeballs::ModelGenerator.start
   elsif(ARGV.include?('controller'))
-    ARGV.delete('model')
+    ARGV.delete('controller')
     Eyeballs::ControllerGenerator.start
   end
 else
