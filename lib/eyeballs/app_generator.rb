@@ -19,7 +19,11 @@ module Eyeballs
     end
   
     def build_the_app
-      directory "templates/app", "#{name}/app"
+      directory "templates/app_root", "#{name}"
+      copy_file 'dist/jquery-1.4.2.min.js', "#{name}/vendor/jquery/jquery-1.4.2.min.js"
+      copy_file 'dist/jquery.livequery.js', "#{name}/vendor/jquery/jquery.livequery.js"
+      copy_file 'dist/mustache.js', "#{name}/vendor/mustache/mustache.js"
+      directory "src", "#{name}/vendor/eyeballs/"
     end
   
     def farewell
