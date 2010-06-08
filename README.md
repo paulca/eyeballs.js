@@ -67,9 +67,9 @@ If you install the eyeballs.js Ruby gem, you can use the eyeballs command to gen
 
     gem install eyeballs.js
     
-To create a new eyeball.js app:
+To create a new eyeballs.js app:
 
-    eyeballs my\_new\_app
+    eyeballs my_new_app
 
 This will create a new app in the my\_new\_app folder.
 
