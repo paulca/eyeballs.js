@@ -1,1 +1,30 @@
-<h2><%= name.capitalize.pluralize %></h2>
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title><%= name.capitalize.pluralize %></title>
+  </head>
+  <body>
+    
+    <div id="<%= name.pluralize %>">
+      
+    </div>
+  </body>
+  <script src="dist/jquery/jquery-1.4.2.min.js"></script>
+  <script src="dist/jquery/jquery.livequery.js"></script>
+  <script src="dist/mustache/mustache.js"></script>
+  <script src="dist/eyeballs/o_O.js"></script>
+  <script src="dist/eyeballs/jquery.o_O.js"></script>
+  <script src="dist/eyeballs/o_O.localstorage.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    o_O.model.adapter = o_O.localstorage;
+  </script>
+  <script src="models/<%= name.downcase %>.js"></script>
+  <script src="controllers/<%= name.downcase.pluralize %>_controller.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      <%= name.capitalize.pluralize %>Controller.index();
+    })
+  </script>
+</html>
