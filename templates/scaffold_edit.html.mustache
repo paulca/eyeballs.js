@@ -1,0 +1,13 @@
+<div class="edit-<%= name.downcase %>">
+  <form data-id="{{id}}" data-controller="<%= name.downcase.pluralize %>" data-action="update">
+    <%- attributes.each do |attribute| %>
+      <label for="<%= name.downcase %>-<%= attribute.name %>"><%= attribute.name.titlecase %></label><br />
+      <%- if attribute.type == 'text' %>
+        <textarea name="<%= attribute.name %>" data-attribute="<%= attribute.name %>">{{<%= attribute.name%> }}</textarea><br />
+      <%- else %>
+        <input type="text" name="<%= attribute.name %>" value="{{<%= attribute.name %>}}" data-attribute="<%= attribute.name %>"><br />
+      <%- end -%>
+    <%- end -%>
+    <input type="submit" name="commit" value="Save"> or <a href="#" data-controller="<%= name.downcase.pluralize %>" data-action="cancel_edit">Cancel</a>
+  </form>
+</div>

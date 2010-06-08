@@ -47,7 +47,7 @@ o_O('<%= name.capitalize.pluralize -%>Controller', {
       if(<%= name.capitalize %>.valid())
       {
         <%= name.capitalize %>.update_attributes(o_O.params(form), function(updated_<%= name.downcase %>){
-          o_O.get_template('<%= name.downcase %>/_<%= name.downcase %>', updated_<%= name.downcase %>, function(data, template){ 
+          o_O.get_template('<%= name.downcase.pluralize %>/_<%= name.downcase %>', updated_<%= name.downcase %>, function(data, template){ 
             var template = Mustache.to_html(template, data);
             edit_<%= name.downcase %>_div.replaceWith(template);
             <%= name.downcase %>_div.remove();
