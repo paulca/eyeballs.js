@@ -7,21 +7,38 @@
   </head>
   <body>
     
+    <h1><%= name.titlecase.pluralize %></h1>
+
+    <h2>Add:</h2>
+    
+    <form data-bind="<%= name.downcase.pluralize %>/create">
+      <%- attributes.each do |attribute| %>
+        <label for="<%= name.downcase %>-<%= attribute.name %>"><%= attribute.name.titlecase %></label><br />
+        <%- if attribute.type == 'text' %>
+          <textarea name="<%= attribute.name %>" data-attribute="<%= attribute.name %>"></textarea><br />
+        <%- else %>
+          <input type="text" name="<%= attribute.name %>" value="" data-attribute="<%= attribute.name %>"><br />
+        <%- end -%>
+      <%- end -%>
+
+      <input type="submit" name="commit" value="Save">
+    </form>
+    
     <div id="<%= name.pluralize %>">
       
     </div>
   </body>
-  <script src="dist/jquery/jquery-1.4.2.min.js"></script>
-  <script src="dist/jquery/jquery.livequery.js"></script>
-  <script src="dist/mustache/mustache.js"></script>
-  <script src="dist/eyeballs/o_O.js"></script>
-  <script src="dist/eyeballs/jquery.o_O.js"></script>
-  <script src="dist/eyeballs/o_O.localstorage.js"></script>
+  <script src="vendor/jquery/jquery-1.4.2.min.js"></script>
+  <script src="vendor/jquery/jquery.livequery.js"></script>
+  <script src="vendor/mustache/mustache.js"></script>
+  <script src="vendor/eyeballs/o_O.js"></script>
+  <script src="vendor/eyeballs/jquery.o_O.js"></script>
+  <script src="vendor/eyeballs/o_O.localstorage.js"></script>
   <script type="text/javascript" charset="utf-8">
     o_O.model.adapter = o_O.localstorage;
   </script>
-  <script src="models/<%= name.downcase %>.js"></script>
-  <script src="controllers/<%= name.downcase.pluralize %>_controller.js"></script>
+  <script src="app/models/<%= name.downcase %>.js"></script>
+  <script src="app/controllers/<%= name.downcase.pluralize %>_controller.js"></script>
   <script type="text/javascript" charset="utf-8">
     $(function(){
       <%= name.capitalize.pluralize %>Controller.index();

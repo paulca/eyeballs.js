@@ -1,91 +1,75 @@
 o_O('<%= name.capitalize.pluralize -%>Controller', {
   index: function(){
-    <%= name.capitalize %>.all(function(<%= name.pluralize %>){
-      for(var id in <% name.pluralize %>)
+    <%= name.capitalize %>.all(function(<%= name.downcase.pluralize %>){
+      for(var id in <%= name.downcase.pluralize %>)
       {
         var <%= name.downcase %> = <%= name.downcase.pluralize %>[id];
         o_O.render('<%= name.downcase.pluralize %>/_<%= name.downcase %>', <%= name.downcase %>, {append: 'div#<%= name.pluralize %>'})
       }
     });
   },
-  new: function(){
+  new: function(){  
     o_O.render('<%= name.downcase.pluralize %>/new', {}, {before: 'div#<%= name.pluralize %>'})
-  }
-})
-
-
-  // o_O('ReviewsController', {
-  //   index: function(){
-  //     Review.all(function(reviews){
-  //       for(var id in reviews)
-  //       {
-  //         var review = reviews[id];
-  //         o_O.render('reviews/_review', review, {append: 'div#reviews'})
-  //       }
-  //     });
-  //   },
-  //   create: function(){
-  //     var review = Review.initialize(o_O.params($(this)));
-  //     var form = $(this);
-  //     review.save({
-  //       invalid: function(review){
-  //         o_O.alert_errors(review);
-  //       },
-  //       success: function(review){
-  //         o_O.render('reviews/_review', review, {prepend: 'div#reviews'});
-  //         form.find('input[type=text], textarea').val('');
-  //       }
-  //     })
-  //   },
-  //   edit: function(){
-  //     review_div = $(this).parents('div.review');
-  //     review = Review.find(review_div.attr('data-id'), function(review){
-  //       o_O.get_template('reviews/edit', review, function(data, template){
-  //         edit_review = Mustache.to_html(template, data);
-  //         review_div.hide().after(edit_review);
-  //       });
-  //     });
-  //   },
-  //   cancel_edit: function(){
-  //     edit_review_div = $(this).parents('div.edit-review');
-  //     review_div = edit_review_div.prev('div.review:first');
-  //     edit_review_div.remove();
-  //     review_div.show();
-  //   },
-  //   update: function(){
-  //     edit_review_div = $(this).parents('div.edit-review');
-  //     review_div = edit_review_div.prev('div.review:first');
-  //     var form = $(this)
-  //     Review.find(form.attr('data-id'), function(review){
-  //       if(review.valid())
-  //       {
-  //         review.update_attributes(o_O.params(form), function(updated_review){
-  //           o_O.get_template('reviews/_review', updated_review, function(data, template){ 
-  //             var template = Mustache.to_html(template, data);
-  //             edit_review_div.replaceWith(template);
-  //             review_div.remove();
-  //           });
-  //         })
-  //       }
-  //       else
-  //       {
-  //          o_O.alert_errors(review);
-  //       }
-  //     });
-  //   },
-  //   destroy: function(){
-  //     if(confirm('Are You sure?'))
-  //     {
-  //       $(this).parents('div.review:first').slideToggle(function(){
-  //         var div = $(this);
-  //         Review.find($(this).attr('data-id'), function(review){
-  //           review.destroy();
-  //           div.remove();
-  //         });
-  //       });
-  //     }
-  //   },
-  //   boopty: function(){
-  //     alert('BOOPTY!');
-  //   }
-  // });
+  },
+  create: function(){
+    var <%= name.downcase %> = <%= name.capitalize %>.initialize(o_O.params($(this)));
+    var form = $(this);
+    <%= name.downcase %>.save({
+      invalid: function(<%= name.downcase %>){
+        o_O.alert_errors(<%= name.downcase %>);
+      },
+      success: function(<%= name.downcase %>){
+        o_O.render('<%= name.downcase.pluralize %>/_<%= name.downcase %>', <%= name.downcase %>, {prepend: 'div#<%= name.downcase.pluralize %>'});
+        form.find('input[type=text], textarea').val('');
+      }
+    })
+  },
+  edit: function(){
+    <%= name.downcase %>_div = $(this).parents('div.<%= name.downcase %>');
+    review = <%= name.capitalize %>.find(<%= name.downcase %>_div.attr('data-id'), function(<%= name.downcase %>){
+      o_O.get_template('<%= name.downcase.pluralize %>/edit', <%= name.downcase %>, function(data, template){
+        edit_<%= name.downcase %> = Mustache.to_html(template, data);
+        <%= name.downcase %>_div.hide().after(edit_<%= name.downcase %>);
+      });
+    });
+  },
+  cancel_edit: function(){
+    edit_<%= name.downcase %>_div = $(this).parents('div.edit-<%= name.downcase %>');
+    <%= name.downcase %>_div = edit_<%= name.downcase %>_div.prev('div.<%= name.downcase %>:first');
+    edit_<%= name.downcase %>_div.remove();
+    <%= name.downcase %>_div.show();
+  },
+  update: function(){
+    edit_<%= name.downcase %>_div = $(this).parents('div.edit-<%= name.downcase %>');
+    review_div = edit_<%= name.downcase %>_div.prev('div.<%= name.downcase %>:first');
+    var form = $(this)
+    <%= name.capitalize %>.find(form.attr('data-id'), function(<%= name.capitalize %>){
+      if(<%= name.capitalize %>.valid())
+      {
+        <%= name.capitalize %>.update_attributes(o_O.params(form), function(updated_<%= name.downcase %>){
+          o_O.get_template('<%= name.downcase %>/_<%= name.downcase %>', updated_<%= name.downcase %>, function(data, template){ 
+            var template = Mustache.to_html(template, data);
+            edit_<%= name.downcase %>_div.replaceWith(template);
+            <%= name.downcase %>_div.remove();
+          });
+        });
+      }
+      else
+      {
+         o_O.alert_errors(<%= name.downcase %>);
+      }
+    });
+  },
+  destroy: function(){
+    if(confirm('Are You sure?'))
+    {
+      $(this).parents('div.<%= name.downcase %>:first').slideToggle(function(){
+        var div = $(this);
+        <%= name.capitalize %>.find($(this).attr('data-id'), function(<%= name.downcase %>){
+          <%= name.downcase %>.destroy();
+          div.remove();
+        });
+      });
+    }
+  },
+});

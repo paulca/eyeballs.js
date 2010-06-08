@@ -5,7 +5,6 @@ module Eyeballs
     desc "Creates a new eyeballs.js scaffold"
   
     argument :name
-    argument :string_attributes
   
     def self.source_root
       File.join(File.dirname(__FILE__), '..', '..')
@@ -30,7 +29,7 @@ module Eyeballs
     def build_the_views
       template "templates/scaffold_index.html", "#{name.downcase.pluralize}.html"
       template "templates/scaffold_partial.html.mustache", "app/views/#{name.downcase.pluralize}/_#{name.downcase}.html.mustache"
-      template "templates/scaffold_new.html.mustache", "app/views/#{name.downcase.pluralize}/new.html.mustache"
+      template "templates/scaffold_edit.html.mustache", "app/views/#{name.downcase.pluralize}/edit.html.mustache"
     end
   
     def farewell
@@ -38,15 +37,15 @@ module Eyeballs
     end
     
     def attributes
-      AttributeCollector.new(string_attributes)
+      AttributeCollector.new((ARGV - [name]))
     end
   end
   
   class AttributeCollector
     class << self
       def new(attrs)
-        attrs.collect do |attribute|
-          parts = attribute.split(':')
+        attrs.collect do |attr|
+          parts = attr.split(':')
           Attribute.new(:name => parts[0], :type => parts[1])
         end
       end
