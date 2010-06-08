@@ -80,6 +80,12 @@ When you're up and running, you can use the model and controller generators:
 
 These generators will install files to app/models and app/controllers relative to where you run the `eyeballs` command.
 
+You can also install a scaffold:
+
+    eyeballs generate scaffold Post
+    
+This will generate a `posts.html`, a `post.js` and a `posts_controller.js`.
+
 Models
 ======
 
