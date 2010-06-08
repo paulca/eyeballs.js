@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs.js}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-06-03}
+  s.date = %q{2010-06-06}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -17,14 +17,23 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    "README.md",
+    "CHANGELOG",
+     "README.md",
      "Rakefile",
-     "app.rb",
      "bin/eyeballs",
      "config.ru",
      "eyeballs.js.gemspec",
      "lib/eyeballs.rb",
-     "views/index.erb"
+     "lib/eyeballs/app_generator.rb",
+     "lib/eyeballs/cli.rb",
+     "lib/eyeballs/controller_generator.rb",
+     "lib/eyeballs/model_generator.rb",
+     "lib/eyeballs/scaffold_generator.rb",
+     "templates/app_root/index.html",
+     "templates/controller.js",
+     "templates/model.js",
+     "templates/scaffold_controller.js",
+     "templates/scaffold_index.html"
   ]
   s.has_rdoc = false
   s.homepage = %q{http://www.github.com/paulca/eyeballs.js}
@@ -32,6 +41,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A lightweight javascript MVC framework.}
+  s.test_files = [
+    "spec/app_generator_spec.rb",
+     "spec/controller_generator_spec.rb",
+     "spec/model_generator_spec.rb",
+     "spec/scaffold_generator_spec.rb",
+     "spec/spec_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

@@ -3,14 +3,7 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'eyeballs'
 
 if(ARGV.include?('generate'))
-  ARGV.delete('generate')
-  if(ARGV.include?('model'))
-    ARGV.delete('model')
-    Eyeballs::ModelGenerator.start
-  elsif(ARGV.include?('controller'))
-    ARGV.delete('controller')
-    Eyeballs::ControllerGenerator.start
-  end
+  Eyeballs::CLI.start
 else
   Eyeballs::AppGenerator.start
 end
