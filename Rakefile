@@ -12,11 +12,14 @@ end
 
 PKG_FILES = FileList[
   '[a-zA-Z]*',
-  'bin/**/*',
   'app/**/*',
+  'bin/**/*',
+  'dist/**/*',
   'templates/**/*',
   'lib/**/*',
+  'src/**/*',
   'templates/**/*',
+  'test/**/*',
   'views/**/*'
 ]
 

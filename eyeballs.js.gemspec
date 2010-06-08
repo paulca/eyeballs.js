@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs.js}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-06-06}
+  s.date = %q{2010-06-08}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -33,7 +33,9 @@ Gem::Specification.new do |s|
      "templates/controller.js",
      "templates/model.js",
      "templates/scaffold_controller.js",
-     "templates/scaffold_index.html"
+     "templates/scaffold_index.html",
+     "templates/scaffold_new.html.mustache",
+     "templates/scaffold_partial.html.mustache"
   ]
   s.has_rdoc = false
   s.homepage = %q{http://www.github.com/paulca/eyeballs.js}
