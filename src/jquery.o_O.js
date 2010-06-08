@@ -110,7 +110,7 @@ o_O.get_template = function(template, data, callback){
     }
     else
     {
-      url = 'views/'
+      url = 'app/views/'
     }
     $.get(url + template + '.html.mustache', function(response){
       o_O.templates[template] = response;
