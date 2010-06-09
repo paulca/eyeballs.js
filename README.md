@@ -86,6 +86,8 @@ You can also generate a scaffold:
     
 This will generate a `posts.html`, a `post.js` and a `posts_controller.js`.
 
+If the generator detects a "public" directory when you run it, it will install into public/javascripts.
+
 Models
 ======
 
