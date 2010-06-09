@@ -10,20 +10,25 @@ module Eyeballs
       File.join(File.dirname(__FILE__), '..', '..')
     end
   
-    def self.destination_root
-      "#{name}"
-    end
-  
     def greeting
       $stdout.puts "Creating new eyeballs.js app #{name}"
     end
+    
+    def install_to
+      @install_to ||= if File.exists?('public')
+        $stdout.puts "public folder detected, installing to public/javascripts"
+        'public/javascripts'
+      else
+        name
+      end
+    end
   
     def build_the_app
-      directory "templates/app_root", "#{name}"
-      copy_file 'dist/jquery-1.4.2.min.js', "#{name}/vendor/jquery/jquery-1.4.2.min.js"
-      copy_file 'dist/jquery.livequery.js', "#{name}/vendor/jquery/jquery.livequery.js"
-      copy_file 'dist/mustache.js', "#{name}/vendor/mustache/mustache.js"
-      directory "src", "#{name}/vendor/eyeballs/"
+      directory "templates/app_root", install_to
+      copy_file 'dist/jquery-1.4.2.min.js', "#{install_to}/vendor/jquery/jquery-1.4.2.min.js"
+      copy_file 'dist/jquery.livequery.js', "#{install_to}/vendor/jquery/jquery.livequery.js"
+      copy_file 'dist/mustache.js', "#{install_to}/vendor/mustache/mustache.js"
+      directory "src", "#{install_to}/vendor/eyeballs/"
     end
   
     def farewell

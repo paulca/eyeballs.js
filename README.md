@@ -57,7 +57,7 @@ Wrapping that all up, to use eyeballs.js with the Rails adapter and jQuery:
     
     <!-- Rails adapter -->
     <script src="o_O.rails.js"></script>
-  
+
 Badabing, badaboom! You're now ready to start creating some models and controllers.
 
 Generators
@@ -80,7 +80,7 @@ When you're up and running, you can use the model and controller generators:
 
 These generators will install files to app/models and app/controllers relative to where you run the `eyeballs` command.
 
-You can also install a scaffold:
+You can also generate a scaffold:
 
     eyeballs generate scaffold Post
     
