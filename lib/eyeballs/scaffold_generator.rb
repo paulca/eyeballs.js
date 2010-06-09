@@ -1,10 +1,12 @@
 module Eyeballs
   class ScaffoldGenerator < Thor::Group
     include Thor::Actions
+    include Eyeballs::AppDetector
   
     desc "Creates a new eyeballs.js scaffold"
   
     argument :name
+    argument :attrs, :type => :array
   
     def self.source_root
       File.join(File.dirname(__FILE__), '..', '..')
@@ -23,13 +25,13 @@ module Eyeballs
     end
     
     def build_the_controller
-      template "templates/scaffold_controller.js", "app/controllers/#{name.downcase.pluralize}_controller.js"
+      template "templates/scaffold_controller.js", "#{app_path}/app/controllers/#{name.downcase.pluralize}_controller.js"
     end
     
     def build_the_views
-      template "templates/scaffold_index.html", "#{name.downcase.pluralize}.html"
-      template "templates/scaffold_partial.html.mustache", "app/views/#{name.downcase.pluralize}/_#{name.downcase}.html.mustache"
-      template "templates/scaffold_edit.html.mustache", "app/views/#{name.downcase.pluralize}/edit.html.mustache"
+      template "templates/scaffold_index.html", "#{app_path}/#{name.downcase.pluralize}.html"
+      template "templates/scaffold_partial.html.mustache", "#{app_path}/app/views/#{name.downcase.pluralize}/_#{name.downcase}.html.mustache"
+      template "#{app_path}/templates/scaffold_edit.html.mustache", "app/views/#{name.downcase.pluralize}/edit.html.mustache"
     end
   
     def farewell
@@ -37,7 +39,7 @@ module Eyeballs
     end
     
     def attributes
-      AttributeCollector.new((ARGV - [name]))
+      AttributeCollector.new(attrs)
     end
   end
   

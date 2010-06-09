@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-describe Eyeballs::AppGenerator do
-  let(:test_root) { File.join(File.dirname(File.expand_path(__FILE__)), 'test_root') }
-  
+describe Eyeballs::AppGenerator do  
   describe "generate a simple app" do
     before(:all) do
       create_test_root

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Eyeballs::ModelGenerator do
-  let(:test_root) { 'spec/test_root' }
   before(:all) do
     create_test_root
-    run_command("eyeballs generate scaffold Review title:string content:text")
+    FileUtils.cd(test_root)
+    Eyeballs::ScaffoldGenerator.start(["Review", "title:string", "content:text"])
   end
   let(:model_file) { file('app', 'models', 'review.js') }
   let(:controller_file) { file('app', 'controllers', 'reviews_controller.js') }

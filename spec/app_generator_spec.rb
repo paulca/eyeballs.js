@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Eyeballs::AppGenerator do
-  let(:test_root) { 'spec/test_root' }
   
   describe "generate a simple app" do
     before(:all) do
       create_test_root
-      run_command("eyeballs test")
+      FileUtils.cd(test_root)
+      Eyeballs::AppGenerator.start('test')
     end
     let(:app_dir) { file('test', 'app') }
     let(:model_dir) { file('test', 'app', 'models') }

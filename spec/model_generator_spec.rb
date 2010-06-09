@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe Eyeballs::ModelGenerator do
-  let(:test_root) { 'spec/test_root' }
+
   before(:all) do
     create_test_root
-    run_command("eyeballs generate model Paul")
+    FileUtils.cd(test_root)
+    Eyeballs::ModelGenerator.start(["Paul"])
   end
   let(:model_file) { file('app', 'models', 'paul.js') }
   

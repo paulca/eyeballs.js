@@ -19,6 +19,10 @@ def file(*parts)
   FileChecker.new([test_root] + parts)
 end
 
+def test_root
+  File.join(File.dirname(File.expand_path(__FILE__)), 'test_root')
+end
+
 class FileChecker
   def initialize(parts)
     @file = File.join(parts)

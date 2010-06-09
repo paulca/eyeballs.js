@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Eyeballs::ControllerGenerator do
-  let(:test_root) { 'spec/test_root' }
+
   before(:all) do
     create_test_root
     run_command("eyeballs generate controller Paul")
