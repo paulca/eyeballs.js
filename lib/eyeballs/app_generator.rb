@@ -23,7 +23,7 @@ module Eyeballs
       directory "src", "#{new_app_path}/vendor/eyeballs/"
     end
   
-    def farewell
+    def farewell      
       $stdout.puts "Thank you for installing eyeballs.js"
     end
   end
