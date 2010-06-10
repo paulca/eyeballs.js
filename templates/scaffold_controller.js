@@ -8,9 +8,6 @@ o_O('<%= name.capitalize.pluralize -%>Controller', {
       }
     });
   },
-  new: function(){  
-    o_O.render('<%= name.downcase.pluralize %>/new', {}, {before: 'div#<%= name.pluralize %>'})
-  },
   create: function(){
     var <%= name.downcase %> = <%= name.capitalize %>.initialize(o_O.params($(this)));
     var form = $(this);
