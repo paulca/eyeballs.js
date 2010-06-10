@@ -36,7 +36,8 @@ begin
     s.files = PKG_FILES.to_a
     s.require_path = "lib"
     s.has_rdoc = false
-    s.dependencies ['thor', 'activesupport']
+    s.add_dependency 'thor'
+    s.add_dependency 'activesupport'
     s.extra_rdoc_files = ["README.md"]
   end
 rescue LoadError
