@@ -27,7 +27,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "eyeballs"
-    s.version = "0.3.3"
+    s.version = "0.3.3.1"
     s.author = "Paul Campbell"
     s.email = "paul@rslw.com"
     s.homepage = "http://www.github.com/paulca/eyeballs.js"
@@ -36,6 +36,7 @@ begin
     s.files = PKG_FILES.to_a
     s.require_path = "lib"
     s.has_rdoc = false
+    s.dependencies ['thor', 'activesupport']
     s.extra_rdoc_files = ["README.md"]
   end
 rescue LoadError
