@@ -63,7 +63,7 @@ Badabing, badaboom! You're now ready to start creating some models and controlle
 Generators
 ==========
 
-If you install the eyeballs.js Ruby gem, you can use the eyeballs command to generator eyeballs.js apps, models and controllers:
+If you install the eyeballs.js Ruby gem, you can use the eyeballs command to generate eyeballs.js apps, models and controllers:
 
     gem install eyeballs.js
     
