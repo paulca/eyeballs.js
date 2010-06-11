@@ -12,7 +12,7 @@ module Eyeballs
     end
   
     def greeting
-      $stdout.puts "Creating new eyeballs.js controller #{name.pluraize}Controller"
+      $stdout.puts "Creating new eyeballs.js controller #{name.pluralize}Controller"
     end
   
     def build_the_model

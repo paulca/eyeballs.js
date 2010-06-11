@@ -4,7 +4,6 @@ module Eyeballs
     include Eyeballs::AppDetector
 
     desc "Creates a new eyeballs.js model"
-  
     argument :name
   
     def self.source_root

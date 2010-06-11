@@ -1,6 +1,7 @@
 require 'eyeballs'
 require 'fileutils'
 require 'ruby-debug'
+require 'pathname'
 Debugger.settings[:autoeval] = true
 
 def create_test_root
@@ -16,27 +17,27 @@ def run_command(cmd)
 end
 
 def file(*parts)
-  FileChecker.new([test_root] + parts)
+  Pathname.new([test_root, *parts].join('/'))
 end
 
 def test_root
   File.join(File.dirname(File.expand_path(__FILE__)), 'test_root')
 end
 
-class FileChecker
-  def initialize(parts)
-    @file = File.join(parts)
-  end
-
-  def exist?
-    File.exists?(@file)
-  end
-  
-  def read
-    File.read(@file)
-  end
-  
-  def to_s
-    @file
-  end
-end
+# class FileChecker
+#   def initialize(parts)
+#     @file = File.join(parts)
+#   end
+# 
+#   def exist?
+#     File.exists?(@file)
+#   end
+#   
+#   def read
+#     File.read(@file)
+#   end
+#   
+#   def to_s
+#     @file
+#   end
+# end
