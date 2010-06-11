@@ -4,7 +4,7 @@ o_O('<%= name.capitalize.pluralize -%>Controller', {
       for(var id in <%= name.downcase.pluralize %>)
       {
         var <%= name.downcase %> = <%= name.downcase.pluralize %>[id];
-        o_O.render('<%= name.downcase.pluralize %>/_<%= name.downcase %>', <%= name.downcase %>, {append: 'div#<%= name.pluralize %>'})
+        o_O.render('<%= name.downcase.pluralize %>/_<%= name.downcase %>', <%= name.downcase %>, {append: 'div#<%= name.downcase.pluralize %>'})
       }
     });
   },

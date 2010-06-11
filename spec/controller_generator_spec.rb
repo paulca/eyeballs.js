@@ -6,7 +6,8 @@ describe Eyeballs::ControllerGenerator do
     create_test_root
     run_command("eyeballs generate controller Paul")
   end
-  let(:controller_file) { file('app', 'controllers', 'paul_controller.js') }
+  
+  let(:controller_file) { file('app/controllers/paul_controller.js') }
   
   it "should create my controller" do
     controller_file.should exist
