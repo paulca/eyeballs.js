@@ -11,6 +11,8 @@
 
   <script>  
 
+  o_O.model.adapter = o_O.dom;
+
   o_O('Review', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
@@ -31,6 +33,21 @@
     
     module("Models");
     
+    asyncTest('find() an existent object',2, function(){
+      Review.find('thing', {
+        loading: function(){
+          ok('this should be called')
+        },
+        success: function(){
+          ok('this should be called');
+          start();
+        },
+        failure: function(){
+          ok(false, 'this should not be called');
+        }
+      })
+    });
+
     asyncTest('a valid, successful model', 2, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save({
@@ -76,21 +93,21 @@
           });
         })
 
-        asyncTest('updating an invalid review', 1, function(){
-              var myReview = Review.initialize();
-              myReview.update_attributes({}, {
-                success: function(){
-                  ok(false, 'should not call the success callback');
-                },
-                invalid: function(){
-                  ok(true, 'should call the invalid callback');
-                  start();
-                },
-                loading: function(){
-                  ok(false, 'should not call the loading callback');
-                }
-              });
-            })
+  asyncTest('updating an invalid review', 1, function(){
+        var myReview = Review.initialize();
+        myReview.update_attributes({}, {
+          success: function(){
+            ok(false, 'should not call the success callback');
+          },
+          invalid: function(){
+            ok(true, 'should call the invalid callback');
+            start();
+          },
+          loading: function(){
+            ok(false, 'should not call the loading callback');
+          }
+        });
+      })
 
       test('destroying a review', 2, function(){
         var myReview = Review.initialize();
@@ -114,5 +131,7 @@
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
   </div>
+  
+  <div data-id="thing"></div>
 </body>
 </html>

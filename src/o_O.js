@@ -190,16 +190,22 @@ o_O.model = {
       find: function(id, callback){
         if(this.adapter)
         {
+          run_callback(callback, 'loading', this)
           var model = this;
           return this.adapter.find(this, id, function(returned_object){
-            if(typeof callback === 'function')
+            found_object = model.initialize(returned_object);
+            if(!found_object['new_record'])
             {
-              found_object = model.initialize(returned_object);
-              if(!found_object['new_record'])
-              {
-                found_object['new_record'] = false;
-              }
-              callback(found_object);
+              found_object['new_record'] = false;
+            }
+            if(found_object.id)
+            {
+              console.log(found_object)
+              run_callback(callback, 'success', found_object);
+            }
+            else
+            {
+              run_callback(callback, 'failure', found_object);
             }
           });
         }
