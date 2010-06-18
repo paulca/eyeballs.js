@@ -43,6 +43,13 @@
       });
     })
     
+    asyncTest('pulling something in with prefix', 1, function(){
+      Review.find(1, {prefix:'/my', success: function(found_review){
+        equals(found_review.title, 'Prefixed');
+        start();
+      }})
+    })
+    
     asyncTest('getting all', 2, function(){
       var review = Review.initialize({title: 'Local, baby'});
       review.save(function(saved_review){

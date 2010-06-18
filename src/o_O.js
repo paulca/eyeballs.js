@@ -206,7 +206,7 @@ o_O.model = {
             {
               run_callback(callback, 'failure', found_object);
             }
-          });
+          }, callback);
         }
       },
       model_name: model_name,

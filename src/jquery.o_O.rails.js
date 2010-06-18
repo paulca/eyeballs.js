@@ -54,9 +54,14 @@ o_O.rails = {
       })
     }
   },
-  find: function(model, id, callback)
+  find: function(model, id, callback, options)
   {
-    $.get('/' + model.table_name + '/' + id, function(response){
+    var url = '/' + model.table_name + '/' + id;
+    if(typeof options === 'object' && options.prefix)
+    {
+      url = options.prefix + url;
+    }
+    $.get(url, function(response){
       var retrieved_object = JSON.parse(response);
       if(typeof callback === 'function')
       {
