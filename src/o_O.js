@@ -200,7 +200,6 @@ o_O.model = {
             }
             if(found_object.id)
             {
-              console.log(found_object)
               run_callback(callback, 'success', found_object);
             }
             else
