@@ -134,6 +134,17 @@ You can also add your own validations, again, similar to how Rails does things:
       post.errors   # => [{
                     #     message: 'title should be present'}]
     })     # yep, there's a save method too!
+    
+When you want to find things:
+
+    Post.find({
+      loading: function(){
+        console.log("I'm loading...")
+      },
+      success: function(post){
+        console.log("here I am")
+      }
+    })
 
 And if you want to add your own methods:
 
