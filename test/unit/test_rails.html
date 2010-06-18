@@ -65,7 +65,6 @@
       var review = Review.initialize()
       equals(review.new_record, true, 'should be a new record review');
       review.save(function(saved_review){
-        console.log(saved_review)
         equals(saved_review.new_record, false, 'should not be a new record after')
         start();
       });
