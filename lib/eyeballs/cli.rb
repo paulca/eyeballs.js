@@ -6,7 +6,7 @@ module Eyeballs
       ARGV.delete('generate')
       if(ARGV.include?(requested_generator))
         ARGV.delete(requested_generator)
-        Kernel.const_get("Eyeballs::#{requested_generator.capitalize}Generator").start
+        ActiveSupport::Inflector.constantize("Eyeballs::#{requested_generator.capitalize}Generator").start
       end
     end
 
