@@ -4,7 +4,8 @@ describe Eyeballs::ControllerGenerator do
 
   before(:all) do
     create_test_root
-    run_command("eyeballs generate controller Paul")
+    FileUtils.cd(test_root)
+    Eyeballs::ControllerGenerator.start(["Paul"])
   end
   
   let(:controller_file) { file('app/controllers/paul_controller.js') }
