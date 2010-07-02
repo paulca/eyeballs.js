@@ -27,7 +27,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "eyeballs"
-    s.version = "0.3.6.1"
+    s.version = "0.3.7"
     s.author = "Paul Campbell"
     s.email = "paul@rslw.com"
     s.homepage = "http://www.github.com/paulca/eyeballs.js"
