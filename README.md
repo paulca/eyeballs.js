@@ -14,7 +14,7 @@ The goals are:
 The implementation is owes a lot to Ruby on Rails, but also attempts to be idiomatic javascript.
 
 Overview
-========
+--------
 
 eyeballs.js can sit on top of an already implemented web app with a well thought out object model. It can also be used to build standalone javascript apps, backed by HTML5 local storage or something like CouchDB.
 
@@ -22,8 +22,14 @@ eyeballs.js models are not necessarily one-to-one mapped to server side models u
 
 Finally, eyeballs.js is still a bit of an experiment. It's a quick implementation of a crazy idea to help make javascript code a little bit more organised.
 
+eyeballs.js is supposed to be both agnostic and modular. The code is broken down into modules, drivers and adapters.
+
+*Modules* add functionality.
+*Drivers* add support for underlying javascript frameworks.
+*Adapters* provide an API to a persistence layer at the model level.
+
 Getting Started
-===============
+---------------
 
 eyeballs.js is packaged into modules, according to dependencies.
 
@@ -61,7 +67,7 @@ Wrapping that all up, to use eyeballs.js with the Rails adapter and jQuery:
 Badabing, badaboom! You're now ready to start creating some models and controllers.
 
 Generators
-==========
+----------
 
 If you install the eyeballs.js Ruby gem, you can use the eyeballs command to generate eyeballs.js apps, models and controllers:
 
@@ -89,7 +95,7 @@ This will generate a `posts.html`, a `post.js` and a `posts_controller.js`.
 If the generator detects a "public" directory when you run it, it will install into public/javascripts.
 
 Models
-======
+------
 
 You define a model by passing a name and function to the eyeballs ( o_O ) function (pronounced 'eep eep'). As inspired by Rails, model definitions are capitalised. Note, however, that the new prefix is not used.
 
@@ -181,7 +187,7 @@ Finding, saving, updating and deleting. With callbacks? Easy peasy:
 There's a strong emphasis on callbacks: since any persisting to backends should be done asynchronously.
 
 Controllers
-===========
+-----------
 
 An eyeballs.js controller is also initialized with the eyeballs function, by passing a string name and an object containing the controller actions.
 
@@ -231,7 +237,7 @@ Finally, in shorthand only, you can bind multiple events to a single element:
 Isn't that cool?
     
 Putting it all together
-=======================
+-----------------------
 
 There's a small demo app included in this package, a simple app for adding personal reviews. It's a simple Sinatra app, so you can run it with:
 
@@ -290,12 +296,12 @@ That's all for now!
     
 
 Running the tests
-=================
+-----------------
 
 eyeballs.js uses QUnit for in-browser testing. Just load the files in the test directory in any browser to run them.
 
 About me
-========
+--------
 
 I'm Paul Campbell. I'm an avid web developer. Follow my ramblings at [http://www.pabcas.com](http://www.pabcas.com)
 

@@ -1,0 +1,41 @@
+--- 
+dependencies: 
+  thor: 
+    group: 
+    - :default
+    version: ">= 0"
+  sinatra: 
+    group: 
+    - :default
+    version: ">= 0"
+  jeweler: 
+    group: 
+    - :development
+    version: ">= 0"
+  activesupport: 
+    group: 
+    - :default
+    version: ">= 0"
+specs: 
+- activesupport: 
+    version: 2.3.8
+- json_pure: 
+    version: 1.4.3
+- gemcutter: 
+    version: 0.5.0
+- git: 
+    version: 1.2.5
+- rubyforge: 
+    version: 2.0.4
+- jeweler: 
+    version: 1.4.0
+- rack: 
+    version: 1.2.1
+- sinatra: 
+    version: "1.0"
+- thor: 
+    version: 0.13.7
+hash: f87b7fe7ced46601a717481e798108c10cee4cb0
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org
