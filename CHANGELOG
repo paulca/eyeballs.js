@@ -1,3 +1,7 @@
+Wed Jul 7 2010
+- - - - - - - -
+- Add namespace and root support in routing
+
 Tue Jul 6 2010
 - - - - - - - -
 - Housekeeping, add adapters, modules and drivers directories and relevant sub-directories
