@@ -2,102 +2,60 @@
                     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <script src="../../dist/jquery-1.4.2.min.js"></script>
-  <script src="../../dist/jquery.livequery.js"></script>
+  <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
+  <script src="../../dist/jquery/jquery.livequery.js"></script>
+  <script src="../../dist/jquery/jquery.ba-hashchange.js"></script>
   <script src="../../src/o_O.js"></script>
-  <script src="../../src/jquery.o_O.js"></script>
-  
-  <script src="../../src/o_O.routing.js"></script>
-  <script src="../../src/jquery.o_O.routing.js"></script>
+  <script src="../../src/modules/o_O.model.js"></script>
+  <script src="../../src/modules/o_O.validations.js"></script>
+  <script src="../../src/drivers/jquery/adapters/o_O.dom.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
+  <script src="../../src/modules/o_O.routes.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
 
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
 
   <script>
   o_O('ReviewsController', {
-    create: function(){
-      $(this).html('created!');
-    },
-    show: function(){
-      $(this).html('shown!');
-    },
-    other: function(){
-      $(this).html('other!');
-    },
-    another: function(){
-      $(this).html('another!')
-    },
-    check: function(){
-      $(this).val('bacon')
-    },
-    shortcut: function(){
-      $(this).html('shortcut!')
-    },
-    multi: function(){
-      $(this).html($(this).html() + ' multi!')
+    index: function(bit){
+      var out;
+      if(bit == 'test')
+      {
+        out = 'clicked!'
+      }
+      else
+      {
+        out = 'indexed!'
+      }
+      $('div#index').html(out);
+      return 'whoop!'
     }
   });
+  
+  o_O.routes.draw(function(map){
+    map.match('/', {to: "reviews#index", with: 'test'});
+  })
 
   $(document).ready(function(){
     
-    module("Controller");
+    module("Simple Route");
     
-    test('bind to global',1,function(){
-      equals(typeof ReviewsController, 'object', 'ReviewsController should be an object')
+    test('o_O.routes.urls', function(){
+      equals(o_O.routes.urls[0], '/', 'should store the necessary URLs')
     })
     
-    test('submitting an auto-bound form', 1, function(){
-      $('form#myForm').trigger('submit');
-      equals($('form#myForm').html(), 'created!', 'html should have been updated');
-    });
-    
-    test('submitting an auto-bound form with data-bind shortcut', 1, function(){
-      $('form#myShortcutForm').trigger('submit');
-      equals($('form#myShortcutForm').html(), 'created!', 'html should have been updated');
-    });
-    
-    test('clicking an auto-bound link', 1, function(){
-      $('a#myLink').trigger('click');
-      equals($('a#myLink').html(), 'shown!', 'html should have been updated');
-    });
-    
-    test('clicking an auto-bound link with data-bind shortcut', 1, function(){
-      $('a#myShortcutLink').trigger('click');
-      equals($('a#myShortcutLink').html(), 'shown!', 'html should have been updated');
-    });
-    
-    test('hovering a custom bound element', 1, function(){
-      $('div#myDiv').trigger('mouseover');
-      equals($('div#myDiv').html(), 'other!', 'html should have been updated');
-    });
-    
-    new_element = $('<a id="anotherLink" data-controller="reviews" data-action="another">another link</a>')
-    $('div#anotherDiv').append(new_element);
-    
-    
-    setTimeout(function(){
-      test("a new link", 1, function(){
-        $('a#anotherLink').trigger('click');
-        equals($('a#anotherLink').html(), 'another!', 'it should have some dynamic behavior');
-      })
-    }, 100);
-
-    test('should allow default behavior', 1, function(){
-      $('input#myCheckbox').trigger('click');
-      equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
+    test('o_O.routes.rules', function(){
+      equals(o_O.routes.rules['/'].action(), ReviewsController.index())
     })
     
-    test('should allow default behavior with data-bind', 2, function(){
-      $('input#myOtherCheckbox').trigger('click');
-      equals($('input#myOtherCheckbox:checked').val(), 'bacon', "check box value should change")
-      equals($('input#myOtherCheckbox:checked').length, 1, "check box should be checked")
-    })
-    
-    test('should bind on shortcuts',2, function(){
-      $('div#shortcut').trigger('click');
-      equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
-      $('div#shortcut').trigger('mouseover');
-      equals($("div#shortcut").html(), 'shortcut! multi!', 'it should bind multiple events')
+    asyncTest('map.match',function(){
+      $('a#index-link').trigger('click');
+      setTimeout(function(){
+        equals($('div#index').html(), 'clicked!', "should call the action");
+        start();
+      },100)
     })
 
   });
@@ -110,32 +68,9 @@
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
  
- <div data-id="paul">
-  <form id="myForm" data-controller="reviews" data-action="create">
-    test form
-  </form>
-  
-  <form id="myShortcutForm" data-bind="reviews/create">
-    test form
-  </form>
-  
-  <a id="myLink" data-controller="reviews" data-action="show">
-    test link
-  </a>
-  
-  <a id="myShortcutLink" data-bind="reviews/show">
-    test link
-  </a>
-
-  <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
-  <div id="shortcut" data-bind="click:reviews/shortcut; mouseenter:reviews/multi">
-    I'm a shortcut
+  <a id="index-link" data-ajax-history="true" href="/">Hello!</a>
+ 
+  <div id="index">
   </div>
-  <div id="anotherDiv">
-    
-  </div>
-  <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
-  <input id="myOtherCheckbox" data-bind="+click:reviews/check" type="checkbox" value="toast">
- </div>
 </body>
 </html>
