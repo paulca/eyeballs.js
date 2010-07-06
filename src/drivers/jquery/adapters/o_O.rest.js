@@ -1,5 +1,5 @@
 // REST & Rails, woop!
-o_O.rails = {
+o_O.rest = {
   all: function(model, callback){
     $.get('/' + model.table_name, function(response){
       var documents = JSON.parse(response);

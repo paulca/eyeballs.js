@@ -1,3 +1,9 @@
+Tue Jul 6 2010
+- - - - - - - -
+- Housekeeping, add adapters, modules and drivers directories and relevant sub-directories
+- Add routing
+- use "meetings#index" style data-bind shortcuts instead of "meetings/index"
+
 Thu Jun 17 2010
 - - - - - - - -
 - Add "prefix" to Rails find method

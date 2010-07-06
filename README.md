@@ -6,15 +6,16 @@ eyeballs.js is a slim javascript library designed to sit on top of a javascript 
 The goals are:
 
   * Organisation of client-side web app code using the Model-View-Controller pattern.
-  * Simple model implementation for client-side form validation.
-  * Rapid development of javascript actions using strong conventions.
+  * Simple model implementation for handling non event-related concerns.
+  * Simple routing layer for hash-tag change based navigation, preserving the back-button
+  * Rapid development of javascript apps using strong conventions.
   * Easing the pain of building fast, responsive interfaces.
   * Exploring the possibilities of offline web apps.
 
 The implementation is owes a lot to Ruby on Rails, but also attempts to be idiomatic javascript.
 
 Overview
-========
+--------
 
 eyeballs.js can sit on top of an already implemented web app with a well thought out object model. It can also be used to build standalone javascript apps, backed by HTML5 local storage or something like CouchDB.
 
@@ -22,14 +23,20 @@ eyeballs.js models are not necessarily one-to-one mapped to server side models u
 
 Finally, eyeballs.js is still a bit of an experiment. It's a quick implementation of a crazy idea to help make javascript code a little bit more organised.
 
+eyeballs.js is supposed to be both agnostic and modular. The code is broken down into modules, drivers and adapters.
+
+*Modules* add various parts of functionality, for example the code that powers the individual model, controller, routing and validation layers.
+*Drivers* add support for underlying javascript frameworks. Features that rely on event handling etc. are part of driver logic.
+*Adapters* provide an API to various persistence layers, eg. HTML5 Local Storage, a REST interface or a CouchDB instance.
+
 Getting Started
-===============
+---------------
 
 eyeballs.js is packaged into modules, according to dependencies.
 
-The main lib, o\_O.js, has no dependencies and lets you use eyeballs.js models standalone.
+The main library has no dependencies and lets you use eyeballs.js models standalone.
 
-Standalone, o\_O.js doesn't do much: it provides the o\_O() function for initializing models and some validations.
+Standalone, eyeballs.js doesn't do much: it provides the o\_O() function for initializing models and some validations.
 
 At a very minimum, you should choose an adapter. There are a few to choose from:
 
@@ -38,7 +45,7 @@ At a very minimum, you should choose an adapter. There are a few to choose from:
   - **o\_O.couchdb** - persist records to a local CouchDB instance, for building MVC CouchApps, for example.
   - **o\_O.rails** - An adapter for persisting models to a backend powered by Rails, or using Rails-style RESTful routing.
 
-Finally, you need a controller. The first release of eyeballs.js includes a controller initializer for jQuery. This adapter happens to depend on jQuery.livequery, for reasons of magic.
+Finally, you need a controller. The first release of eyeballs.js includes a controller as part of the jQuery driver. This adapter also depends on jQuery.livequery.
 
 You can also use a javascript templating language. Mustache.js fits this need quite nicely.
 
@@ -51,17 +58,23 @@ Wrapping that all up, to use eyeballs.js with the Rails adapter and jQuery:
     <!-- Mustache for templating -->
     <script src="mustache.js"></script>
     
-    <!-- eyeballs.js -->
+    <!-- eyeballs.js basic -->
     <script src="o_O.js"></script>
-    <script src="jquery.o_O.js"></script>
+    <script src="modules/o_O.model.js"></script>
+    <script src="modules/o_O.validations.js"></script>
     
-    <!-- Rails adapter -->
-    <script src="o_O.rails.js"></script>
+    <!-- eyeballs.js jquery driver for controller logic -->
+    <script src="drivers/jquery/modules/o_O.controller.js"></script>
+    <script src="drivers/jquery/modules/o_O.support.js"></script>
+    <script src="drivers/jquery/modules/o_O.routes.js"></script>
+    
+    <!-- REST adapter -->
+    <script src="drivers/jquery/adapters/o_O.rest.js"></script>
 
 Badabing, badaboom! You're now ready to start creating some models and controllers.
 
 Generators
-==========
+----------
 
 If you install the eyeballs.js Ruby gem, you can use the eyeballs command to generate eyeballs.js apps, models and controllers:
 
@@ -89,7 +102,7 @@ This will generate a `posts.html`, a `post.js` and a `posts_controller.js`.
 If the generator detects a "public" directory when you run it, it will install into public/javascripts.
 
 Models
-======
+------
 
 You define a model by passing a name and function to the eyeballs ( o_O ) function (pronounced 'eep eep'). As inspired by Rails, model definitions are capitalised. Note, however, that the new prefix is not used.
 
@@ -181,7 +194,7 @@ Finding, saving, updating and deleting. With callbacks? Easy peasy:
 There's a strong emphasis on callbacks: since any persisting to backends should be done asynchronously.
 
 Controllers
-===========
+-----------
 
 An eyeballs.js controller is also initialized with the eyeballs function, by passing a string name and an object containing the controller actions.
 
@@ -195,6 +208,36 @@ An eyeballs.js controller is also initialized with the eyeballs function, by pas
     })
 
 Again, this looks nice and familiar. Dead, dead simple.
+
+### Calling Controller Actions & Binding Events ###
+
+There are several ways to bind events to controller actions.
+
+#### Calling Directly ####
+
+The simplest way to call controller actions is to bind them directly. From the above example, you can simply call:
+
+    PostsController.new()
+
+...once you have initialized your controller.
+
+#### Routing ####
+
+You can use the eyeballs.js router to bind events to changes in the URL hash. This is particularly effective for graceful degradation, as well as preserving the back button history.
+
+Your `config/routes.js` file would look something like this:
+
+    o_O.routes.draw(function(map){
+      map.match('/posts/new/', {to: 'posts#new'})
+    })
+
+You can now bind this to particular links, by adding the `data-ajax-history` attribute to your `a` elements:
+
+    <a href="/posts/new" data-ajax-history="true">Click Me!</a>
+    
+This link will now call `PostsController.new()` when it is clicked.
+
+#### Binding actions to events ####
 
 To bind events to these controller actions, use the data-controller and data-action attributes:
 
@@ -231,7 +274,9 @@ Finally, in shorthand only, you can bind multiple events to a single element:
 Isn't that cool?
     
 Putting it all together
-=======================
+-----------------------
+
+TODO: The demo app isn't working right now. There should be a generator to generate a new demo app after each release.
 
 There's a small demo app included in this package, a simple app for adding personal reviews. It's a simple Sinatra app, so you can run it with:
 
@@ -290,12 +335,12 @@ That's all for now!
     
 
 Running the tests
-=================
+-----------------
 
 eyeballs.js uses QUnit for in-browser testing. Just load the files in the test directory in any browser to run them.
 
 About me
-========
+--------
 
 I'm Paul Campbell. I'm an avid web developer. Follow my ramblings at [http://www.pabcas.com](http://www.pabcas.com)
 

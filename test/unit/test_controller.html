@@ -2,10 +2,10 @@
                     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <script src="../../dist/jquery-1.4.2.min.js"></script>
-  <script src="../../dist/jquery.livequery.js"></script>
+  <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
+  <script src="../../dist/jquery/jquery.livequery.js"></script>
   <script src="../../src/o_O.js"></script>
-  <script src="../../src/jquery.o_O.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
 
@@ -111,7 +111,7 @@
     test form
   </form>
   
-  <form id="myShortcutForm" data-bind="reviews/create">
+  <form id="myShortcutForm" data-bind="reviews#create">
     test form
   </form>
   
@@ -119,19 +119,19 @@
     test link
   </a>
   
-  <a id="myShortcutLink" data-bind="reviews/show">
+  <a id="myShortcutLink" data-bind="reviews#show">
     test link
   </a>
 
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
-  <div id="shortcut" data-bind="click:reviews/shortcut; mouseenter:reviews/multi">
+  <div id="shortcut" data-bind="click:reviews#shortcut; mouseenter:reviews#multi">
     I'm a shortcut
   </div>
   <div id="anotherDiv">
     
   </div>
   <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
-  <input id="myOtherCheckbox" data-bind="+click:reviews/check" type="checkbox" value="toast">
+  <input id="myOtherCheckbox" data-bind="+click:reviews#check" type="checkbox" value="toast">
  </div>
 </body>
 </html>
