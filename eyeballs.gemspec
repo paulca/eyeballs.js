@@ -18,11 +18,17 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "CHANGELOG",
+     "Gemfile",
+     "Gemfile.lock",
      "README.md",
      "Rakefile",
      "app.rb",
      "bin/eyeballs",
      "config.ru",
+     "dist/jquery/jquery-1.4.2.min.js",
+     "dist/jquery/jquery.ba-hashchange.js",
+     "dist/jquery/jquery.livequery.js",
+     "dist/mustache/mustache.0.2.3.js",
      "eyeballs.gemspec",
      "lib/eyeballs.rb",
      "lib/eyeballs/app_detector.rb",
@@ -31,6 +37,15 @@ Gem::Specification.new do |s|
      "lib/eyeballs/controller_generator.rb",
      "lib/eyeballs/model_generator.rb",
      "lib/eyeballs/scaffold_generator.rb",
+     "src/adapters/o_O.localstorage.js",
+     "src/drivers/jquery/adapters/o_O.couchdb.js",
+     "src/drivers/jquery/adapters/o_O.dom.js",
+     "src/drivers/jquery/adapters/o_O.rest.js",
+     "src/drivers/jquery/modules/o_O.controller.js",
+     "src/drivers/jquery/modules/o_O.routes.js",
+     "src/drivers/jquery/modules/o_O.support.js",
+     "src/modules/o_O.model.js",
+     "src/modules/o_O.validations.js",
      "src/o_O.js",
      "templates/app_root/index.html",
      "templates/controller.js",
@@ -48,7 +63,9 @@ Gem::Specification.new do |s|
      "test/unit/test_form.html",
      "test/unit/test_localstorage.html",
      "test/unit/test_model.html",
-     "test/unit/test_model_with_callbacks.html"
+     "test/unit/test_model_with_callbacks.html",
+     "test/unit/test_rest.html",
+     "test/unit/test_routing.html"
   ]
   s.homepage = %q{http://www.github.com/paulca/eyeballs.js}
   s.rdoc_options = ["--charset=UTF-8"]
