@@ -12,6 +12,7 @@ describe Eyeballs::AppGenerator do
     let(:model_dir) { file('test', 'app', 'models') }
     let(:controller_dir) { file('test', 'app', 'controllers') }
     let(:view_dir) { file('test', 'app', 'views') }
+    let(:config_dir) { file('test', 'config') }
     let(:vendor_dir) { file('test', 'vendor') }
     let(:jquery_dir) { file('test', 'vendor', 'jquery') }
     let(:eyeballs_dir) { file('test', 'vendor', 'eyeballs') }
@@ -21,6 +22,8 @@ describe Eyeballs::AppGenerator do
     let(:livequery_file) { file('test', 'vendor', 'jquery', 'jquery.livequery.js') }
     let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.2.3.js') }
     let(:index_file) { file('test', 'index.html') }
+    let(:initializer_file) { file('test', 'config', 'initializer.js')}
+    let(:routes_file) { file('test', 'config', 'routes.js')}
     
     it "should create the test root" do
       File.exists?(test_root).should be_true
@@ -31,6 +34,7 @@ describe Eyeballs::AppGenerator do
       model_dir.should exist
       controller_dir.should exist
       view_dir.should exist
+      config_dir.should exist
       vendor_dir.should exist
       jquery_dir.should exist
       eyeballs_dir.should exist
@@ -42,6 +46,8 @@ describe Eyeballs::AppGenerator do
       livequery_file.should exist
       mustache_file.should exist
       index_file.should exist
+      initializer_file.should exist
+      routes_file.should exist
     end
     
     after(:all) do
