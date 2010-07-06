@@ -19,7 +19,7 @@ describe Eyeballs::AppGenerator do
     
     let(:jquery_file) { file('test', 'vendor', 'jquery', 'jquery-1.4.2.min.js') }
     let(:livequery_file) { file('test', 'vendor', 'jquery', 'jquery.livequery.js') }
-    let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.js') }
+    let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.2.3.js') }
     let(:index_file) { file('test', 'index.html') }
     
     it "should create the test root" do
