@@ -67,3 +67,7 @@ if(typeof String.prototype.capitalize == 'undefined')
     return this.charAt(0).toUpperCase() + this.slice(1);
   }
 }
+
+String.prototype.o_O_trim = function(chars) {
+  return this.replace(new RegExp("(^[" + chars + "]+|[" + chars + "]+$)", "g"), '')
+}

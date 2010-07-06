@@ -19,6 +19,9 @@
 
   <script>
   o_O('ReviewsController', {
+    root: function(){
+      $('div#root').html('rooting for you')
+    },
     index: function(bit){
       var out;
       if(bit == 'test')
@@ -31,29 +34,62 @@
       }
       $('div#index').html(out);
       return 'whoop!'
+    },
+    namespaced_index: function(bit){
+      var out;
+      if(bit == 'test')
+      {
+        out = 'namespaced and clicked!'
+      }
+      else
+      {
+        out = 'namespaced and indexed!'
+      }
+      $('div#namespaced-index').html(out);
+      return 'awesome!'
     }
   });
   
   o_O.routes.draw(function(map){
-    map.match('/', {to: "reviews#index", with: 'test'});
+    map.root({to: "reviews#root"})
+    map.match('/reviews/index/', {to: "reviews#index", with: 'test'});
+    map.namespace('my', function(my){
+      my.match('action', {to: "reviews#namespaced_index", with: 'test'})
+    })
   })
 
   $(document).ready(function(){
     
-    module("Simple Route");
+    module("Routing", {teardown: function(){
+      document.location.hash = ''
+    }});
     
     test('o_O.routes.urls', function(){
-      equals(o_O.routes.urls[0], '/', 'should store the necessary URLs')
+      equals(o_O.routes.urls[0], 'reviews/index', 'should store the necessary URLs')
+      equals(o_O.routes.urls[1], 'my/action', 'should store the necessary URLs')
     })
     
     test('o_O.routes.rules', function(){
-      equals(o_O.routes.rules['/'].action(), ReviewsController.index())
+      equals(o_O.routes.rules['reviews/index'].action(), ReviewsController.index())
+      equals(o_O.routes.rules['my/action'].action(), ReviewsController.namespaced_index())
+    })
+    
+    test('o_O.routes.root', function(){
+      equals($('div#root').html(), 'rooting for you');
     })
     
     asyncTest('map.match',function(){
       $('a#index-link').trigger('click');
       setTimeout(function(){
         equals($('div#index').html(), 'clicked!', "should call the action");
+        start();
+      },100)
+    })
+    
+    asyncTest('map.namespace',function(){
+      $('a#namespaced-index-link').trigger('click');
+      setTimeout(function(){
+        equals($('div#namespaced-index').html(), 'namespaced and clicked!', "should call the action");
         start();
       },100)
     })
@@ -68,9 +104,13 @@
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
  
-  <a id="index-link" data-ajax-history="true" href="/">Hello!</a>
+  <a id="index-link" data-ajax-history="true" href="/reviews/index">Hello!</a>
+  <a id="namespaced-index-link" data-ajax-history="true" href="/my/action">Hello!</a>
  
   <div id="index">
   </div>
+  <div id="namespaced-index">
+  </div>
+  <div id="root"></div>
 </body>
 </html>
