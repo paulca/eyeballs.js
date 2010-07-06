@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
@@ -47,6 +47,8 @@ Gem::Specification.new do |s|
      "src/modules/o_O.model.js",
      "src/modules/o_O.validations.js",
      "src/o_O.js",
+     "templates/app_root/config/initializer.js",
+     "templates/app_root/config/routes.js",
      "templates/app_root/index.html",
      "templates/controller.js",
      "templates/model.js",
