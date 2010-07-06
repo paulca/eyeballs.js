@@ -111,7 +111,7 @@
     test form
   </form>
   
-  <form id="myShortcutForm" data-bind="reviews/create">
+  <form id="myShortcutForm" data-bind="reviews#create">
     test form
   </form>
   
@@ -119,19 +119,19 @@
     test link
   </a>
   
-  <a id="myShortcutLink" data-bind="reviews/show">
+  <a id="myShortcutLink" data-bind="reviews#show">
     test link
   </a>
 
   <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
-  <div id="shortcut" data-bind="click:reviews/shortcut; mouseenter:reviews/multi">
+  <div id="shortcut" data-bind="click:reviews#shortcut; mouseenter:reviews#multi">
     I'm a shortcut
   </div>
   <div id="anotherDiv">
     
   </div>
   <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
-  <input id="myOtherCheckbox" data-bind="+click:reviews/check" type="checkbox" value="toast">
+  <input id="myOtherCheckbox" data-bind="+click:reviews#check" type="checkbox" value="toast">
  </div>
 </body>
 </html>

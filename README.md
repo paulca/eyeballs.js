@@ -202,6 +202,10 @@ An eyeballs.js controller is also initialized with the eyeballs function, by pas
 
 Again, this looks nice and familiar. Dead, dead simple.
 
+### Binding Events ###
+
+
+
 To bind events to these controller actions, use the data-controller and data-action attributes:
 
     <a href="/posts/new" data-controller="posts" data-action="new">Click me!</a>

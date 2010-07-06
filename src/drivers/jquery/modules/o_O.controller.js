@@ -12,6 +12,7 @@ o_O.controller = {
     var controller = controller;
 
     $(function(){
+      
       for(var action in controller)
       {        
         var selector = '[data-controller=' + controller_name + '][data-action=' + action + ']';
@@ -25,13 +26,13 @@ o_O.controller = {
         })
       }
       $('[data-bind]').livequery(function(){
-        var binders = $(this).attr('data-bind').match(/[\+]?(\s+)?[^ :]?[: ]?[^ \/]+[ \/]+[^ ;]+[ ;]?/g)
+        var binders = $(this).attr('data-bind').match(/[\+]?(\s+)?[^ :]?[: ]?[^ #]+[ #]+[^ ;]+[ ;]?/g)
         if(binders != null && binders.length > 0)
         {
           for(i = 0; i < binders.length; i++)
           {
             var rule = binders[i];
-            var parts = rule.match(/([\+])?(\s+)?(([^ :]+)([: ]+))?([^ \/]+)[ \/]+([^ ;]+)[ ;]?/)
+            var parts = rule.match(/([\+])?(\s+)?(([^ :]+)([: ]+))?([^ #]+)[ #]+([^ ;]+)[ ;]?/)
             var default_bit = parts[1];
             var this_action_event = parts[4];
             if(this_action_event === undefined)
