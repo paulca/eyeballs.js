@@ -237,6 +237,22 @@ You can now bind this to particular links, by adding the `data-ajax-history` att
     
 This link will now call `PostsController.new()` when it is clicked.
 
+If you want a default action to fire, that is when the `document.hash` is empty, just hook up a `map.root`:
+
+    o_O.routes.draw(function(map){
+      map.root({to: 'posts#index'})
+    })
+    
+If you have several routes that share the same prefix, you can use a namespace:
+
+    o_O.routes.draw(function(map){
+      map.namespace('my', function(){
+        map.match('posts/new', {to: "myposts#new"}) # hooks up to MypostsController.new()
+      })
+    })
+    
+Tasty!
+
 #### Binding actions to events ####
 
 To bind events to these controller actions, use the data-controller and data-action attributes:
