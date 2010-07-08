@@ -118,7 +118,7 @@ Not very exciting.
 However, if you're familiar with Rails, you'll be familiar with the wonderful syntax for adding validations to your models. eyeballs.js lets you add validations to your models as follows:
 
     o_O('Post', function(post){
-      post.validates_presence_of('title)
+      post.validates_presence_of('title')
     })
 
 Now, when you initialize a new Post, you can validate it, nice and easy:
