@@ -273,19 +273,19 @@ There's also a shorthand for binding:
 
 Bind clicks to PostsController#new
 
-    <a href="/posts/new" data-bind="posts/new">Click me!</a>
+    <a href="/posts/new" data-bind="posts#new">Click me!</a>
     
 Disable returning false to continue propagating new events:
 
-    <a href="/posts/new" data-bind="+posts/new">Click me!</a>
+    <a href="/posts/new" data-bind="+posts#new">Click me!</a>
 
 Custom events:
 
-    <a href="/posts/new" data-bind="mouseover:posts/new">Click me!</a>
+    <a href="/posts/new" data-bind="mouseover:posts#new">Click me!</a>
 
 Finally, in shorthand only, you can bind multiple events to a single element:
 
-    <a href="/posts/new" data-bind="mouseover:posts/preview; click: posts/new">Hover first, then Click me!</a>
+    <a href="/posts/new" data-bind="mouseover:posts#preview; click: posts/new">Hover first, then Click me!</a>
     
 Isn't that cool?
     
