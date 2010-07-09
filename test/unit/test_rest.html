@@ -47,6 +47,17 @@
       });
     });
     
+    asyncTest('accepting a string back', function(){
+      var review = Review.initialize({title: 'Magic!'})
+      review.save({
+        url: "/string_back",
+        success: function(saved_review){
+          equals(saved_review, 'some string', 'we should be able to accept a string back');
+          start();
+        }
+      });
+    });
+    
     asyncTest('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'});
       review.save(function(){

@@ -31,12 +31,17 @@ o_O.rest = {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
     var respond = function(response){
-      var saved_object = JSON.parse(response);
-      for(var attribute in saved_object)
-      {
-        object_to_save[attribute] = saved_object[attribute];
+      try{
+        var saved_object = JSON.parse(response);
+        for(var attribute in saved_object)
+        {
+          object_to_save[attribute] = saved_object[attribute];
+        }
+        object_to_save.new_record = false;
       }
-      object_to_save.new_record = false;
+      catch(e){
+        object_to_save = response;
+      }
       if(typeof callback === 'function')
       {
         callback(object_to_save);

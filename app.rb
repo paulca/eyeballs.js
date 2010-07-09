@@ -15,6 +15,10 @@ post '/alternate_reviews' do
   '{"id": "2"}'
 end
 
+post '/string_back' do
+  'some string'
+end
+
 get '/reviews/:id' do
   '{"id": "1", "title":"More Magic!"}'
 end
