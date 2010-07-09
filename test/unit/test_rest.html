@@ -103,6 +103,20 @@
       });
     });
     
+    asyncTest('consistent ID on string back', function(){
+      var string_back_id;
+      Review.create({},{
+        url: "/string_back",
+        loading: function(saved_review){
+          string_back_id = saved_review.id;
+        },
+        success: function(saved_review, response){
+          equals(saved_review.id, string_back_id, 'ids should be the same');
+          start();
+      }
+      });
+    });
+    
     asyncTest('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'});
       review.save(function(){
