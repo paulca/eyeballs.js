@@ -74,7 +74,7 @@ o_O.model = {
               var initialized_object = o_O.models[model.model_name].initialize(returned_object);
               initialized_object.new_record = false;
               run_callback(callback, 'success', initialized_object);
-            });
+            }, callback);
           }
           else
           {

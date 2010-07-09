@@ -35,6 +35,18 @@
       });
     });
     
+    asyncTest('storing a basic basic thing with a custom URL', function(){
+      var review = Review.initialize({title: 'Magic!'})
+      review.save({
+        url: "/alternate_reviews",
+        success: function(saved_review){
+          equals(saved_review.title, review.title, 'title should match');
+          equals(saved_review.id, '2', "Rails should give back the ID");
+          start();
+        }
+      });
+    });
+    
     asyncTest('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'});
       review.save(function(){

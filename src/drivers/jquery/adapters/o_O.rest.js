@@ -22,9 +22,10 @@ o_O.rest = {
       }
     })
   },
-  save: function(object, callback)
+  save: function(object, callback, original_callback)
   {
-    var object_to_save = {}
+    var object_to_save = {};
+    var url;
     for(var i = 0; i < object.attributes.length; i++)
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
@@ -41,15 +42,23 @@ o_O.rest = {
         callback(object_to_save);
       }
     }
+    if(typeof original_callback.url === 'string')
+    {
+      url = original_callback.url
+    }
+    else
+    {
+      url = '/' + object.table_name;
+    }
     if(object.new_record)
     {
-      $.post('/' + object.table_name, object_to_save, respond);
+      $.post(url, object_to_save, respond);
     }
     else
     {
       $.ajax({
         type: 'PUT',
-        url: '/' + object.table_name + '/' + object.id,
+        url: url + '/' + object.id,
         success: respond
       })
     }
