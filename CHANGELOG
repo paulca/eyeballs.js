@@ -2,6 +2,9 @@ Fri Jul 9
 - - - - - 
 - Add 'create' method
 - Add 'url' paramater for save
+- Specify whether to use a json_root (for Rails etc.)
+- Allow specifying the json_root name
+- Allow specifying a CSRF token
 
 Wed Jul 7 2010
 - - - - - - - -
