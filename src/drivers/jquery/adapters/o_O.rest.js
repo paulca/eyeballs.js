@@ -49,7 +49,11 @@ o_O.rest = {
     }
     if(typeof original_callback.url === 'string')
     {
-      url = original_callback.url
+      url = original_callback.url;
+    }
+    else if(typeof window[object.model_name]['url'] === 'string')
+    {
+      url = window[object.model_name]['url'];
     }
     else
     {

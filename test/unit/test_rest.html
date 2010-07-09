@@ -41,7 +41,7 @@
     asyncTest('storing a basic basic thing with custom URL set in the model', function(){
       FakeReview.create({title: 'Magic!'}, function(saved_review){
         equals(FakeReview.url, '/reviews', 'Should be set');
-        equals(saved_review.title, review.title, 'title should match');
+        equals(saved_review.title, 'Magic!', 'title should match');
         equals(saved_review.id, '1', "Rails should give back the ID");
         start();
       });
