@@ -11,7 +11,7 @@
   <script src="../../src/drivers/jquery/adapters/o_O.dom.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
-  <script src="../../src/modules/o_O.routes.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
 
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
@@ -52,9 +52,9 @@
   
   o_O.routes.draw(function(map){
     map.root({to: "reviews#root"})
-    map.match('/reviews/index/', {to: "reviews#index", with: 'test'});
+    map.match('/reviews/index/', {to: "reviews#index", with_args: 'test'});
     map.namespace('my', function(my){
-      my.match('action', {to: "reviews#namespaced_index", with: 'test'})
+      my.match('action', {to: "reviews#namespaced_index", with_args: 'test'})
     })
   })
 

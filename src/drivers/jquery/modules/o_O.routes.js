@@ -26,7 +26,10 @@ o_O.routes = {
         {
           parsed_route = prefix + '/' + parsed_route
         }
-        o_O.routes.rules[parsed_route] = {"action": o_O.routes.figure_action(options), "with": options.with};
+        o_O.routes.rules[parsed_route] = {
+          action: o_O.routes.figure_action(options),
+          with_args: options.with_args
+          };
         o_O.routes.urls.push(parsed_route);
       }
     }
@@ -48,7 +51,7 @@ o_O.routes = {
         var hash = location.hash.replace(/^(#)/, '').o_O_trim('/');
         if(o_O.routes.urls.indexOf(hash) >= 0)
         {
-          o_O.routes.rules[hash].action(o_O.routes.rules[hash].with);
+          o_O.routes.rules[hash].action(o_O.routes.rules[hash].with_args);
         }
       });
       
