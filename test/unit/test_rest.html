@@ -24,6 +24,9 @@
     module("Rails Test (with jQuery)");
     
     o_O('Review', function(){})
+    o_O('FakeReview', function(fake_review){
+      fake_review.url = '/reviews'
+    })
     
     asyncTest('storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
@@ -35,7 +38,16 @@
       });
     });
     
-    asyncTest('storing a basic basic thing with a custom URL', function(){
+    asyncTest('storing a basic basic thing with custom URL set in the model', function(){
+      FakeReview.create({title: 'Magic!'}, function(saved_review){
+        equals(FakeReview.url, '/reviews', 'Should be set');
+        equals(saved_review.title, review.title, 'title should match');
+        equals(saved_review.id, '1', "Rails should give back the ID");
+        start();
+      });
+    });
+    
+    asyncTest('storing a basic basic thing with a custom URL set in the save', function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save({
         url: "/alternate_reviews",

@@ -65,6 +65,18 @@
       });
     });
     
+    asyncTest('create', 2, function(){
+      Review.create({title: "Biscuit", content: "Some Content"},{
+        loading: function(){
+          ok('should call the loading callback before success')
+        },
+        success: function(){
+          ok('should call the success callback')
+          start();
+        }
+      });
+    });
+    
     asyncTest('an invalid review',1, function(){
       var myReview = Review.initialize();
       myReview.save({

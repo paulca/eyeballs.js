@@ -5,6 +5,7 @@ o_O.model = {
     var class_methods, instance_methods, initializer_methods;
     var validates_presence_of, validates_length_of;
     var table_name = model_name.toLowerCase() + 's';
+    var initial_class_methods = [];
   
     class_methods = {
       validations: {presence: [], lengthliness: [], custom: []},
@@ -20,6 +21,11 @@ o_O.model = {
         this.validations.custom.push(validation)
       }
     }
+    for(var method in class_methods)
+    {
+      initial_class_methods.push(method);
+    }
+    
   
     var run_callback = function(callback, method, args){
       try{
@@ -157,6 +163,9 @@ o_O.model = {
         }
         return attributes;
       },
+      create: function(attributes, callbacks){
+        this.initialize(attributes).save(callbacks);
+      },
       find: function(id, callback){
         if(this.adapter)
         {
@@ -181,6 +190,14 @@ o_O.model = {
       },
       model_name: model_name,
       table_name: table_name
+    }
+    
+    for(var method in class_methods)
+    {
+      if(initial_class_methods.indexOf(method) === -1)
+      {
+        initializer_methods[method] = class_methods[method];
+      }
     }
   
     return initializer_methods;
