@@ -31,7 +31,6 @@ o_O.rest = {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
     var respond = function(response){
-      console.log(response);
       try{
         var saved_object = JSON.parse(response);
         for(var attribute in saved_object)
@@ -59,6 +58,17 @@ o_O.rest = {
     else
     {
       url = '/' + object.table_name;
+    }
+    
+    if(window[object.model_name]['include_json_root'] === true)
+    {
+      new_object_to_save = {};
+      new_object_to_save[object.model_name.underscore()] = object_to_save;
+      object_to_save = new_object_to_save;
+    }
+    if(typeof o_O.config.authenticity_token === 'string')
+    {
+      object_to_save['authenticity_token'] = o_O.config.authenticity_token;
     }
     if(object.new_record)
     {
@@ -91,3 +101,5 @@ o_O.rest = {
     })
   }
 }
+
+o_O.config.rest = {}

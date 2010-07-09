@@ -68,6 +68,17 @@ if(typeof String.prototype.capitalize == 'undefined')
   }
 }
 
+if(typeof String.prototype.underscore == 'undefined')
+{
+  String.prototype.underscore = function(){
+    return this.replace(/::/g, '/')
+               .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+               .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+               .replace(/-/g, '_')
+               .toLowerCase();
+  }
+}
+
 String.prototype.o_O_trim = function(chars) {
   return this.replace(new RegExp("(^[" + chars + "]+|[" + chars + "]+$)", "g"), '')
 }

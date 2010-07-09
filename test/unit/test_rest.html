@@ -23,10 +23,10 @@
     
     module("REST Interface Test (with jQuery)");
     
-    o_O('Review', function(){})
+    o_O('Review', function(){});
     o_O('FakeReview', function(fake_review){
       fake_review.url = '/reviews'
-    })
+    });
     
     asyncTest('storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
@@ -58,6 +58,28 @@
         }
       });
     });
+    
+    o_O('RailsReview', function(review){
+      review.include_json_root = true;
+    });
+    
+    asyncTest('storing a basic basic thing with include_root', function(){
+      RailsReview.create({title: "Awesome"},function(response){
+        equals(response, 'ok', 'should send things with a root');
+        start();
+      });
+    });
+    
+    o_O.config.authenticity_token = 'a12345';
+    asyncTest('CSRF token', function(){
+      RailsReview.create({title: "Unnecessary"}, {
+        url: '/auth_token',
+        success: function(response){
+          equals(response, 'a12345', 'authenticity token should match')
+          start();
+        }
+      })
+    })
     
     asyncTest('accepting a string back', function(){
       var review = Review.initialize({title: 'Magic!'})
@@ -127,6 +149,8 @@
         });
       });
     })
+    
+    
 
   });
   </script>

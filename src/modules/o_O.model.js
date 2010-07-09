@@ -4,7 +4,7 @@ o_O.model = {
     var callback = callback;
     var class_methods, instance_methods, initializer_methods;
     var validates_presence_of, validates_length_of;
-    var table_name = model_name.toLowerCase() + 's';
+    var table_name = model_name.underscore() + 's';
     var initial_class_methods = [];
   
     class_methods = {
