@@ -103,6 +103,17 @@
       });
     });
     
+    asyncTest("ID shouldn't be sent", function(){
+      var string_back_id;
+      AlternateRailsReview.create({},{
+        url: "/test_id",
+        success: function(saved_review, response){
+          equals('ok', response, 'it should not sent an ID');
+          start();
+      }
+      });
+    });
+    
     asyncTest('consistent ID on string back', function(){
       var string_back_id;
       Review.create({},{

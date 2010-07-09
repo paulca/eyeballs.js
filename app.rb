@@ -19,6 +19,16 @@ post '/string_back' do
   'some string'
 end
 
+post '/test_id' do
+  if params[:alternate_object]
+    if params[:id]
+      'fail'
+    end
+  else
+    'ok'
+  end
+end
+
 post '/rails_reviews' do
   if params[:rails_review]
     'ok'

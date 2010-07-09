@@ -30,8 +30,6 @@ o_O.rest = {
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
-    // keep the ID persistent
-    object_to_save.id = object.id;
     var respond = function(response){
       try{
         var saved_object = JSON.parse(response);
@@ -42,6 +40,8 @@ o_O.rest = {
         object_to_save.new_record = false;
       }
       catch(e){
+        // keep the ID persistent
+        object_to_save.id = object.id;
       }
       if(typeof callback === 'function')
       {
