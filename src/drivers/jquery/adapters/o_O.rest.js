@@ -62,8 +62,17 @@ o_O.rest = {
     
     if(window[object.model_name]['include_json_root'] === true)
     {
+      var object_name;
       new_object_to_save = {};
-      new_object_to_save[object.model_name.underscore()] = object_to_save;
+      if(typeof window[object.model_name]['json_root_name'] === 'string')
+      {
+       object_name = window[object.model_name]['json_root_name'];
+      }
+      else
+      {
+        object_name = object.model_name.underscore();
+      }
+      new_object_to_save[object_name] = object_to_save;
       object_to_save = new_object_to_save;
     }
     if(typeof o_O.config.authenticity_token === 'string')

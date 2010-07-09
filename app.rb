@@ -27,6 +27,14 @@ post '/rails_reviews' do
   end
 end
 
+post '/alternate_rails_reviews' do
+  if params[:alternate_object]
+    'ok'
+  else
+    'fail'
+  end
+end
+
 post '/auth_token' do
   params[:authenticity_token]
 end

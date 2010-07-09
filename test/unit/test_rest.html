@@ -62,10 +62,21 @@
     o_O('RailsReview', function(review){
       review.include_json_root = true;
     });
+    o_O('AlternateRailsReview', function(review){
+      review.include_json_root = true;
+      review.json_root_name = 'alternate_object'
+    });
     
     asyncTest('storing a basic basic thing with include_root', function(){
       RailsReview.create({title: "Awesome"},function(response){
         equals(response, 'ok', 'should send things with a root');
+        start();
+      });
+    });
+
+    asyncTest('specifying a custom json_root_name', function(){
+      AlternateRailsReview.create({title: "Awesome"},function(response){
+        equals(response, 'ok', 'should send things to /alternate_rails_reviews');
         start();
       });
     });
