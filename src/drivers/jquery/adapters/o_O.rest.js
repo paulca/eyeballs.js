@@ -40,11 +40,10 @@ o_O.rest = {
         object_to_save.new_record = false;
       }
       catch(e){
-        object_to_save = response;
       }
       if(typeof callback === 'function')
       {
-        callback(object_to_save);
+        callback(object_to_save, response);
       }
     }
     if(typeof original_callback.url === 'string')

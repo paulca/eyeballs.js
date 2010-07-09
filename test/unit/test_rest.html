@@ -68,14 +68,14 @@
     });
     
     asyncTest('storing a basic basic thing with include_root', function(){
-      RailsReview.create({title: "Awesome"},function(response){
+      RailsReview.create({title: "Awesome"},function(review, response){
         equals(response, 'ok', 'should send things with a root');
         start();
       });
     });
 
     asyncTest('specifying a custom json_root_name', function(){
-      AlternateRailsReview.create({title: "Awesome"},function(response){
+      AlternateRailsReview.create({title: "Awesome"},function(review, response){
         equals(response, 'ok', 'should send things to /alternate_rails_reviews');
         start();
       });
@@ -85,7 +85,7 @@
     asyncTest('CSRF token', function(){
       RailsReview.create({title: "Unnecessary"}, {
         url: '/auth_token',
-        success: function(response){
+        success: function(review, response){
           equals(response, 'a12345', 'authenticity token should match')
           start();
         }
@@ -96,8 +96,8 @@
       var review = Review.initialize({title: 'Magic!'})
       review.save({
         url: "/string_back",
-        success: function(saved_review){
-          equals(saved_review, 'some string', 'we should be able to accept a string back');
+        success: function(saved_review, response){
+          equals(response, 'some string', 'we should be able to accept a string back');
           start();
         }
       });
