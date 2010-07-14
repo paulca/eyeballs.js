@@ -1,7 +1,12 @@
+Wed Jul 14 2010
+- - - - - - - -
+- Add 'url' parameter for destroy
+- Add errors.on for finding errors
+
 Fri Jul 9
 - - - - - 
 - Add 'create' method
-- Add 'url' paramater for save
+- Add 'url' parameter for save
 - Specify whether to use a json_root (for Rails etc.)
 - Allow specifying the json_root name
 - Allow specifying a CSRF token
