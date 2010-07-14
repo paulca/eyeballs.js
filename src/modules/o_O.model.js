@@ -113,7 +113,7 @@ o_O.model = {
         this.save(callback);
       },
       valid: function(){
-        this.errors = [];
+        this.errors.length = 0;
         
         o_O.validations.run(this);
 
@@ -129,6 +129,16 @@ o_O.model = {
       errors: [],
       validations: class_methods.validations
     }
+    instance_methods.errors.on = function(field){
+      for(var i=0; i<instance_methods.errors.length; i++)
+      {
+        if(field === instance_methods.errors[i].field)
+        {
+          return instance_methods.errors[i];
+        }
+      }
+    }
+    
     for(method in class_methods.methods)
     {
       instance_methods[method] = class_methods.methods[method]

@@ -88,10 +88,12 @@
       equals(myReview.content, 'Dublin', 'should update the content');
     })
     
-    test('updating a review invalid', 1, function(){
+    test('updating a review invalid', function(){
       myReview = Review.find('paul');
       myReview.update_attributes({title: '', content: ''});
       equals(myReview.errors.length, 2, "should have 2 errors");
+      equals(myReview.errors.on('title').field, 'title')
+      equals(myReview.errors.on('title').type, 'presence')
     })
 
     test('defining methods should work',1, function(){
