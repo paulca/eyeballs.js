@@ -170,22 +170,43 @@
       var review = Review.initialize({title: 'Doomed!'});
       review.save(function(saved_review){
         saved_review.update_attributes({title: 'Tennessee'}, function(saved_review){
-          equals(saved_review.title, 'Tennessee', 'Title should have been updated');
+          equals(saved_review.title, 'Updated', 'Title should have been updated');
           start();
         });
       });
     });
     
-    asyncTest('deleting', 1, function(){
+    asyncTest('updating with custom URL', 1, function(){
+      var review = FakeReview.initialize({title: 'Doomed!'});
+      review.save(function(saved_review){
+        saved_review.update_attributes({title: 'Tennessee'}, function(saved_review){
+          equals(saved_review.title, 'Updated', 'Title should have been updated');
+          start();
+        });
+      });
+    });
+    
+    asyncTest('deleting', 2, function(){
       var review = Review.initialize({title: 'Doomed!'});
       review.save(function(saved_review){        
-        saved_review.destroy(function(destroyed_review){
+        saved_review.destroy(function(destroyed_review, response){
           equals(destroyed_review.destroyed, true, 'It should have deleted the doc')
+          equals(response, 'Deleted OK', 'It should have deleted the doc')
           start()
         });
       });
     })
     
+    asyncTest('deleting with custom URL', 2, function(){
+      var review = FakeReview.initialize({title: 'Doomed!'});
+      review.save(function(saved_review){        
+        saved_review.destroy(function(destroyed_review, response){
+          equals(destroyed_review.destroyed, true, 'It should have deleted the doc')
+          equals(response, 'Deleted OK', 'It should have deleted the doc')
+          start()
+        });
+      });
+    })
     
 
   });

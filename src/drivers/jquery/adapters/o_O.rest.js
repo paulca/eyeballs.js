@@ -1,5 +1,19 @@
 // REST & Rails, woop!
 o_O.rest = {
+  figure_url: function(original_callback, object){
+    if(typeof original_callback.url === 'string')
+    {
+      return original_callback.url;
+    }
+    else if(typeof window[object.model_name]['url'] === 'string')
+    {
+      return window[object.model_name]['url'];
+    }
+    else
+    {
+      return '/' + object.table_name;
+    }
+  },
   all: function(model, callback){
     $.get('/' + model.table_name, function(response){
       var documents = JSON.parse(response);
@@ -9,15 +23,15 @@ o_O.rest = {
       }
     })
   },
-  destroy: function(object, callback){
+  destroy: function(object, callback, original_callback){
     object.destroyed = true;
     $.ajax({
       type: 'DELETE',
-      url: '/' + object.table_name + '/' + object.id,
-      success: function(){
+      url: this.figure_url(original_callback, object) + '/' + object.id,
+      success: function(response){
         if(typeof callback === 'function')
         {
-          callback(object);
+          callback(object, response);
         }
       }
     })
@@ -48,18 +62,7 @@ o_O.rest = {
         callback(object_to_save, response);
       }
     }
-    if(typeof original_callback.url === 'string')
-    {
-      url = original_callback.url;
-    }
-    else if(typeof window[object.model_name]['url'] === 'string')
-    {
-      url = window[object.model_name]['url'];
-    }
-    else
-    {
-      url = '/' + object.table_name;
-    }
+    url = this.figure_url(original_callback, object);
     
     if(window[object.model_name]['include_json_root'] === true)
     {

@@ -58,9 +58,9 @@ o_O.model = {
         run_callback(callback, 'loading', this)
         if(this.adapter)
         {
-          this.adapter.destroy(this, function(returned_object){
-            run_callback(callback, 'success', returned_object);
-          });
+          this.adapter.destroy(this, function(returned_object, response){
+            run_callback(callback, 'success', returned_object, response);
+          }, callback);
         }
         else
         {

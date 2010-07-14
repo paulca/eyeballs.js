@@ -4,8 +4,8 @@ o_O.couchdb = {
     
     var database = o_O.model.adapter.settings.database;
     
-    var ddoc_id = ['_design', model.table_name].join('/')
-    var view_name = model.table_name + '/all'
+    var ddoc_id = ['_design', model.table_name].join('/');
+    var view_name = model.table_name + '/all';
     var get_all_documents = function(result){
       var documents = result.rows;
       var all_documents = [];

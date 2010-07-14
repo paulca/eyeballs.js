@@ -58,9 +58,9 @@ get '/my/reviews/:id' do
 end
 
 put '/reviews/:id' do
-  '{"id": "1", "title":"' + params[:title] + '"}'
+  '{"id": "1", "title":"Updated"}'
 end
 
 delete '/reviews/:id' do
-  '{"id": "1", "title":"Tennessee"}'
+  'Deleted OK'
 end
