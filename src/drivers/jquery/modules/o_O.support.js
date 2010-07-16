@@ -64,7 +64,7 @@ o_O.get_template = function(template, data, callback){
 if(typeof String.prototype.capitalize == 'undefined')
 {
   String.prototype.capitalize = function(){
-    return this.charAt(0).toUpperCase() + this.slice(1);
+    return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();
   }
 }
 

@@ -20,12 +20,12 @@ o_O.validations = {
       {
         if(max && object[field].length > max)
         {
-          var message = field + ' should be less than ' + max + ' characters';
+          var message = field.capitalize() + ' should be less than ' + max + ' characters';
           object.errors.push({field: field, type: 'length', message: message});
         }
         if(min && object[field].length < min)
         {
-          var message = field + ' should be greater than ' + min + ' characters';
+          var message = field.capitalize() + ' should be greater than ' + min + ' characters';
           object.errors.push({field: field, type: 'length', message: message});
         }
       }
@@ -37,7 +37,7 @@ o_O.validations = {
       var field = object.validations.presence[i].field;
       if(object[field] == '' || object[field] == null)
       {
-        var message = field + ' should be present';
+        var message = field.capitalize() + ' should be present';
         object.errors.push({field: field, type: 'presence', message: message})
       }
     }

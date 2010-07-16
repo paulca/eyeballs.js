@@ -107,11 +107,11 @@
       equals(myReview.errors.length, 1, "should have an error");
       equals(myReview.errors[0].field, 'title', 'should be on title');
       equals(myReview.errors[0].type, 'length', 'should be length')
-      equals(myReview.errors[0].message, 'title should be less than 15 characters', 'should have an error message')
+      equals(myReview.errors[0].message, 'Title should be less than 15 characters', 'should have an error message')
       myReview.title = 'the'
       myReview.save();
       equals(myReview.errors.length, 1, "should still only have one error");
-      equals(myReview.errors[0].message, 'title should be greater than 5 characters', 'should have an error message')
+      equals(myReview.errors[0].message, 'Title should be greater than 5 characters', 'should have an error message')
     });
     
     test('custom validation', 3, function(){
