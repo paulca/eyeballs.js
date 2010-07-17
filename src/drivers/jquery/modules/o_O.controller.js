@@ -20,6 +20,14 @@ o_O.controller = {
             {
               this_action_event = ($(this).is('form')) ? 'submit' : 'click';
             }
+            if(this_action_event === 'blur' && event.type == 'focusout')
+            {
+              this_action_event = 'focusout';
+            }
+            if(this_action_event === 'focus' && event.type == 'focusin')
+            {
+              this_action_event = 'focusin';
+            }
             var this_controller_name = parts[6];
             var this_action = parts[7];
             if(this_controller_name == controller_name && this_action_event === event.type)
