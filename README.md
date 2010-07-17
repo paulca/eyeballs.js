@@ -255,39 +255,25 @@ Tasty!
 
 #### Binding actions to events ####
 
-To bind events to these controller actions, use the data-controller and data-action attributes:
+To bind events to these controller actions, use the data-bind attribute:
 
-    <a href="/posts/new" data-controller="posts" data-action="new">Click me!</a>
+    <a href="/posts/new" data-controller="posts#new">Click me!</a>
 
 This binds all clicks on this element to the new action on the PostsController. By default, if you add these attributes to a form, the action is bound to the submit event; to all other elements it binds to a click.
 
-It also returns false, canceling out the default behavior. If you want the default behavior, you can add `data-default=true`:
+It also returns false, canceling out the default behavior. If you want the default behavior, prefix with `+`  to "add" the action to the propagation chain:
 
-    <a href="/posts/new" data-controller="posts" data-action="new" data-default="true">Click me!</a>
+    <a href="/posts/new" data-controller="+posts#new">Click me!</a>
     
-You can also bind to custom events, using data-event:
+You can also bind to custom events:
 
-    <a href="/posts/new" data-controller="posts" data-action="new" data-default="true" data-event="mouseover">Hover over me!</a>
+    <a href="/posts/new" data-controller="+mouseover:posts#new">Hover over me!</a>
     
-There's also a shorthand for binding:
-
-Bind clicks to PostsController#new
-
-    <a href="/posts/new" data-bind="posts#new">Click me!</a>
-    
-Disable returning false to continue propagating new events:
-
-    <a href="/posts/new" data-bind="+posts#new">Click me!</a>
-
-Custom events:
-
-    <a href="/posts/new" data-bind="mouseover:posts#new">Click me!</a>
-
-Finally, in shorthand only, you can bind multiple events to a single element:
+You can bind multiple events and actions to a single element:
 
     <a href="/posts/new" data-bind="mouseover:posts#preview; click: posts/new">Hover first, then Click me!</a>
     
-Isn't that cool?
+It's called "obtrusive UJS" ... explicit, yet everything has its own place.
     
 Putting it all together
 -----------------------
