@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.4.2"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-07-07}
+  s.date = %q{2010-07-17}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -22,12 +22,12 @@ Gem::Specification.new do |s|
      "Gemfile.lock",
      "README.md",
      "Rakefile",
+     "TODO",
      "app.rb",
      "bin/eyeballs",
      "config.ru",
      "dist/jquery/jquery-1.4.2.min.js",
      "dist/jquery/jquery.ba-hashchange.js",
-     "dist/jquery/jquery.livequery.js",
      "dist/mustache/mustache.0.2.3.js",
      "eyeballs.gemspec",
      "lib/eyeballs.rb",
