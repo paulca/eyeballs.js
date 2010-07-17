@@ -278,15 +278,7 @@ It's called "obtrusive UJS" ... explicit, yet everything has its own place.
 Putting it all together
 -----------------------
 
-TODO: The demo app isn't working right now. There should be a generator to generate a new demo app after each release.
-
-There's a small demo app included in this package, a simple app for adding personal reviews. It's a simple Sinatra app, so you can run it with:
-
-    ruby app.rb
-
-And then visit it in a browser at `localhost:4567`
-
-It should all "just work" ... in a browser that supports HTML5 local storage.
+Imagine a simple app for posting reviews. It will comprise a "Review" model, "ReviewsController" and associated views.
 
 `models/review.js` looks like this:
 
@@ -295,9 +287,9 @@ It should all "just work" ... in a browser that supports HTML5 local storage.
       review.validates_presence_of('content');
     });
 
-This defines the Review model, allowing us to initialize and save Review objects.
+This defines the Review model, allowing us to initialize and save Review objects, while ensuring `title` and `content` are included.
 
-The `create` action in `controllers/reviews_controller.js` looks like this:
+The `create` action in `controllers/reviews_controller.js` looks like this (using jQuery):
 
     ...
     create: function(){
@@ -317,7 +309,7 @@ The `create` action in `controllers/reviews_controller.js` looks like this:
 
 The form that hooks up to this action is like this:
 
-    <form data-controller="reviews" data-action="create">
+    <form data-bind="reviews#create">
       <label for="review-title">Title</label><br />
       <input type="text" name="title" value="" data-attribute="title"><br />
       <label for="review-content">Review</label><br />
@@ -325,21 +317,19 @@ The form that hooks up to this action is like this:
       <input type="submit" name="commit" value="Save">
     </form>
 
-The main things to note here are the way that the form binds automatically to the create action (using jQuery). Also, field elements have the "data-attribute" attributes ... the o\_O.params() function reads from these, returning a JSON object that can be passed to Review.initialize(...).
+The main things to note here are the way that the form binds automatically to the create action (using jQuery event delegation). Also, field elements have the "data-attribute" attributes ... the o\_O.params() function reads from these, returning a JSON object that can be passed to Review.initialize(...).
 
 Notice also `o_O.alert_errors(...)` which displays an alert of all the errors on an invalid review.
 
 Finally, the o\_O.render function takes a template, which is a Mustache.js template stored in `views/`, the review object and a set of options.
-
-This is all very early stuff, but please feel free to play and feedback.
-
-That's all for now!
     
 
 Running the tests
 -----------------
 
 eyeballs.js uses QUnit for in-browser testing. Just load the files in the test directory in any browser to run them.
+
+For the REST tests, you can use the included Sinatra app, `app.rb`. The tests expect it to be in a local virtual domain `http://eyeballs`
 
 About me
 --------

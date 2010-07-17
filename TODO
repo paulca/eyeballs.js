@@ -1,5 +1,2 @@
-- Support for proper_underscore_to_camelcase
-- Support for specifying the URL in the model, if the model name doesn't match
 - alert_errors
-- Better humanizing of attributes
 - Rails helper to automatically include "data-attributes"
