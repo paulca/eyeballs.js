@@ -1,5 +1,9 @@
 --- 
 dependencies: 
+  ruby-debug: 
+    group: 
+    - :test
+    version: ">= 0"
   thor: 
     group: 
     - :default
@@ -23,6 +27,8 @@ dependencies:
 specs: 
 - activesupport: 
     version: 2.3.8
+- columnize: 
+    version: 0.3.1
 - json_pure: 
     version: 1.4.3
 - gemcutter: 
@@ -33,15 +39,21 @@ specs:
     version: 2.0.4
 - jeweler: 
     version: 1.4.0
+- linecache: 
+    version: "0.43"
 - rack: 
     version: 1.2.1
 - rspec: 
     version: 1.3.0
+- ruby-debug-base: 
+    version: 0.10.3
+- ruby-debug: 
+    version: 0.10.3
 - sinatra: 
     version: "1.0"
 - thor: 
-    version: 0.13.7
-hash: 17f409790dfc3ab7e279201874a3aab85e4c7c95
+    version: 0.13.8
+hash: 18ee2e0d3e9a46cd1d8e8c39951ba9414860f401
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

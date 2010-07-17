@@ -3,7 +3,6 @@
 <html>
 <head>
   <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
-  <script src="../../dist/jquery/jquery.livequery.js"></script>
   <script src="../../src/o_O.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
@@ -46,50 +45,39 @@
       $('form#myForm').trigger('submit');
       equals($('form#myForm').html(), 'created!', 'html should have been updated');
     });
-    
-    test('submitting an auto-bound form with data-bind shortcut', 1, function(){
-      $('form#myShortcutForm').trigger('submit');
-      equals($('form#myShortcutForm').html(), 'created!', 'html should have been updated');
-    });
-    
+
     test('clicking an auto-bound link', 1, function(){
       $('a#myLink').trigger('click');
       equals($('a#myLink').html(), 'shown!', 'html should have been updated');
     });
-    
-    test('clicking an auto-bound link with data-bind shortcut', 1, function(){
-      $('a#myShortcutLink').trigger('click');
-      equals($('a#myShortcutLink').html(), 'shown!', 'html should have been updated');
-    });
-    
+
+
     test('hovering a custom bound element', 1, function(){
       $('div#myDiv').trigger('mouseover');
       equals($('div#myDiv').html(), 'other!', 'html should have been updated');
     });
     
-    new_element = $('<a id="anotherLink" data-controller="reviews" data-action="another">another link</a>')
+    new_element = $('<a id="anotherLink" data-bind="reviews#another">another link</a>')
     $('div#anotherDiv').append(new_element);
     
     
-    setTimeout(function(){
-      test("a new link", 1, function(){
+    asyncTest('new link', function(){
+      setTimeout(function(){
         $('a#anotherLink').trigger('click');
         equals($('a#anotherLink').html(), 'another!', 'it should have some dynamic behavior');
-      })
-    }, 100);
+        start();
+      }, 100);
+    })
 
-    test('should allow default behavior', 1, function(){
-      $('input#myCheckbox').trigger('click');
-      equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
+    asyncTest('should allow default behavior', 1, function(){
+      setTimeout(function(){
+        $('input#myCheckbox').trigger('click');
+        equals($('input#myCheckbox:checked').length, 1, "check box should be checked")
+        start();
+      }, 100)
     })
     
-    test('should allow default behavior with data-bind', 2, function(){
-      $('input#myOtherCheckbox').trigger('click');
-      equals($('input#myOtherCheckbox:checked').val(), 'bacon', "check box value should change")
-      equals($('input#myOtherCheckbox:checked').length, 1, "check box should be checked")
-    })
-    
-    test('should bind on shortcuts',2, function(){
+    test('should bind multiple events',2, function(){
       $('div#shortcut').trigger('click');
       equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
       $('div#shortcut').trigger('mouseover');
@@ -107,15 +95,11 @@
   <ol id="qunit-tests"></ol>
  
  <div data-id="paul">
-  <form id="myForm" data-controller="reviews" data-action="create">
+  <form id="myForm" data-bind="reviews#create">
     test form
   </form>
-  
-  <form id="myShortcutForm" data-bind="reviews#create">
-    test form
-  </form>
-  
-  <a id="myLink" data-controller="reviews" data-action="show">
+    
+  <a id="myLink" data-bind="reviews#show">
     test link
   </a>
   
@@ -123,15 +107,14 @@
     test link
   </a>
 
-  <div id="myDiv" data-controller="reviews" data-action="other" data-event="mouseenter">stuff</div>
-  <div id="shortcut" data-bind="click:reviews#shortcut; mouseenter:reviews#multi">
+  <div id="myDiv" data-bind="mouseover:reviews#other">stuff</div>
+  <div id="shortcut" data-bind="click:reviews#shortcut; mouseover:reviews#multi">
     I'm a shortcut
   </div>
   <div id="anotherDiv">
     
   </div>
-  <input id="myCheckbox" data-controller="reviews" data-action="check" data-default="true" type="checkbox">
-  <input id="myOtherCheckbox" data-bind="+click:reviews#check" type="checkbox" value="toast">
+  <input id="myCheckbox" data-bind="+click:reviews#check" data-default="true" type="checkbox">
  </div>
 </body>
 </html>

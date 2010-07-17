@@ -43,7 +43,7 @@ describe Eyeballs::AppGenerator do
     
     it "should create the app files" do
       jquery_file.should exist
-      livequery_file.should exist
+      livequery_file.should_not exist
       mustache_file.should exist
       index_file.should exist
       initializer_file.should exist

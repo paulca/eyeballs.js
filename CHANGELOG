@@ -1,3 +1,7 @@
+Sat Jul 17
+- - - - - -
+- Remove data-controller data-action stuff. "data-bind" is way better.
+
 Wed Jul 14 2010
 - - - - - - - -
 - Add 'url' parameter for destroy
