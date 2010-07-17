@@ -35,7 +35,7 @@ o_O.validations = {
     for(var i = 0; i < object.validations.presence.length; i++)
     {
       var field = object.validations.presence[i].field;
-      if(object[field] == '' || object[field] == null)
+      if(object[field] == null || (typeof object[field] === 'string' && object[field].blank()) )
       {
         var message = field.capitalize() + ' should be present';
         object.errors.push({field: field, type: 'presence', message: message})
