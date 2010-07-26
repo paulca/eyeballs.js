@@ -1,2 +1,6 @@
 - alert_errors
 - Rails helper to automatically include "data-attributes"
+- offline mode
+- WebSQL
+- undo
+- server side error callback
