@@ -32,10 +32,14 @@ o_O.controller = {
             var this_action = parts[7];
             if(this_controller_name == controller_name && this_action_event === event.type)
             {
-              controller[this_action].apply(this);
               if(default_bit != '+')
               {
+                controller[this_action].apply(this);
                 return false;
+              }
+              else
+              {
+                return controller[this_action].apply(this);
               }
             }
           }
