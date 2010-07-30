@@ -257,17 +257,17 @@ Tasty!
 
 To bind events to these controller actions, use the data-bind attribute:
 
-    <a href="/posts/new" data-controller="posts#new">Click me!</a>
+    <a href="/posts/new" data-bind="posts#new">Click me!</a>
 
 This binds all clicks on this element to the new action on the PostsController. By default, if you add these attributes to a form, the action is bound to the submit event; to all other elements it binds to a click.
 
 It also returns false, canceling out the default behavior. If you want the default behavior, prefix with `+`  to "add" the action to the propagation chain:
 
-    <a href="/posts/new" data-controller="+posts#new">Click me!</a>
+    <a href="/posts/new" data-bind="+posts#new">Click me!</a>
     
 You can also bind to custom events:
 
-    <a href="/posts/new" data-controller="+mouseover:posts#new">Hover over me!</a>
+    <a href="/posts/new" data-bind="+mouseover:posts#new">Hover over me!</a>
     
 You can bind multiple events and actions to a single element:
 
