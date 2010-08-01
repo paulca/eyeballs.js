@@ -1,3 +1,7 @@
+Sun Aug 1
+- - - - -
+- Bring the scaffold generator up to date
+
 Tue Jul 27
 - - - - - -
 - Event Delegation bug causing the default bit not to return false
