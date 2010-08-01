@@ -29,9 +29,9 @@ module Eyeballs
     end
     
     def build_the_views
-      template "templates/scaffold_index.html", "#{app_path}/#{name.downcase.pluralize}.html"
+      template "templates/scaffold_index.html", "#{public_path}/#{name.downcase.pluralize}.html"
       template "templates/scaffold_partial.html.mustache", "#{app_path}/app/views/#{name.downcase.pluralize}/_#{name.downcase}.html.mustache"
-      template "#{app_path}/templates/scaffold_edit.html.mustache", "app/views/#{name.downcase.pluralize}/edit.html.mustache"
+      template "templates/scaffold_edit.html.mustache", "#{app_path}/app/views/#{name.downcase.pluralize}/edit.html.mustache"
     end
   
     def farewell

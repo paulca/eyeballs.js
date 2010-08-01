@@ -20,6 +20,18 @@ module Eyeballs
       end
     end
     
+    def public_path
+      @public_path ||= if rack_app?
+        'public'
+      else
+        '.'
+      end
+    end
+    
+    def prefix
+      '/public/' if rack_app?
+    end
+    
     def rack_app?
       File.exists?('public')
     end
