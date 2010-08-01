@@ -289,7 +289,7 @@ Imagine a simple app for posting reviews. It will comprise a "Review" model, "Re
 
 This defines the Review model, allowing us to initialize and save Review objects, while ensuring `title` and `content` are included.
 
-The `create` action in `controllers/reviews_controller.js` looks like this (using jQuery):
+The `create` action in `controllers/reviews_venue.js` looks like this (using jQuery):
 
     ...
     create: function(){
