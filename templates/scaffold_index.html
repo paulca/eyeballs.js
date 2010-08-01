@@ -11,7 +11,7 @@
 
     <h2>Add:</h2>
     
-    <form data-bind="<%= name.downcase.pluralize %>/create">
+    <form data-bind="<%= name.downcase.pluralize %>#create">
       <%- attributes.each do |attribute| %>
         <label for="<%= name.downcase %>-<%= attribute.name %>"><%= attribute.name.titlecase %></label><br />
         <%- if attribute.type == 'text' %>
