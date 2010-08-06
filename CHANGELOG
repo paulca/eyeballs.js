@@ -1,3 +1,7 @@
+Fri Aug 6
+- - - - - 
+- Add support for passing params from the URL to the controller
+
 Sun Aug 1
 - - - - -
 - Bring the scaffold generator up to date

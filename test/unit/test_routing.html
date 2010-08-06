@@ -12,7 +12,6 @@
   <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
-  <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
 
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
@@ -47,6 +46,9 @@
       }
       $('div#namespaced-index').html(out);
       return 'awesome!'
+    },
+    sending_params: function(params){
+      $('div#with_params').html(params('test'));
     }
   });
   
@@ -56,6 +58,7 @@
     map.namespace('my', function(my){
       my.match('action', {to: "reviews#namespaced_index", with_args: 'test'})
     })
+    map.match('/reviews/:test', {to: 'reviews#sending_params'})
   })
 
   $(document).ready(function(){
@@ -93,6 +96,15 @@
         start();
       },100)
     })
+    
+    asyncTest('withparams',function(){
+      $('a#with-params').trigger('click');
+      setTimeout(function(){
+        equals($('div#with_params').html(), 'something', "should pass the params");
+        start();
+      },100)
+    })
+    
 
   });
   </script>
@@ -106,11 +118,14 @@
  
   <a id="index-link" data-ajax-history="true" href="/reviews/index">Hello!</a>
   <a id="namespaced-index-link" data-ajax-history="true" href="/my/action">Hello!</a>
+  
+  <a id="with-params" data-ajax-history="true" href="/reviews/something">Hello!</a>
  
   <div id="index">
   </div>
   <div id="namespaced-index">
   </div>
   <div id="root"></div>
+  <div id="with_params"></div>
 </body>
 </html>
