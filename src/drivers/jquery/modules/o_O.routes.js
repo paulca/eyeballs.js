@@ -60,9 +60,10 @@ o_O.routes = {
         {
           o_O.routes.rules['root'].action();
         }
+        
       }
       
-      $(window).bind( 'hashchange', function(){
+      var route_on_hash = function(){
         var hash = location.hash.replace(/^(#)/, '').o_O_trim('/');
         if(o_O.routes.urls.indexOf(hash) >= 0)
         {
@@ -93,7 +94,9 @@ o_O.routes = {
             }
           }
         }
-      });
+      }
+      
+      $(window).bind( 'hashchange', route_on_hash);
       
       $('a').live('click', function(){
         if($(this).is('a[data-ajax-history=true]'))
@@ -102,6 +105,11 @@ o_O.routes = {
           return false;
         }
       });
-    })
+      
+      if(location.hash != '')
+      {
+        route_on_hash();
+      }
+    }) 
   }
 }
