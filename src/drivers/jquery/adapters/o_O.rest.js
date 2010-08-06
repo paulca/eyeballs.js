@@ -100,16 +100,27 @@ o_O.rest = {
   find: function(model, id, callback, options)
   {
     var url = '/' + model.table_name + '/' + id;
-    if(typeof options === 'object' && options.prefix)
+    if(typeof options === 'object')
     {
-      url = options.prefix + url;
+      if(options['url']){
+        url = options['url'];
+      }
+      else if(options['prefix'])
+      {
+        url = options.prefix + url;
+      }
     }
     $.get(url, function(response){
-      var retrieved_object = JSON.parse(response);
+      try{
+        var retrieved_object = JSON.parse(response);
+      }
+      catch(e){
+        var retrieved_object = model.initialize({id: id});
+      }
       if(typeof callback === 'function')
       {
         retrieved_object.new_record = false;
-        callback(retrieved_object);
+        callback(retrieved_object, response);
       }
     })
   }

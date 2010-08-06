@@ -179,9 +179,9 @@ o_O.model = {
       find: function(id, callback){
         if(this.adapter)
         {
-          run_callback(callback, 'loading', this)
+          run_callback(callback, 'loading', this.initialize({id: id}))
           var model = this;
-          return this.adapter.find(this, id, function(returned_object){
+          return this.adapter.find(this, id, function(returned_object, response){
             found_object = model.initialize(returned_object);
             if(!found_object['new_record'])
             {
@@ -189,11 +189,11 @@ o_O.model = {
             }
             if(found_object.id)
             {
-              run_callback(callback, 'success', found_object);
+              run_callback(callback, 'success', found_object, response);
             }
             else
             {
-              run_callback(callback, 'failure', found_object);
+              run_callback(callback, 'failure', found_object, response);
             }
           }, callback);
         }

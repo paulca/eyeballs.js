@@ -114,7 +114,7 @@
       });
     });
     
-    asyncTest('consistent ID on string back', function(){
+    asyncTest('consistent ID save with string back', function(){
       var string_back_id;
       Review.create({},{
         url: "/string_back",
@@ -123,6 +123,21 @@
         },
         success: function(saved_review, response){
           equals(saved_review.id, string_back_id, 'ids should be the same');
+          start();
+      }
+      });
+    });
+    
+    asyncTest('consistent ID find with string back', function(){
+      var string_back_id;
+      Review.find({},{
+        url: "/string_back",
+        loading: function(found_review){
+          string_back_id = found_review.id;
+        },
+        success: function(found_review, response){
+          equals(response, 'found a string', 'should give me a string back!');
+          equals(found_review.id, string_back_id, 'ids should be the same');
           start();
       }
       });

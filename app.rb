@@ -15,6 +15,10 @@ post '/alternate_reviews' do
   '{"id": "2"}'
 end
 
+get '/string_back' do
+  'found a string'
+end
+
 post '/string_back' do
   'some string'
 end
