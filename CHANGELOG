@@ -1,6 +1,7 @@
 Fri Aug 6
 - - - - - 
 - Add support for passing params from the URL to the controller
+- Add proper callbacks and reading a response to .find
 
 Sun Aug 1
 - - - - -
