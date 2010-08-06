@@ -237,6 +237,22 @@ You can now bind this to particular links, by adding the `data-ajax-history` att
     
 This link will now call `PostsController.new()` when it is clicked.
 
+You can also set params in the URL, eg:
+
+    o_O.routes.draw(function(map){
+      map.match('/posts/:id/', {to: 'posts#show'})
+    })
+
+    <a href="/posts/1">Click Me for Post 1!</a>
+    
+and your controller:
+    
+    o_O('PostsController', {
+      show: function(params){
+        alert(params('id')) #=> '1'
+      }
+    })
+
 If you want a default action to fire, that is when the `document.hash` is empty, just hook up a `map.root`:
 
     o_O.routes.draw(function(map){

@@ -1,7 +1,8 @@
 require 'eyeballs'
 require 'fileutils'
 require 'pathname'
-# Debugger.settings[:autoeval] = true
+require 'ruby-debug'
+Debugger.settings[:autoeval] = true
 
 def create_test_root
   FileUtils.mkdir_p(test_root)
