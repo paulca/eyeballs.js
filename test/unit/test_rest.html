@@ -130,7 +130,7 @@
     
     asyncTest('consistent ID find with string back', function(){
       var string_back_id;
-      Review.find({},{
+      Review.find('1',{
         url: "/string_back",
         loading: function(found_review){
           string_back_id = found_review.id;
@@ -155,7 +155,7 @@
     })
     
     asyncTest('pulling something in with prefix', 1, function(){
-      Review.find(1, {prefix:'/my', success: function(found_review){
+      Review.find(1, {url:'/my/reviews', success: function(found_review){
         equals(found_review.title, 'Prefixed');
         start();
       }})

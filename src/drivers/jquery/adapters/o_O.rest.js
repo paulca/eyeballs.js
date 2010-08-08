@@ -99,17 +99,7 @@ o_O.rest = {
   },
   find: function(model, id, callback, options)
   {
-    var url = '/' + model.table_name + '/' + id;
-    if(typeof options === 'object')
-    {
-      if(options['url']){
-        url = options['url'];
-      }
-      else if(options['prefix'])
-      {
-        url = options.prefix + url;
-      }
-    }
+    var url = this.figure_url(options, model) + '/' + id;
     $.get(url, function(response){
       try{
         var retrieved_object = JSON.parse(response);
