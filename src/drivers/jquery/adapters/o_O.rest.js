@@ -101,11 +101,18 @@ o_O.rest = {
   {
     var url = this.figure_url(options, model) + '/' + id;
     $.get(url, function(response){
-      try{
-        var retrieved_object = JSON.parse(response);
+      if(typeof response === 'object')
+      {
+        var retrieved_object = response;
       }
-      catch(e){
-        var retrieved_object = model.initialize({id: id});
+      else
+      {
+        try{
+          var retrieved_object = JSON.parse(response);
+        }
+        catch(e){
+          var retrieved_object = model.initialize({id: id});
+        }
       }
       if(typeof callback === 'function')
       {

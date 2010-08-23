@@ -154,6 +154,13 @@
       });
     })
     
+    asyncTest('pulling something in by itself', 1, function(){
+      Review.find(2, {success: function(found_review){
+        equals(found_review.title, 'funtimes');
+        start();
+      }})
+    })
+    
     asyncTest('pulling something in with prefix', 1, function(){
       Review.find(1, {url:'/my/reviews', success: function(found_review){
         equals(found_review.title, 'Prefixed');

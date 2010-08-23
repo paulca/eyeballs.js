@@ -53,6 +53,10 @@ post '/auth_token' do
   params[:authenticity_token]
 end
 
+get '/reviews/2' do
+  '{"id": "2", "title":"funtimes"}'
+end
+
 get '/reviews/:id' do
   '{"id": "1", "title":"More Magic!"}'
 end
