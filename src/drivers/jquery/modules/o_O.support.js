@@ -34,6 +34,10 @@ o_O.render = function(template, data, options){
       {
         $(options.prepend).prepend(rendered);
       }
+      if(options.replace)
+      {
+        $(options.replace).replaceWith(rendered);
+      }
     }
   });
 }

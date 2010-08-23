@@ -17,6 +17,7 @@ module Eyeballs
   
     def build_the_model
       template "templates/controller.js", "#{app_path}/app/controllers/#{name.downcase}_controller.js"
+      empty_directory "#{app_path}/app/views/#{name.downcase}"
     end
   
     def farewell

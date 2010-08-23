@@ -9,6 +9,7 @@ describe Eyeballs::ControllerGenerator do
   end
   
   let(:controller_file) { file('app/controllers/paul_controller.js') }
+  let(:controller_view_dir) { file('app/views/paul') }
   
   it "should create my controller" do
     controller_file.should exist
@@ -16,6 +17,10 @@ describe Eyeballs::ControllerGenerator do
   
   it "should create my file" do
     controller_file.read.should include("o_O('PaulController', {")
+  end
+  
+  it "should create an empty dir for views" do
+    controller_view_dir.should exist
   end
   
   after(:all) do

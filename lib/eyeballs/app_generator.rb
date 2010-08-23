@@ -18,7 +18,7 @@ module Eyeballs
     def build_the_app
       directory "templates/app_root", new_app_path
       copy_file 'dist/jquery/jquery-1.4.2.min.js', "#{new_app_path}/vendor/jquery/jquery-1.4.2.min.js"
-      copy_file 'dist/mustache/mustache.0.2.3.js', "#{new_app_path}/vendor/mustache/mustache.0.2.3.js"
+      copy_file 'dist/mustache/mustache.0.3.0.js', "#{new_app_path}/vendor/mustache/mustache.0.3.0.js"
       directory "src", "#{new_app_path}/vendor/eyeballs/"
       template "templates/initializer.js", "#{new_app_path}/config/initializer.js"
     end

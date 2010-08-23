@@ -20,7 +20,7 @@ describe Eyeballs::AppGenerator do
     
     let(:jquery_file) { file('test', 'vendor', 'jquery', 'jquery-1.4.2.min.js') }
     let(:livequery_file) { file('test', 'vendor', 'jquery', 'jquery.livequery.js') }
-    let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.2.3.js') }
+    let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.3.0.js') }
     let(:index_file) { file('test', 'index.html') }
     let(:initializer_file) { file('test', 'config', 'initializer.js')}
     let(:routes_file) { file('test', 'config', 'routes.js')}
