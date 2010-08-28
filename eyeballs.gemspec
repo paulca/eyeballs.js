@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.5.8.1"
+  s.version = "0.5.8.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-08-23}
+  s.date = %q{2010-08-28}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -47,6 +47,7 @@ Gem::Specification.new do |s|
      "src/modules/o_O.model.js",
      "src/modules/o_O.validations.js",
      "src/o_O.js",
+     "templates/app_root/app.rb",
      "templates/app_root/config/routes.js",
      "templates/app_root/index.html",
      "templates/controller.js",
