@@ -91,6 +91,7 @@ o_O.routes = {
                   return params;
                 }
               });
+              return;
             }
           }
         }
