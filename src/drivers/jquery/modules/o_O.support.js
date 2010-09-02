@@ -38,6 +38,10 @@ o_O.render = function(template, data, options){
       {
         $(options.replace).replaceWith(rendered);
       }
+      if(options.html)
+      {
+        $(options.html).replaceWith(rendered);
+      }
     }
   });
 }
