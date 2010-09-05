@@ -21,6 +21,9 @@ o_O.routes = {
       namespace: function(prefix, callback){
         callback(o_O.routes.router(prefix));
       },
+      resources: function(name){
+        this.match(name, {to:name + '#index'});
+      },
       match: function(route, options){
         var parsed_route = route.o_O_trim('/')
 
