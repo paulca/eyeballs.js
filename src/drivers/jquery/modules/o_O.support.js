@@ -68,32 +68,3 @@ o_O.get_template = function(template, data, callback){
     });
   }
 }
-
-if(typeof String.prototype.capitalize === 'undefined')
-{
-  String.prototype.capitalize = function(){
-    return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();
-  }
-}
-
-if(typeof String.prototype.underscore === 'undefined')
-{
-  String.prototype.underscore = function(){
-    return this.replace(/::/g, '/')
-               .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
-               .replace(/([a-z\d])([A-Z])/g, '$1_$2')
-               .replace(/-/g, '_')
-               .toLowerCase();
-  }
-}
-
-if(typeof String.prototype.blank === 'undefined')
-{
-  String.prototype.blank = function(){
-    return /^\s*$/.test(this);
-  }
-}
-
-String.prototype.o_O_trim = function(chars) {
-  return this.replace(new RegExp("(^[" + chars + "]+|[" + chars + "]+$)", "g"), '')
-}
