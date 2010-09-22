@@ -23,6 +23,9 @@ o_O.routes = {
       },
       resources: function(name){
         this.match(name, {to:name + '#index'});
+        this.match(name + '/new', {to:name + '#add'});
+        this.match(name + '/:id/edit', {to:name + '#edit'});
+        this.match(name + '/:id', {to:name + '#show'});
       },
       match: function(route, options){
         var parsed_route = route.o_O_trim('/')

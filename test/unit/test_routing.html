@@ -54,17 +54,16 @@
   var clicked_routes = []
   o_O('SongsController', {
     add: function(){
-      clicked_routes.push('/songs/new')
+      $('div#songs-add').html('ok')
     },
     index: function(){
-      console.log('indexing')
-      clicked_routes.push('/songs')
+      $('div#songs-index').html('ok')
     },
     show: function(params){
-      clicked_routes.push('/songs/' + params('id'))
+      $('div#songs-show').html('ok ' + params('id'))
     },
     edit: function(params){
-      clicked_routes.push('/songs/edit/1' + params('id'))
+      $('div#songs-edit').html('ok ' + params('id'))
     }
   })
   
@@ -123,10 +122,34 @@
       },100)
     })
     
-    asyncTest('map.resources', function(){
-      window.location.hash = '/songs'
+    asyncTest('resources new', function(){
+      $('a#add-song').click()
       setTimeout(function(){
-        equals(clicked_routes.indexOf("/songs"), 0)
+        equals($('div#songs-add').text(), 'ok') 
+        start();
+      }, 100)
+    })
+
+    asyncTest('resources index', function(){
+      $('a#index-song').click()
+      setTimeout(function(){
+        equals($('div#songs-index').text(), 'ok') 
+        start();
+      }, 100)
+    })
+
+    asyncTest('resources edit', function(){
+      $('a#edit-song').click()
+      setTimeout(function(){
+        equals($('div#songs-edit').text(), 'ok 1') 
+        start();
+      }, 100)
+    })
+
+    asyncTest('resources show', function(){
+      $('a#show-song').click()
+      setTimeout(function(){
+        equals($('div#songs-show').text(), 'ok 1') 
         start();
       }, 100)
     })
@@ -153,5 +176,18 @@
   </div>
   <div id="root"></div>
   <div id="with_params"></div>
+  
+  <a id="add-song" href="/songs/new" data-ajax-history="true">New Song</a>
+  <div id="songs-add"></div>
+
+  <a id="edit-song" href="/songs/1/edit" data-ajax-history="true">Edit Song</a>
+  <div id="songs-edit"></div>
+
+  <a id="show-song" href="/songs/1" data-ajax-history="true">Show Song</a>
+  <div id="songs-show"></div>
+
+  <a id="index-song" href="/songs/" data-ajax-history="true">Songs Index</a>
+  <div id="songs-index"></div>
+  
 </body>
 </html>
