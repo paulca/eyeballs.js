@@ -2,7 +2,8 @@ var o_O = function(){
 
   var bind_to;
   var object_to_bind_to = arguments[2];
-  bind_to = (object_to_bind_to) ? object_to_bind_to : window;
+  
+  bind_to = (object_to_bind_to) ? object_to_bind_to : o_O.config.bind_to;
 
   if(typeof arguments[1] === 'object')
   {
@@ -32,7 +33,9 @@ var o_O = function(){
   }
 }
 
-o_O.config = {}
+o_O.config = {
+  bind_to: window
+}
 o_O.templates = {}
 
 o_O._uuid_default_prefix = '';
