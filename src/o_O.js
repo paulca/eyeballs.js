@@ -10,12 +10,16 @@ var o_O = function(){
     bind_to[controller_name] = o_O.controller.initialize(controller_name, arguments[1]);
     return bind_to[controller_name];
   }
-
-  if(typeof arguments[1] === 'function')
+  else
   {
-    
     var model_name = arguments[0];
     var model_initializer = arguments[1];
+    
+    if(typeof model_initializer != 'function')
+    {
+      model_initializer = function(){}
+    }
+    
     bind_to[model_name] = o_O.model.initialize(model_name, model_initializer);
     
     if(typeof o_O.models !== 'object')
