@@ -7,6 +7,7 @@ o_O.model = {
     var table_name = model_name.underscore() + 's';
     var initial_class_methods = [];
 
+    var class_methods = {}
     if(typeof o_O.validations === 'object')
     {
       class_methods = {

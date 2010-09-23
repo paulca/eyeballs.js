@@ -41,5 +41,19 @@ o_O.validations = {
         object.errors.push({field: field, type: 'presence', message: message})
       }
     }
+  },
+  class_methods: {
+    validations: {presence: [], lengthliness: [], custom: []},
+    methods: {},
+    validates_presence_of: function(field){
+      this.validations.presence.push({field: field});
+    },
+    validates_length_of: function(field, options){
+      options.field = field;
+      this.validations.lengthliness.push(options);
+    },
+    validates: function(validation){
+      this.validations.custom.push(validation)
+    }
   }
 }
