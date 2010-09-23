@@ -60,6 +60,7 @@ Gem::Specification.new do |s|
      "test/index.html",
      "test/unit/qunit.css",
      "test/unit/qunit.js",
+     "test/unit/test_binding.html",
      "test/unit/test_controller.html",
      "test/unit/test_dom.html",
      "test/unit/test_dom_with_callbacks.html",
