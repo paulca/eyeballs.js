@@ -3,7 +3,7 @@ var o_O = function(){
   var bind_to;
   var object_to_bind_to = arguments[2];
   
-  bind_to = (object_to_bind_to) ? object_to_bind_to : o_O.config.bind_to;
+  bind_to = (object_to_bind_to) ? object_to_bind_to : o_O.config.default_bind_to();
 
   if(typeof arguments[1] === 'object')
   {
@@ -34,7 +34,9 @@ var o_O = function(){
 }
 
 o_O.config = {
-  bind_to: window
+  default_bind_to: function(){
+    return (o_O.config.bind_to) ? o_O.config.bind_to : window
+  }
 }
 o_O.templates = {}
 

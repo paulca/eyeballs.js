@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
+  <script src="../../src/o_O.js"></script>
+  <script src="../../src/modules/o_O.model.js"></script>
+
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+<script type="text/javascript" src="qunit.js"></script>
+
+  <script>
+  
+  var MyApp = {};
+  
+  o_O.config.bind_to = MyApp;
+  
+  o_O('Review');
+
+  $(document).ready(function(){
+    
+    module("Models");
+    
+    test('binding to a non-global object', 1, function(){
+      var test_model = MyApp.Review.initialize({title: 'Delicious'})
+      equals(test_model.title, 'Delicious', 'should just work as normal')
+    })
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">Binding Tests</h1>
+ <h2 id="qunit-banner"></h2>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ 
+ <div data-model="Review" data-id="paul">
+  <h1 data-attribute="title">Yeah!</h1>
+  <p data-attribute="content">Paris</p>
+ </div>
+</body>
+</html>
