@@ -117,8 +117,11 @@ o_O.model = {
       },
       valid: function(){
         this.errors.length = 0;
-        
-        o_O.validations.run(this);
+
+        if(typeof o_O.validations === 'object')
+        {
+          o_O.validations.run(this);
+        }
 
         if(this.errors.length == 0)
         {
