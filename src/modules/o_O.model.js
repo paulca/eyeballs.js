@@ -6,26 +6,28 @@ o_O.model = {
     var validates_presence_of, validates_length_of;
     var table_name = model_name.underscore() + 's';
     var initial_class_methods = [];
-  
-    class_methods = {
-      validations: {presence: [], lengthliness: [], custom: []},
-      methods: {},
-      validates_presence_of: function(field){
-        this.validations.presence.push({field: field});
-      },
-      validates_length_of: function(field, options){
-        options.field = field;
-        this.validations.lengthliness.push(options);
-      },
-      validates: function(validation){
-        this.validations.custom.push(validation)
+
+    if(typeof o_O.validations === 'object')
+    {
+      class_methods = {
+        validations: {presence: [], lengthliness: [], custom: []},
+        methods: {},
+        validates_presence_of: function(field){
+          this.validations.presence.push({field: field});
+        },
+        validates_length_of: function(field, options){
+          options.field = field;
+          this.validations.lengthliness.push(options);
+        },
+        validates: function(validation){
+          this.validations.custom.push(validation)
+        }
+      }
+      for(var method in o_O.validations.class_methods)
+      {
+        initial_class_methods.push(method);
       }
     }
-    for(var method in class_methods)
-    {
-      initial_class_methods.push(method);
-    }
-    
   
     var run_callback = function(callback, method, object, response){
       try{
