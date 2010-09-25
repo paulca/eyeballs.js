@@ -43,7 +43,7 @@ At a very minimum, you should choose an adapter. There are a few to choose from:
   - **o\_O.dom** - a basic adapter without any persistence.
   - **o\_O.localstorage** - persist records to HTML5 local storage.
   - **o\_O.couchdb** - persist records to a local CouchDB instance, for building MVC CouchApps, for example.
-  - **o\_O.rails** - An adapter for persisting models to a backend powered by Rails, or using Rails-style RESTful routing.
+  - **o\_O.rest** - An adapter for persisting models to a backend powered by Rails, or using Rails-style RESTful routing.
 
 Finally, you need a controller. The first release of eyeballs.js includes a controller as part of the jQuery driver. This adapter also depends on jQuery.livequery.
 
