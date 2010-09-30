@@ -21,33 +21,18 @@
       $('div#root').html('rooting for you')
     },
     index: function(bit){
-      var out;
-      if(bit == 'test')
-      {
-        out = 'clicked!'
-      }
-      else
-      {
-        out = 'indexed!'
-      }
-      $('div#index').html(out);
+      $('div#index').html('clicked!');
       return 'whoop!'
     },
     namespaced_index: function(bit){
-      var out;
-      if(bit == 'test')
-      {
-        out = 'namespaced and clicked!'
-      }
-      else
-      {
-        out = 'namespaced and indexed!'
-      }
-      $('div#namespaced-index').html(out);
+      $('div#namespaced-index').html('namespaced and clicked!');
       return 'awesome!'
     },
     sending_params: function(params){
       $('div#with_params').html(params('test') + params('other_test'));
+    },
+    sending_params_normal: function(params){
+      $('div#with_params_normal').html(params('other_test'));
     }
   });
   
@@ -69,11 +54,12 @@
   
   o_O.routes.draw(function(map){
     map.root({to: "reviews#root"})
-    map.match('/reviews/index/', {to: "reviews#index", with_args: 'test'});
+    map.match('/reviews/index/', {to: "reviews#index"});
     map.namespace('my', function(my){
-      my.match('action', {to: "reviews#namespaced_index", with_args: 'test'})
+      my.match('action', {to: "reviews#namespaced_index"})
     })
     map.match('/reviews/:test', {to: 'reviews#sending_params'})
+    map.match('gobble', {to: 'reviews#sending_params_normal'})
     
     map.resources('songs')
   })
@@ -118,6 +104,14 @@
       $('a#with-params').trigger('click');
       setTimeout(function(){
         equals($('div#with_params').html(), 'somethingelse', "should pass the params");
+        start();
+      },100)
+    })
+
+    asyncTest('withparams normal route',function(){
+      $('a#with-params-normal').trigger('click');
+      setTimeout(function(){
+        equals($('div#with_params_normal').html(), 'else', "should pass the params");
         start();
       },100)
     })
@@ -168,7 +162,9 @@
   <a id="index-link" data-ajax-history="true" href="/reviews/index">Hello!</a>
   <a id="namespaced-index-link" data-ajax-history="true" href="/my/action">Hello!</a>
   
-  <a id="with-params" data-ajax-history="true" href="/reviews/something?other_test=else">Hello!</a>
+  <a id="with-params" data-ajax-history="true" href="/reviews/something?other_test=else">With Params</a>
+  
+  <a id="with-params-normal" data-ajax-history="true" href="/gobble?other_test=else">With Params Normal</a>
  
   <div id="index">
   </div>
@@ -176,6 +172,7 @@
   </div>
   <div id="root"></div>
   <div id="with_params"></div>
+  <div id="with_params_normal"></div>
   
   <a id="add-song" href="/songs/new" data-ajax-history="true">New Song</a>
   <div id="songs-add"></div>
