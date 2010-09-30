@@ -40,7 +40,7 @@ o_O.render = function(template, data, options){
       }
       if(options.html)
       {
-        $(options.html).replaceWith(rendered);
+        $(options.html).html(rendered);
       }
     }
   });
