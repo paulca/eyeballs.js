@@ -47,7 +47,7 @@
       return 'awesome!'
     },
     sending_params: function(params){
-      $('div#with_params').html(params('test'));
+      $('div#with_params').html(params('test') + params('other_test'));
     }
   });
   
@@ -117,7 +117,7 @@
     asyncTest('withparams',function(){
       $('a#with-params').trigger('click');
       setTimeout(function(){
-        equals($('div#with_params').html(), 'something', "should pass the params");
+        equals($('div#with_params').html(), 'somethingelse', "should pass the params");
         start();
       },100)
     })
@@ -168,7 +168,7 @@
   <a id="index-link" data-ajax-history="true" href="/reviews/index">Hello!</a>
   <a id="namespaced-index-link" data-ajax-history="true" href="/my/action">Hello!</a>
   
-  <a id="with-params" data-ajax-history="true" href="/reviews/something">Hello!</a>
+  <a id="with-params" data-ajax-history="true" href="/reviews/something?other_test=else">Hello!</a>
  
   <div id="index">
   </div>

@@ -58,7 +58,6 @@ o_O.routes = {
   
   draw: function(callback){    
     $(function(){
-      
       callback(o_O.routes.router());
       if(location.hash.o_O_trim() == '')
       {
@@ -70,7 +69,17 @@ o_O.routes = {
       }
       
       var route_on_hash = function(){
-        var hash = location.hash.replace(/^(#)/, '').o_O_trim('/');
+        var parts = location.hash.split('?')
+        var hash = parts[0].replace(/^(#)/, '').o_O_trim('/');
+        var query_string_parts;
+        if(typeof parts[1] === 'string')
+        {
+          query_string_parts = parts[1].replace('&amp;', '&').split('&');
+        }
+        else
+        {
+          query_string_parts = '';
+        }
         if(o_O.routes.urls.indexOf(hash) >= 0)
         {
           o_O.routes.rules[hash].action(o_O.routes.rules[hash].with_args);
@@ -87,6 +96,15 @@ o_O.routes = {
                 for(j = 0; j < rule.matchers.length; j++)
                 {
                   params[rule.matchers[j].replace(/^:/, '')] = match[j+1];
+                }
+
+                if(query_string_parts.length > 0)
+                {
+                  for(k = 0; k < query_string_parts.length; k++)
+                  {
+                    var param_parts = query_string_parts[k].split('=')
+                    params[param_parts[0]] = param_parts[1];
+                  }
                 }
                 if(attr)
                 {
