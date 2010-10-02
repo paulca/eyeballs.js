@@ -1,6 +1,11 @@
+Thu Sep 30
+- - - - - -
+- Misc bugfixes
+- Add support for query string style params
+
 Sun Aug 8
 - - - - -
-- Remove 'previx', 'url' is better ...
+- Remove 'prefix', 'url' is better ...
 
 Fri Aug 6
 - - - - - 

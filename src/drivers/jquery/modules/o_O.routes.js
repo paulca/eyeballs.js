@@ -58,22 +58,70 @@ o_O.routes = {
   
   draw: function(callback){    
     $(function(){
-      
       callback(o_O.routes.router());
+      
+      var parts, hash, query_string_parts;
+      
+      var update_hash_parts = function(){
+        parts = location.hash.split('?')
+        hash = parts[0].replace(/^(#)/, '').o_O_trim('/');
+        query_string_parts;
+        if(typeof parts[1] === 'string')
+        {
+          query_string_parts = parts[1].replace('&amp;', '&').split('&');
+        }
+        else
+        {
+          query_string_parts = '';
+        }
+      }
+      
+      var compute_params = function(rule){
+        return function(attr){
+          var params = {}
+          if(rule)
+          {
+            for(j = 0; j < rule.matchers.length; j++)
+            {
+              params[rule.matchers[j].replace(/^:/, '')] = match[j+1];
+            }
+          }
+          
+          if(query_string_parts.length > 0)
+          {
+            for(k = 0; k < query_string_parts.length; k++)
+            {
+              var param_parts = query_string_parts[k].split('=')
+              params[param_parts[0]] = param_parts[1];
+            }
+          }
+          if(attr)
+          {
+            return params[attr];
+          }
+          else
+          {
+            return params;
+          }
+        }
+      }
+      
       if(location.hash.o_O_trim() == '')
       {
+        update_hash_parts()
         if(typeof o_O.routes.rules['root'] === 'object')
         {
-          o_O.routes.rules['root'].action();
+          o_O.routes.rules['root'].action(compute_params());
         }
         
       }
       
       var route_on_hash = function(){
-        var hash = location.hash.replace(/^(#)/, '').o_O_trim('/');
+        update_hash_parts();
         if(o_O.routes.urls.indexOf(hash) >= 0)
         {
-          o_O.routes.rules[hash].action(o_O.routes.rules[hash].with_args);
+          console.log(compute_params()())
+          o_O.routes.rules[hash].action(compute_params());
         }
         else
         {
@@ -82,21 +130,7 @@ o_O.routes = {
             if(match = hash.match(o_O.routes.regex_urls[i].regex))
             {
               var rule = o_O.routes.rules[o_O.routes.regex_urls[i].matcher];
-              rule.action(function(attr){
-                var params = {}
-                for(j = 0; j < rule.matchers.length; j++)
-                {
-                  params[rule.matchers[j].replace(/^:/, '')] = match[j+1];
-                }
-                if(attr)
-                {
-                  return params[attr];
-                }
-                else
-                {
-                  return params;
-                }
-              });
+              rule.action(compute_params(rule));
               return;
             }
           }
