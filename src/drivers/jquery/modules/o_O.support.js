@@ -8,18 +8,33 @@ o_O.find_attributes = function(template, callback){
   return object;
 }
 
-o_O.params = function(form){
-    return o_O.find_attributes(form, function(field){
-      if(field.is('[type=radio]'))
-      {
-        return $('[data-attribute=' + field.attr('data-attribute') + ']:checked').val()
-      }
-      else
-      {
-        return field.val();
-      }
-    });
+o_O.params_from_form = function(form){
+  return o_O.find_attributes(form, function(field){
+    if(field.is('[type=radio]'))
+    {
+      return $('[data-attribute=' + field.attr('data-attribute') + ']:checked').val()
+    }
+    else
+    {
+      return field.val();
+    }
+  });
+}
+
+o_O.params = function(param, new_value){
+  if(new_value != void(0))
+  {
+    o_O.params.collection[param] = new_value;
+    return new_value;
   }
+  if(typeof param === 'string')
+  {
+    return o_O.params.collection[param];
+  }
+  return o_O.params.collection;
+}
+
+o_O.params.collection = {}
   
 o_O.render = function(template, data, options){
   o_O.get_template(template, data, function(data, template){ 
@@ -41,6 +56,14 @@ o_O.render = function(template, data, options){
       if(options.html)
       {
         $(options.html).html(rendered);
+      }
+      if(options.before)
+      {
+        $(options.html).before(rendered);
+      }
+      if(options.after)
+      {
+        $(options.html).after(rendered);
       }
     }
   });

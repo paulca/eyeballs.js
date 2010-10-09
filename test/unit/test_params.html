@@ -14,7 +14,7 @@
 <script type="text/javascript" src="qunit.js"></script>
 
   <script>
-  var Review = o_O(function(that){
+  o_O('Review', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
     return that;
@@ -25,9 +25,18 @@
     module("Forms");
     
     test('getting form attributes', 2, function(){
-      equals(o_O.params($('form#test-form')).title, 'Biscuit', 'form attributes should come in nicely')
-      equals(o_O.params($('form#test-form')).selection, "1", 'should work with checkboxes')
+      equals(o_O.params_from_form($('form#test-form')).title, 'Biscuit', 'form attributes should come in nicely')
+      equals(o_O.params_from_form($('form#test-form')).selection, "1", 'should work with checkboxes')
     });
+    
+    test('params should be empty', function(){
+      equals(typeof o_O.params(), 'object')
+    })
+    
+    test('setting a param', function(){
+      o_O.params('thing', 'new value')
+      equals(o_O.params('thing'), 'new value')
+    })
 
   });
   </script>
