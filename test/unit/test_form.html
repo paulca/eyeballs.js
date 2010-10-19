@@ -3,7 +3,6 @@
 <html>
 <head>
   <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
-  <script src="../../dist/jquery/jquery.livequery.js"></script>
   <script src="../../src/o_O.js"></script>
   <script src="../../src/modules/o_O.model.js"></script>
   <script src="../../src/modules/o_O.validations.js"></script>
@@ -14,7 +13,7 @@
 <script type="text/javascript" src="qunit.js"></script>
 
   <script>
-  var Review = o_O(function(that){
+  var Review = o_O('Model', function(that){
     that.validates_presence_of('title');
     that.validates_presence_of('content');
     return that;
