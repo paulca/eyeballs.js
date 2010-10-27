@@ -26,6 +26,15 @@ o_O.params = function(param, new_value){
 }
 
 o_O.params.collection = {}
+
+$(function(){
+  $('body').delegate('form', 'submit', function(){
+    for(param in o_O.params_from_form($(this)))
+    {
+      o_O.params(param, o_O.params_from_form($(this))[param]);
+    }
+  })
+})
   
 o_O.render = function(template, data, options){
   o_O.get_template(template, data, function(data, template){ 
