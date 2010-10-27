@@ -3,7 +3,7 @@
 <html>
 <head>
   <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
-  <script src="../../dist/jquery/jquery.livequery.js"></script>
+  <script src="../../dist/jquery/jquery.ba-bbq.min.js"></script>
   <script src="../../src/o_O.js"></script>
   <script src="../../src/modules/o_O.model.js"></script>
   <script src="../../src/modules/o_O.validations.js"></script>
@@ -24,9 +24,10 @@
     
     module("Forms");
     
-    test('getting form attributes', 2, function(){
+    test('getting form attributes', function(){
       equals(o_O.params_from_form($('form#test-form')).title, 'Biscuit', 'form attributes should come in nicely')
       equals(o_O.params_from_form($('form#test-form')).selection, "1", 'should work with checkboxes')
+      equals(o_O.params_from_form($('form#test-form')).thing['title'], "Thing's Title", 'should work with checkboxes')
     });
     
     test('params should be empty', function(){
@@ -48,9 +49,10 @@
  <h2 id="qunit-userAgent"></h2>
  <ol id="qunit-tests"></ol>
  <form id="test-form">
-  <input type="title" data-attribute="title" type="text" value="Biscuit">
-  <input type="radio" data-attribute="selection" value="1" checked>
-  <input type="radio" data-attribute="selection" value="-1">
+  <input type="text" name="title" type="text" value="Biscuit">
+  <input type="radio" name="selection" value="1" checked>
+  <input type="radio" name="selection" value="-1">
+  <input type="text" name="thing[title]" value="Thing's Title"></input>
  </form>
 </body>
 </html>

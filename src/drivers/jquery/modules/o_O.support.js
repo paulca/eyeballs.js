@@ -9,16 +9,7 @@ o_O.find_attributes = function(template, callback){
 }
 
 o_O.params_from_form = function(form){
-  return o_O.find_attributes(form, function(field){
-    if(field.is('[type=radio]'))
-    {
-      return $('[data-attribute=' + field.attr('data-attribute') + ']:checked').val()
-    }
-    else
-    {
-      return field.val();
-    }
-  });
+  return $.deparam(form.serialize());
 }
 
 o_O.params = function(param, new_value){
