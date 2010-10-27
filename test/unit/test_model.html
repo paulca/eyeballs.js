@@ -17,20 +17,20 @@
   
   o_O.model.adapter = o_O.dom;
   
-  o_O('Review', function(that){
-    that.validates_presence_of('title');
-    that.validates_presence_of('content');
-    that.validates_length_of('title', {min: 5, max: 15});
-    that.validates(function(review){
+  o_O('Review', function(){
+    this.validates_presence_of('title');
+    this.validates_presence_of('content');
+    this.validates_length_of('title', {min: 5, max: 15});
+    this.validates(function(review){
       if(review.score != 99 && review.test === true)
       {
         review.errors.push({message: 'Score should be 99'})
       }
     })
-    that.methods.title_numbered = function(){
+    this.methods.title_numbered = function(){
       return '1. ' + this.title;
     }
-    return that;
+    return this;
   });
   
   var MyApp = {};

@@ -54,7 +54,7 @@ o_O.model = {
       }
     }  
 
-    var config = callback(class_methods);
+    var config = callback.apply(class_methods, [class_methods]);
     instance_methods = {
       adapter: o_O.model.adapter,
       destroy: function(callback){
