@@ -120,7 +120,6 @@ o_O.routes = {
         update_hash_parts();
         if(o_O.routes.urls.indexOf(hash) >= 0)
         {
-          console.log(compute_params()())
           o_O.routes.rules[hash].action(compute_params());
         }
         else
