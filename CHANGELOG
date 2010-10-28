@@ -4,6 +4,7 @@ Thu Oct 28
 - Support for this.* within model declarations
 - Support for o_O('model_name') or o_O('controller_name') getter
 
+
 Thu Sep 30
 - - - - - -
 - Misc bugfixes
