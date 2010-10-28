@@ -110,7 +110,7 @@ Models
 
 You define a model by passing a name and function to the eyeballs ( o_O ) function (pronounced 'eep eep'). As inspired by Rails, model definitions are capitalised. Note, however, that the new prefix is not used.
 
-    o_O('Post', function(post){ })
+    o_O('Post', function(){ })
 
 You can now initialize an individual post:
 
@@ -121,8 +121,8 @@ Not very exciting.
 
 However, if you're familiar with Rails, you'll be familiar with the wonderful syntax for adding validations to your models. eyeballs.js lets you add validations to your models as follows:
 
-    o_O('Post', function(post){
-      post.validates_presence_of('title')
+    o_O('Post', function(){
+      this.validates_presence_of('title')
     })
 
 Now, when you initialize a new Post, you can validate it, nice and easy:
@@ -137,8 +137,8 @@ and so on, so forth. This will be very familiar to those who use Rails.
 
 You can also add your own validations, again, similar to how Rails does things:
 
-    o_O('Post', function(post){
-      post.validates(function(post){
+    o_O('Post', function(){
+      this.validates(function(post){
         if(post.title != 'Awesome')
         {
           post.errors.push({message: 'Not Awesome Enough'})
@@ -165,8 +165,8 @@ When you want to find things:
 
 And if you want to add your own methods:
 
-    o_O('Post', function(post){
-      post.methods.title_downcased: function(){
+    o_O('Post', function(){
+      this.methods.title_downcased: function(){
         this.title.toLowerCase();
       }
     })
@@ -302,9 +302,9 @@ Imagine a simple app for posting reviews. It will comprise a "Review" model, "Re
 
 `models/review.js` looks like this:
 
-    o_O('Review', function(review){
-      review.validates_presence_of('title');
-      review.validates_presence_of('content');
+    o_O('Review', function(){
+      this.validates_presence_of('title');
+      this.validates_presence_of('content');
     });
 
 This defines the Review model, allowing us to initialize and save Review objects, while ensuring `title` and `content` are included.

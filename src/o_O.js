@@ -5,7 +5,11 @@ var o_O = function(){
   
   bind_to = (object_to_bind_to) ? object_to_bind_to : o_O.config.default_bind_to();
 
-  if(typeof arguments[1] === 'object')
+  if(arguments.length === 1)
+  {
+    return bind_to[arguments[0]]
+  }
+  else if(typeof arguments[1] === 'object')
   {
     var controller_name = arguments[0];
     bind_to[controller_name] = o_O.controller.initialize(controller_name, arguments[1]);

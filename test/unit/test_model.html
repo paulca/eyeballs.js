@@ -43,6 +43,11 @@
       var test_model = MyApp.TestModel.initialize({title: 'Delicious'})
       equals(test_model.title, 'Delicious', 'should just work as normal')
     })
+    
+    test('functional syntax', 1, function(){
+      var test_model = o_O('Review').initialize({title: 'Delicious'})
+      equals(test_model.title, 'Delicious', 'should just work as normal')
+    })
 
     test('serialization',1, function(){
       var myReview = Review.initialize({title: 'Groovy'})
