@@ -2,6 +2,7 @@ Thu Oct 28
 - - - - - -
 - Much more robust support for o_O.params
 - Support for this.* within model declarations
+- Support for o_O('model_name') or o_O('controller_name') getter
 
 Thu Sep 30
 - - - - - -
