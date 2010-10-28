@@ -45,31 +45,35 @@ At a very minimum, you should choose an adapter. There are a few to choose from:
   - **o\_O.couchdb** - persist records to a local CouchDB instance, for building MVC CouchApps, for example.
   - **o\_O.rest** - An adapter for persisting models to a backend powered by Rails, or using Rails-style RESTful routing.
 
-Finally, you need a controller. The first release of eyeballs.js includes a controller as part of the jQuery driver. This adapter also depends on jQuery.livequery.
+Finally, you need a controller. The first release of eyeballs.js includes a controller as part of the jQuery driver.
 
 You can also use a javascript templating language. Mustache.js fits this need quite nicely.
 
 Wrapping that all up, to use eyeballs.js with the Rails adapter and jQuery:
 
     <!-- jQuery and livequery -->
-    <script src="http://jquery.com/src/jquery-latest.js"></script>
-    <script src="jquery.livequery.js"></script>
+    <script src="vendor/javascripts/jquery.1.4.min.js"></script>
+    <script src="vendor/jquery/jquery.ba-bbq.min.js"></script>
     
     <!-- Mustache for templating -->
-    <script src="mustache.js"></script>
+    <script src="vendor/mustache/mustache.0.3.0.js"></script>
     
     <!-- eyeballs.js basic -->
-    <script src="o_O.js"></script>
-    <script src="modules/o_O.model.js"></script>
-    <script src="modules/o_O.validations.js"></script>
+    <script src="vendor/eyeballs/o_O.js"></script>
+    <script src="vendor/eyeballs/modules/o_O.model.js"></script>
+    <script src="vendor/eyeballs/modules/o_O.validations.js"></script>
     
     <!-- eyeballs.js jquery driver for controller logic -->
-    <script src="drivers/jquery/modules/o_O.controller.js"></script>
-    <script src="drivers/jquery/modules/o_O.support.js"></script>
-    <script src="drivers/jquery/modules/o_O.routes.js"></script>
+    <script src="vendor/eyeballs/drivers/jquery/modules/o_O.controller.js"></script>
+    <script src="vendor/eyeballs/drivers/jquery/modules/o_O.support.js"></script>
+    <script src="vendor/eyeballs/drivers/jquery/modules/o_O.routes.js"></script>
     
     <!-- REST adapter -->
-    <script src="drivers/jquery/adapters/o_O.rest.js"></script>
+    <script src="vendor/eyeballs/drivers/jquery/adapters/o_O.rest.js"></script>
+    
+    <!-- Configuration -->
+    <script src="config/initializer.js"></script>
+    <script src="config/routes.js"></script>
 
 Badabing, badaboom! You're now ready to start creating some models and controllers.
 
