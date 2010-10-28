@@ -6,7 +6,7 @@ describe Eyeballs::AppGenerator do
       create_test_root
       FileUtils.mkdir(test_root + '/public')
       FileUtils.cd(test_root)
-      Eyeballs::AppGenerator.start('test')
+      Eyeballs::AppGenerator.start(['test'])
     end
     let(:app_dir) { file('public', 'javascripts', 'app') }
     

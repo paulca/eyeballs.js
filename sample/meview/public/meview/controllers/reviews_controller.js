@@ -9,7 +9,7 @@ o_O('ReviewsController', {
     });
   },
   create: function(){
-    var review = Review.initialize(o_O.params($(this)));
+    var review = Review.initialize(o_O.params(7));
     var form = $(this);
     review.save({
       invalid: function(review){

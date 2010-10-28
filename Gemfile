@@ -6,9 +6,10 @@ gem 'activesupport'
 
 group :development do
   gem 'jeweler'
+  gem 'rake'
 end
 
 group :test do
-  gem 'rspec'
-  gem 'ruby-debug'
+  gem 'rspec', '1.3.1'
+  gem 'ruby-debug19'
 end

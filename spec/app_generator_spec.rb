@@ -3,11 +3,6 @@ require 'spec_helper'
 describe Eyeballs::AppGenerator do
   
   describe "generate a simple app" do
-    before(:all) do
-      create_test_root
-      FileUtils.cd(test_root)
-      Eyeballs::AppGenerator.start('test')
-    end
     let(:app_dir) { file('test', 'app') }
     let(:model_dir) { file('test', 'app', 'models') }
     let(:controller_dir) { file('test', 'app', 'controllers') }
@@ -19,11 +14,17 @@ describe Eyeballs::AppGenerator do
     let(:mustache_dir) { file('test', 'vendor', 'mustache') }
     
     let(:jquery_file) { file('test', 'vendor', 'jquery', 'jquery-1.4.2.min.js') }
-    let(:livequery_file) { file('test', 'vendor', 'jquery', 'jquery.livequery.js') }
+    let(:bbq_file) { file('test', 'vendor', 'jquery', 'jquery.ba-bbq.min.js') }
     let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.3.0.js') }
     let(:index_file) { file('test', 'index.html') }
     let(:initializer_file) { file('test', 'config', 'initializer.js')}
     let(:routes_file) { file('test', 'config', 'routes.js')}
+    
+    before(:all) do
+      create_test_root
+      FileUtils.cd(test_root)
+      Eyeballs::AppGenerator.start(['test'])
+    end
     
     it "should create the test root" do
       File.exists?(test_root).should be_true
@@ -43,7 +44,7 @@ describe Eyeballs::AppGenerator do
     
     it "should create the app files" do
       jquery_file.should exist
-      livequery_file.should_not exist
+      bbq_file.should exist
       mustache_file.should exist
       index_file.should exist
       initializer_file.should exist

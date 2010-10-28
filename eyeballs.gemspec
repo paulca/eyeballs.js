@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.5.10.1"
+  s.version = "0.5.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-09-30}
+  s.date = %q{2010-10-28}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
      "bin/eyeballs",
      "config.ru",
      "dist/jquery/jquery-1.4.2.min.js",
-     "dist/jquery/jquery.ba-hashchange.js",
+     "dist/jquery/jquery.ba-bbq.min.js",
      "dist/mustache/mustache.0.3.0.js",
      "eyeballs.gemspec",
      "lib/eyeballs.rb",
@@ -64,10 +64,10 @@ Gem::Specification.new do |s|
      "test/unit/test_controller.html",
      "test/unit/test_dom.html",
      "test/unit/test_dom_with_callbacks.html",
-     "test/unit/test_form.html",
      "test/unit/test_localstorage.html",
      "test/unit/test_model.html",
      "test/unit/test_model_with_callbacks.html",
+     "test/unit/test_params.html",
      "test/unit/test_rest.html",
      "test/unit/test_routing.html"
   ]
