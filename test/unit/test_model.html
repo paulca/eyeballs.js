@@ -29,6 +29,9 @@
     this.methods.title_numbered = function(){
       return '1. ' + this.title;
     }
+    this.do_something = function(){
+      return 'did something'
+    }
     return this;
   });
   
@@ -47,6 +50,10 @@
     test('functional syntax', 1, function(){
       var test_model = o_O('Review').initialize({title: 'Delicious'})
       equals(test_model.title, 'Delicious', 'should just work as normal')
+    })
+    
+    test('class-ish method', function(){
+      equals(o_O('Review').do_something(), 'did something')
     })
 
     test('serialization',1, function(){
