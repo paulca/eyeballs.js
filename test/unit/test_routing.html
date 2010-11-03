@@ -52,6 +52,12 @@
     }
   })
   
+  o_O('GalleryController', {
+    gallery: function(){
+      $('div#gallery').html(o_O.params('thing'))
+    }
+  })
+  
   o_O.routes.draw(function(map){
     map.root({to: "reviews#root"})
     map.match('/reviews/index/', {to: "reviews#index"});
@@ -60,6 +66,7 @@
     })
     map.match('/reviews/:test', {to: 'reviews#sending_params'})
     map.match('gobble', {to: 'reviews#sending_params_normal'})
+    map.match('/gallery/:image', {to: 'gallery#gallery', thing: 'gallery'})
     
     map.resources('songs')
   })
@@ -148,6 +155,14 @@
       }, 100)
     })
     
+    asyncTest('pass params via routes', function(){
+      $('a#gallery-link').click()
+      setTimeout(function(){
+        equals($('div#gallery').text(), 'gallery') 
+        start();
+      }, 100)
+    })
+    
 
   });
   </script>
@@ -185,6 +200,9 @@
 
   <a id="index-song" href="/songs/" data-ajax-history="true">Songs Index</a>
   <div id="songs-index"></div>
+  
+  <a id="gallery-link" href="/gallery/stuff" data-ajax-history="true">Songs Index</a>
+  <div id="gallery"></div>
   
 </body>
 </html>

@@ -28,19 +28,26 @@ o_O.routes = {
         this.match(name + '/:id', {to:name + '#show'});
       },
       match: function(route, options){
-        var parsed_route = route.o_O_trim('/')
-
+        var parsed_route = route.o_O_trim('/');
+        var params = options;
+        
+        for(var param in options)
+        {
+          if(param != 'to')
+            params[param] = options[param];
+        }
+        
         if(typeof prefix != 'undefined')
         {
           parsed_route = prefix + '/' + parsed_route
         }
-
         if(parsed_route.indexOf(':') >= 0)
         { 
           var regex_to_match = parsed_route.replace(/:[^\/]*/g, '([^\/]*)');
           o_O.routes.rules[parsed_route] = {
             action: o_O.routes.figure_action(options),
-            matchers: parsed_route.match(/:[^\/]*/g)
+            matchers: parsed_route.match(/:[^\/]*/g),
+            params: params
             };
           o_O.routes.regex_urls.push({regex: regex_to_match, matcher:parsed_route});
         }
@@ -77,33 +84,33 @@ o_O.routes = {
       }
       
       var compute_params = function(rule){
-        return function(attr){
-          var params = {}
-          if(rule)
+
+        if(rule)
+        {
+          for(j = 0; j < rule.matchers.length; j++)
           {
-            for(j = 0; j < rule.matchers.length; j++)
-            {
-              params[rule.matchers[j].replace(/^:/, '')] = match[j+1];
-            }
+            o_O.params.collection[rule.matchers[j].replace(/^:/, '')] = match[j+1];
           }
           
-          if(query_string_parts.length > 0)
+          if(rule.params)
           {
-            for(k = 0; k < query_string_parts.length; k++)
+            for(param in rule.params)
             {
-              var param_parts = query_string_parts[k].split('=')
-              params[param_parts[0]] = param_parts[1];
+              o_O.params.collection[param] = rule.params[param];
             }
           }
-          if(attr)
+        }
+        
+        if(query_string_parts.length > 0)
+        {
+          for(k = 0; k < query_string_parts.length; k++)
           {
-            return params[attr];
-          }
-          else
-          {
-            return params;
+            var param_parts = query_string_parts[k].split('=')
+            o_O.params.collection[param_parts[0]] = param_parts[1];
           }
         }
+
+        return o_O.params
       }
       
       if(location.hash.o_O_trim() == '')
