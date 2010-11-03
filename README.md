@@ -248,12 +248,20 @@ You can also set params in the URL, eg:
     })
 
     <a href="/posts/1">Click Me for Post 1!</a>
+
+or in the route:
+    
+    o_O.routes.draw(function(map){
+      map.match('/posts/:id/', {to: 'posts#show', 'custom':'posts'})
+    })
+    
+    o_O.params('custom') #=> 'post'
     
 and your controller:
     
     o_O('PostsController', {
-      show: function(params){
-        alert(params('id')) #=> '1'
+      show: function(){
+        alert(o_O.params('id')) #=> '1'
       }
     })
 
@@ -309,11 +317,11 @@ Imagine a simple app for posting reviews. It will comprise a "Review" model, "Re
 
 This defines the Review model, allowing us to initialize and save Review objects, while ensuring `title` and `content` are included.
 
-The `create` action in `controllers/reviews_venue.js` looks like this (using jQuery):
+The `create` action in `controllers/reviews_controller.js` looks like this (using jQuery):
 
     ...
     create: function(){
-      var review = Review.initialize(o_O.params($(this)));
+      var review = Review.initialize(o_O.params('review'));
       var form = $(this);
       review.save({o
         invalid: function(review){
