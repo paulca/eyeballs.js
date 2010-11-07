@@ -178,6 +178,20 @@
       });
     })
     
+    asyncTest('getting all with content type', 2, function(){
+      var review = Review.initialize({title: 'Local, baby'});
+      review.save(function(saved_review){
+        Review.all({
+          url: '/reviews_with_content_type',
+          success: function(documents){
+            equals(documents[0].title, 'Local, baby', 'It should pull in everything')
+            equals(documents[0].id, '1', 'It should persist the id')
+            start();
+          }
+        })
+      });
+    })
+    
     asyncTest('setting new_record attribute', 2, function(){
       var review = Review.initialize()
       equals(review.new_record, true, 'should be a new record review');

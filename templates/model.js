@@ -1,3 +1,3 @@
-o_O('<%= name.capitalize %>', function(<%= name.downcase %>){
+o_O('<%= name.capitalize %>', function(){
   
 })

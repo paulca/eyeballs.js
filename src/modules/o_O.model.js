@@ -155,7 +155,10 @@ o_O.model = {
       all: function(callback){
         if(this.adapter)
         {
-          return this.adapter.all(this, callback);
+          run_callback(callback, 'loading');
+          return this.adapter.all(this, function(returned_object, response){
+            run_callback(callback, 'success', returned_object, response);
+          }, callback);
         }
       },
       initialize: function(attributes){

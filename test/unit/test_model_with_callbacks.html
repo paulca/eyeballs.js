@@ -36,6 +36,21 @@
     
     module("Models");
     
+    asyncTest('all() with callbacks',2, function(){
+      Review.all({
+        loading: function(){
+          ok('this should be called')
+        },
+        success: function(){
+          ok('this should be called');
+          start();
+        },
+        failure: function(){
+          ok(false, 'this should not be called');
+        }
+      })
+    });
+    
     asyncTest('find() an existent object',2, function(){
       Review.find('thing', {
         loading: function(){

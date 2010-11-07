@@ -7,6 +7,11 @@ get '/reviews' do
   '[{"id": "1", "title":"Local, baby"}]'
 end
 
+get '/reviews_with_content_type' do
+  content_type 'application/json'
+  '[{"id": "1", "title":"Local, baby"}]'
+end
+
 post '/reviews' do
   '{"id": "1"}'
 end

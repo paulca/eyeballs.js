@@ -14,12 +14,19 @@ o_O.rest = {
       return '/' + object.table_name;
     }
   },
-  all: function(model, callback){
-    $.get('/' + model.table_name, function(response){
-      var documents = JSON.parse(response);
+  all: function(model, callback, original_callback){
+    $.get(this.figure_url(original_callback, model), function(response){
+      var documents;
+      try {
+        documents = JSON.parse(response);
+      }
+      catch(e){
+        documents = response
+      }
+      
       if(typeof callback === 'function')
       {
-        callback(documents);
+        callback(documents, response);
       }
     })
   },
