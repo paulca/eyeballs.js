@@ -3,6 +3,15 @@ require 'sinatra'
 set :static, true
 set :public, Proc.new { File.expand_path('.') }
 
+get '/tests.js' do
+  content_type 'application/javascript'
+  files = []
+  Dir["#{File.join(File.expand_path('.'), 'test', 'unit')}/*.html"].each do |file|
+    files << "'#{File.basename(file)}'"
+  end
+  "var test_files = [#{files.join(',')}];"
+end
+
 get '/reviews' do
   '[{"id": "1", "title":"Local, baby"}]'
 end
