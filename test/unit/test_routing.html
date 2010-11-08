@@ -11,6 +11,8 @@
   <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.routes.js"></script>
+  <script src="/tests.js"></script>
+  <script src="run_all.js"></script>
 
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
@@ -87,8 +89,12 @@
       equals(o_O.routes.rules['my/action'].action(), ReviewsController.namespaced_index())
     })
     
-    test('o_O.routes.root', function(){
-      equals($('div#root').html(), 'rooting for you');
+    asyncTest('o_O.routes.root', function(){
+      document.location.hash = ''
+      setTimeout(function(){
+        equals($('div#root').html(), 'rooting for you');
+        start()
+      }, 300)
     })
     
     asyncTest('map.match',function(){

@@ -5,6 +5,8 @@
   <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
   <script src="../../src/o_O.js"></script>
   <script src="../../src/modules/o_O.model.js"></script>
+  <script src="/tests.js"></script>
+  <script src="run_all.js"></script>
 
   <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 <script type="text/javascript" src="qunit.js"></script>
@@ -15,7 +17,7 @@
   
   o_O.config.bind_to = MyApp;
   
-  o_O('Review');
+  o_O('Review', function(){});
 
   $(document).ready(function(){
     
