@@ -47,6 +47,10 @@ post '/test_id' do
   end
 end
 
+get '/rails_reviews' do
+  '[{"rails_review": {"id":"1", "title": "Did you include the root?"}}]'
+end
+
 post '/rails_reviews' do
   if params[:rails_review]
     '{"rails_review": {"id":"1"}}'

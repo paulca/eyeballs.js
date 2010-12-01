@@ -178,7 +178,7 @@
       }})
     })
     
-    asyncTest('getting all', 2, function(){
+    asyncTest('Review.all() getting all', 2, function(){
       var review = Review.initialize({title: 'Local, baby'});
       review.save(function(saved_review){
         Review.all(function(documents){
@@ -187,6 +187,14 @@
           start();
         })
       });
+    })
+    
+    asyncTest('RailsReview.all() getting all', 2, function(){
+        RailsReview.all(function(documents){
+          equals(documents[0].title, 'Did you include the root?', 'It should pull in everything')
+          equals(documents[0].id, '1', 'It should persist the id')
+          start();
+        });
     })
     
     asyncTest('getting all with content type', 2, function(){

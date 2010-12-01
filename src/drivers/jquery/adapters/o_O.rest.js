@@ -20,6 +20,7 @@ o_O.rest = {
     }
   },
   all: function(model, callback, original_callback){
+    var include_json_root = this.include_json_root(model);
     $.get(this.figure_url(original_callback, model), function(response){
       var documents;
       try {
@@ -27,6 +28,15 @@ o_O.rest = {
       }
       catch(e){
         documents = response
+      }
+      
+      if(include_json_root)
+      {
+        var out = [];
+        for(i=0; i<documents.length;i++)
+        {
+          documents[i] = documents[i][model.model_name.underscore()]
+        }
       }
       
       if(typeof callback === 'function')
