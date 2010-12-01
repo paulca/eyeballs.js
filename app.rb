@@ -49,7 +49,7 @@ end
 
 post '/rails_reviews' do
   if params[:rails_review]
-    'ok'
+    '{"id":1}'
   else
     'fail'
   end

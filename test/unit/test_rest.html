@@ -71,7 +71,7 @@
     
     asyncTest('storing a basic basic thing with include_root', function(){
       RailsReview.create({title: "Awesome"},function(review, response){
-        equals(response, 'ok', 'should send things with a root');
+        equals(review.id, '1', 'should fetch a tasty RailsReview');
         start();
       });
     });
@@ -89,7 +89,7 @@
         start();
       });
     });
-    
+
     o_O.config.authenticity_token = 'a12345';
     asyncTest('CSRF token', function(){
       RailsReview.create({title: "Unnecessary"}, {
