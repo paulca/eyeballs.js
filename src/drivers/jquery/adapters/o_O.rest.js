@@ -53,7 +53,17 @@ o_O.rest = {
     }
     var respond = function(response){
       try{
-        var saved_object = JSON.parse(response);
+        if(typeof response === 'string') {
+          response = JSON.parse(response);
+        }
+
+        var saved_object = null;
+        if(window[object.model_name]['include_json_root'] === true) {
+          saved_object = response[object.model_name.underscore()];
+        } else {
+          saved_object = response;
+        }
+
         for(var attribute in saved_object)
         {
           object_to_save[attribute] = saved_object[attribute];
