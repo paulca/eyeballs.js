@@ -71,7 +71,11 @@ o_O.rest = {
     }
     url = this.figure_url(original_callback, object);
     
-    if(window[object.model_name]['include_json_root'] === true)
+    if((  o_O.config.include_json_root && 
+          window[object.model_name]['include_json_root'] == void(0)
+        ) ||
+        ( window[object.model_name]['include_json_root'] === true )
+      )
     {
       var object_name;
       new_object_to_save = {};
