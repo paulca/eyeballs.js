@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.5.12.1"
+  s.version = "0.5.13"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2010-11-07}
+  s.date = %q{2010-12-01}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -57,9 +57,10 @@ Gem::Specification.new do |s|
      "templates/scaffold_edit.html.mustache",
      "templates/scaffold_index.html",
      "templates/scaffold_partial.html.mustache",
-     "test/index.html",
+     "test/run_unit_tests.html",
      "test/unit/qunit.css",
      "test/unit/qunit.js",
+     "test/unit/run_all.js",
      "test/unit/test_binding.html",
      "test/unit/test_controller.html",
      "test/unit/test_dom.html",
@@ -69,6 +70,7 @@ Gem::Specification.new do |s|
      "test/unit/test_model_with_callbacks.html",
      "test/unit/test_params.html",
      "test/unit/test_rest.html",
+     "test/unit/test_rest_global_config.html",
      "test/unit/test_routing.html"
   ]
   s.homepage = %q{http://www.github.com/paulca/eyeballs.js}
