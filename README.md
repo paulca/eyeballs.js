@@ -359,6 +359,10 @@ eyeballs.js uses QUnit for in-browser testing. Just load the files in the test d
 
 For the REST tests, you can use the included Sinatra app, `app.rb`. The tests expect it to be in a local virtual domain `http://eyeballs`
 
+Contributors
+------------
+- Anthony Eden ([aeden](/aeden))
+
 About me
 --------
 
