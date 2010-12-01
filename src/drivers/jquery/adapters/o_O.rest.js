@@ -1,5 +1,10 @@
 // REST & Rails, woop!
 o_O.rest = {
+  include_json_root: function(object){
+    return !!( o_O.config.include_json_root && 
+          window[object.model_name]['include_json_root'] == void(0)) ||
+        ( window[object.model_name]['include_json_root'] === true )
+  },
   figure_url: function(original_callback, object){
     if(typeof original_callback.url === 'string')
     {
@@ -47,13 +52,24 @@ o_O.rest = {
   {
     var object_to_save = {};
     var url;
+    var include_json_root = this.include_json_root(object)
     for(var i = 0; i < object.attributes.length; i++)
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
     var respond = function(response){
       try{
-        var saved_object = JSON.parse(response);
+        if(typeof response === 'string') {
+          response = JSON.parse(response);
+        }
+
+        var saved_object = null;
+        if(include_json_root) {
+          saved_object = response[object.model_name.underscore()];
+        } else {
+          saved_object = response;
+        }
+
         for(var attribute in saved_object)
         {
           object_to_save[attribute] = saved_object[attribute];
@@ -70,12 +86,8 @@ o_O.rest = {
       }
     }
     url = this.figure_url(original_callback, object);
-    
-    if((  o_O.config.include_json_root && 
-          window[object.model_name]['include_json_root'] == void(0)
-        ) ||
-        ( window[object.model_name]['include_json_root'] === true )
-      )
+
+    if(this.include_json_root(object))
     {
       var object_name;
       new_object_to_save = {};
@@ -111,6 +123,7 @@ o_O.rest = {
   find: function(model, id, callback, options)
   {
     var url = this.figure_url(options, model) + '/' + id;
+    var include_json_root = this.include_json_root(model)
     $.get(url, function(response){
       if(typeof response === 'object')
       {
@@ -120,6 +133,10 @@ o_O.rest = {
       {
         try{
           var retrieved_object = JSON.parse(response);
+          if(include_json_root)
+          {
+            retrieved_object = retrieved_object[model.model_name.underscore()]
+          }
         }
         catch(e){
           var retrieved_object = model.initialize({id: id});
