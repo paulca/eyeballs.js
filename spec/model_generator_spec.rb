@@ -14,7 +14,7 @@ describe Eyeballs::ModelGenerator do
   end
   
   it "should create my file" do
-    model_file.read.should include("o_O('Paul', function(paul){")
+    model_file.read.should include("o_O('Paul', function(){")
   end
   
   after(:all) do

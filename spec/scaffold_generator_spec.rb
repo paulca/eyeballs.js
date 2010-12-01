@@ -21,7 +21,7 @@ describe Eyeballs::ModelGenerator do
   end
   
   it "should fill out the model file" do
-    model_file.read.should include("o_O('Review', function(review){")
+    model_file.read.should include("o_O('Review', function(){")
   end
   
   it "should fill out the controller file" do
