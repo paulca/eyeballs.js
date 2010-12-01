@@ -125,22 +125,22 @@ o_O.rest = {
     var url = this.figure_url(options, model) + '/' + id;
     var include_json_root = this.include_json_root(model)
     $.get(url, function(response){
-      if(typeof response === 'object')
-      {
-        var retrieved_object = response;
-      }
-      else
-      {
-        try{
+      try{
+        if(typeof response === 'object')
+        {
+          var retrieved_object = response;
+        }
+        else
+        {
           var retrieved_object = JSON.parse(response);
-          if(include_json_root)
-          {
-            retrieved_object = retrieved_object[model.model_name.underscore()]
-          }
         }
-        catch(e){
-          var retrieved_object = model.initialize({id: id});
+        if(include_json_root)
+        {
+          retrieved_object = retrieved_object[model.model_name.underscore()]
         }
+      }
+      catch(e){
+        var retrieved_object = model.initialize({id: id});
       }
       if(typeof callback === 'function')
       {
