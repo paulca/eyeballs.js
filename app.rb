@@ -55,6 +55,15 @@ post '/rails_reviews' do
   end
 end
 
+get '/rails_reviews/1' do
+  '{"rails_review": {"id":"1"}}'
+end
+
+get '/alternate_rails_reviews/1' do
+  '{"alternate_rails_review": {"id":"1"}}'
+end
+
+
 post '/alternate_rails_reviews' do
   if params[:alternate_object]
     'ok'

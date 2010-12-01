@@ -75,10 +75,17 @@
         start();
       });
     });
+    
+    asyncTest('fetching with include_root', function(){
+      RailsReview.find(1,function(review, response){
+        equals(review.id, '1', 'should fetch a tasty RailsReview');
+        start();
+      });
+    });
 
-    asyncTest('specifying a custom json_root_name', function(){
-      AlternateRailsReview.create({title: "Awesome"},function(review, response){
-        equals(response, 'ok', 'should send things to /alternate_rails_reviews');
+    asyncTest('fetching while specifying a custom json_root_name', function(){
+      AlternateRailsReview.find(1,function(review, response){
+        equals(review.id, '1', 'should get an alternate_rails_review back');
         start();
       });
     });
