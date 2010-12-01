@@ -49,7 +49,7 @@ end
 
 post '/rails_reviews' do
   if params[:rails_review]
-    '{"id":1}'
+    '{"rails_review": {"id":"1"}}'
   else
     'fail'
   end

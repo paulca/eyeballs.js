@@ -30,9 +30,10 @@
       fake_review.url = '/reviews'
     });
     
-    asyncTest('storing a basic basic thing', 3, function(){
+    asyncTest('Review.save() storing a basic basic thing', 3, function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save(function(saved_review){
+        console.log(saved_review)
         equals(saved_review.title, review.title, 'title should match');
         equals(saved_review.id, '1', "Rails should give back the ID");
         equals(saved_review.model_name, 'Review', 'should save the model name');
@@ -40,7 +41,7 @@
       });
     });
     
-    asyncTest('storing a basic basic thing with custom URL set in the model', function(){
+    asyncTest('FakeReview.create() storing a basic basic thing with custom URL set in the model', function(){
       FakeReview.create({title: 'Magic!'}, function(saved_review){
         equals(FakeReview.url, '/reviews', 'Should be set');
         equals(saved_review.title, 'Magic!', 'title should match');
@@ -49,7 +50,7 @@
       });
     });
     
-    asyncTest('storing a basic basic thing with a custom URL set in the save', function(){
+    asyncTest('review.save() storing a basic basic thing with a custom URL set in the save', function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save({
         url: "/alternate_reviews",
@@ -69,7 +70,7 @@
       review.json_root_name = 'alternate_object'
     });
     
-    asyncTest('storing a basic basic thing with include_root', function(){
+    asyncTest('RailsReview.create() storing a basic basic thing with include_root', function(){
       RailsReview.create({title: "Awesome"},function(review, response){
         equals(review.id, '1', 'should fetch a tasty RailsReview');
         start();
@@ -152,7 +153,7 @@
       });
     });
     
-    asyncTest('pulling something in', 2, function(){
+    asyncTest('Review.initialize(...).save(...) pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'});
       review.save(function(){
         found_review = Review.find(review.id, function(found_review){
@@ -163,7 +164,7 @@
       });
     })
     
-    asyncTest('pulling something in by itself', 1, function(){
+    asyncTest('Review.find(2) pulling something in by itself', 1, function(){
       Review.find(2, {success: function(found_review){
         equals(found_review.title, 'funtimes');
         start();
