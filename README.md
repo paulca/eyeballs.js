@@ -115,7 +115,7 @@ You define a model by passing a name and function to the eyeballs ( o_O ) functi
 You can now initialize an individual post:
 
     var post = Post.initialize({title: 'My New Post'});
-    post.title #=> 'My New Post'
+    post.title //=> 'My New Post'
 
 Not very exciting.
 
@@ -128,10 +128,11 @@ However, if you're familiar with Rails, you'll be familiar with the wonderful sy
 Now, when you initialize a new Post, you can validate it, nice and easy:
 
     var post = Post.initialize()
-    post.errors   # => [{
-                  #     field: 'title',
-                  #     message: 'title should be present',
-                  #     type: 'presence'}]
+    post.valid()
+    post.errors   // => [{
+                  //     field: 'title',
+                  //     message: 'title should be present',
+                  //     type: 'presence'}]
 
 and so on, so forth. This will be very familiar to those who use Rails.
 
@@ -148,9 +149,18 @@ You can also add your own validations, again, similar to how Rails does things:
     
     var post = Post.initialize()
     post.save(function(saved_post){
-      post.errors   # => [{
-                    #     message: 'title should be present'}]
-    })     # yep, there's a save method too!
+      post.errors   // => [{
+                    //     message: 'title should be present'}]
+    })              // yep, there's a save method too!
+    
+Even better, using the `invalid` callback:
+
+    post.save({
+      invalid: function(saved_post){
+        // you can assume:
+        saved_post.errors 
+      }
+    })
     
 When you want to find things:
 
@@ -172,7 +182,7 @@ And if you want to add your own methods:
     })
     
     var post = Post.initialize({title: "HUGE"})
-    post.title_downcased()  #=> 'huge'
+    post.title_downcased()  //=> 'huge'
     
 Connecting to an adapter:
 
@@ -221,7 +231,7 @@ There are several ways to bind events to controller actions.
 
 The simplest way to call controller actions is to bind them directly. From the above example, you can simply call:
 
-    PostsController.new()
+    o_O('PostsController').new()
 
 ...once you have initialized your controller.
 
@@ -261,7 +271,7 @@ and your controller:
     
     o_O('PostsController', {
       show: function(){
-        alert(o_O.params('id')) #=> '1'
+        alert(o_O.params('id')) //=> '1'
       }
     })
 
@@ -357,7 +367,7 @@ Running the tests
 
 eyeballs.js uses QUnit for in-browser testing. Just load the files in the test directory in any browser to run them.
 
-For the REST tests, you can use the included Sinatra app, `app.rb`. The tests expect it to be in a local virtual domain `http://eyeballs`
+For the REST tests, you can use the included Sinatra app, `app.rb`. The tests expect it to be in a local virtual domain `http://localhost:4567`
 
 Contributors
 ------------
