@@ -7,6 +7,7 @@
   <script src="../../src/o_O.js"></script>
   <script src="../../src/modules/o_O.model.js"></script>
   <script src="../../src/modules/o_O.validations.js"></script>
+  <script src="../../src/modules/o_O.relations.js"></script>
   <script src="../../src/drivers/jquery/adapters/o_O.rest.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.controller.js"></script>
   <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
@@ -64,6 +65,7 @@
     
     o_O('RailsReview', function(review){
       review.include_json_root = true;
+      review.has_many('comments');
     });
     o_O('AlternateRailsReview', function(review){
       review.include_json_root = true;
@@ -88,6 +90,15 @@
       AlternateRailsReview.find(1,function(review, response){
         equals(review.id, '1', 'should get an alternate_rails_review back');
         start();
+      });
+    });
+
+    asyncTest('fetching a nested resource', function() {
+      RailsReview.find(1, function(review, response) {
+        review.comments.all(function(comments, response) {
+          equals(1, comments.length, 'should fetch nested resources');
+          start();
+        });
       });
     });
 

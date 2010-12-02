@@ -22,11 +22,19 @@ o_O.model = {
         },
         validates: function(validation){
           this.validations.custom.push(validation)
-        }
+        },
       }
       for(var method in o_O.validations.class_methods)
       {
         initial_class_methods.push(method);
+      }
+    }
+
+    if(typeof o_O.relations === 'object')
+    {
+      for(var method in o_O.relations.class_methods)
+      {
+        class_methods[method] = o_O.relations.class_methods[method];
       }
     }
   
@@ -192,6 +200,11 @@ o_O.model = {
           var model = this;
           return this.adapter.find(this, id, function(returned_object, response){
             found_object = model.initialize(returned_object);
+            // TODO: what happens if the relations.js is not loaded?
+            for(name in model.relations) {
+              found_object[name] = model.relations[name];
+            }
+
             if(!found_object['new_record'])
             {
               found_object['new_record'] = false;
