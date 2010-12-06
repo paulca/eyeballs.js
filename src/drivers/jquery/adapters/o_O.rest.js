@@ -43,6 +43,10 @@ o_O.rest = {
       {
         callback(documents, response);
       }
+      else if(typeof callback === 'object')
+      {
+        callback.callback(documents, response);
+      }
     })
   },
   destroy: function(object, callback, original_callback){

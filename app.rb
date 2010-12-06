@@ -63,6 +63,14 @@ get '/rails_reviews/1' do
   '{"rails_review": {"id":"1"}}'
 end
 
+get '/rails_reviews/1/comments' do
+  '[{"comment": {"id":"1"}}]'
+end
+
+get '/comments' do
+  '[{"comment": {"id":"1"}}, {"comment": {"id":"2"}}]'
+end
+
 get '/alternate_rails_reviews/1' do
   '{"alternate_rails_review": {"id":"1"}}'
 end

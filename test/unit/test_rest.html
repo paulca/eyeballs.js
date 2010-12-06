@@ -63,9 +63,12 @@
       });
     });
     
+    o_O('Comment', function(comment) {
+      comment.include_json_root = true;
+    });
     o_O('RailsReview', function(review){
       review.include_json_root = true;
-      review.has_many('comments');
+      review.has_many('comments', 'Comment');
     });
     o_O('AlternateRailsReview', function(review){
       review.include_json_root = true;
@@ -96,7 +99,7 @@
     asyncTest('fetching a nested resource', function() {
       RailsReview.find(1, function(review, response) {
         review.comments.all(function(comments, response) {
-          equals(1, comments.length, 'should fetch nested resources');
+          equals(comments.length, 1, 'should fetch nested resources');
           start();
         });
       });

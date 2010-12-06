@@ -202,7 +202,9 @@ o_O.model = {
             found_object = model.initialize(returned_object);
             // TODO: what happens if the relations.js is not loaded?
             for(name in model.relations) {
-              found_object[name] = model.relations[name];
+              var relation = model.relations[name];
+              relation.belongs_to = found_object;
+              found_object[name] = relation;
             }
 
             if(!found_object['new_record'])

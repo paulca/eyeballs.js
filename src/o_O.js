@@ -75,6 +75,13 @@ if(typeof String.prototype.capitalize === 'undefined')
   }
 }
 
+if(typeof String.prototype.singularize === 'undefined')
+{
+  String.prototype.singularize = function() {
+    return this.replace(/s$/, '')
+  }
+}
+
 if(typeof String.prototype.underscore === 'undefined')
 {
   String.prototype.underscore = function(){
