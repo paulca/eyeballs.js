@@ -1,3 +1,7 @@
+Wed Feb 2
+- - - - -
+- Array.indexOf has no support in IE. Who knew?
+
 Wed Nov 3
 - - - - - 
 - Support passing in params via the routes
