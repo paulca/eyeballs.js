@@ -1,6 +1,7 @@
 Wed Feb 2
 - - - - -
 - Array.indexOf has no support in IE. Who knew?
+- Check for empty regex match aswell as undefined, for IE
 
 Wed Nov 3
 - - - - - 

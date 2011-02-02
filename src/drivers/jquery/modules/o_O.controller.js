@@ -16,7 +16,7 @@ o_O.controller = {
             var parts = rule.match(/([\+])?(\s+)?(([^ :]+)([: ]+))?([^ #]+)[ #]+([^ ;]+)[ ;]?/);
             var default_bit = parts[1];
             var this_action_event = parts[4];
-            if(this_action_event === undefined)
+            if(this_action_event === undefined || this_action_event === '')
             {
               this_action_event = ($(this).is('form')) ? 'submit' : 'click';
             }
