@@ -365,9 +365,15 @@ Finally, the o\_O.render function takes a template, which is a Mustache.js templ
 Running the tests
 -----------------
 
-eyeballs.js uses QUnit for in-browser testing. Just load the files in the test directory in any browser to run them.
+eyeballs.js uses QUnit and a Sinatra app for in-browser testing.
 
-For the REST tests, you can use the included Sinatra app, `app.rb`. The tests expect it to be in a local virtual domain `http://localhost:4567`
+To start the test server:
+
+    ruby app.rb
+
+To run all the tests, visit:
+
+    http://localhost:4567/test/run_unit_tests.html
 
 Contributors
 ------------
