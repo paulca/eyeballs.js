@@ -30,7 +30,7 @@ o_O.model = {
       }
     }
   
-    var run_callback = function(callback, method, object, response){
+    var run_callback = function(callback, method, object, response, xhr){
       try{
         if(typeof callback === 'function' && method === 'success')
         {
@@ -38,7 +38,7 @@ o_O.model = {
         }
         if(typeof callback === 'object' && typeof callback[method] === 'function')
         {
-          callback[method](object, response);
+          callback[method](object, response, xhr);
         }
       }
       catch(e)
@@ -49,7 +49,7 @@ o_O.model = {
         }
         else
         {
-          alert(e);
+          alert(e.name + "\n" + e.message);
         }
       }
     }  
@@ -176,7 +176,7 @@ o_O.model = {
         {
           attributes['id'] = o_O.uuid();
         }
-        if(!attributes['new_record'])
+        if(attributes['new_record'] !== false)
         {
           attributes['new_record'] = true;
         }
@@ -190,7 +190,7 @@ o_O.model = {
         {
           run_callback(callback, 'loading', this.initialize({id: id}))
           var model = this;
-          return this.adapter.find(this, id, function(returned_object, response){
+          return this.adapter.find(this, id, function(returned_object, response, xhr){
             found_object = model.initialize(returned_object);
             if(!found_object['new_record'])
             {
@@ -198,11 +198,11 @@ o_O.model = {
             }
             if(found_object.id)
             {
-              run_callback(callback, 'success', found_object, response);
+              run_callback(callback, 'success', found_object, response, xhr);
             }
             else
             {
-              run_callback(callback, 'failure', found_object, response);
+              run_callback(callback, 'failure', found_object, response, xhr);
             }
           }, callback);
         }
