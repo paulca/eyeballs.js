@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{eyeballs}
-  s.version = "0.5.15"
+  s.version = "0.5.16"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Campbell"]
-  s.date = %q{2011-02-02}
+  s.date = %q{2011-03-03}
   s.default_executable = %q{eyeballs}
   s.email = %q{paul@rslw.com}
   s.executables = ["eyeballs"]
@@ -75,7 +75,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://www.github.com/paulca/eyeballs.js}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.4.2}
+  s.rubygems_version = %q{1.5.0}
   s.summary = %q{A lightweight javascript MVC framework.}
   s.test_files = [
     "spec/app_generator_spec.rb",
