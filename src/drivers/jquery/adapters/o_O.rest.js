@@ -21,7 +21,7 @@ o_O.rest = {
   },
   all: function(model, callback, original_callback){
     var include_json_root = this.include_json_root(model);
-    $.get(this.figure_url(original_callback, model), function(response){
+    $.get(this.figure_url(original_callback, model), function(response, textStatus, xhr){
       var documents;
       try {
         documents = JSON.parse(response);
@@ -41,7 +41,7 @@ o_O.rest = {
       
       if(typeof callback === 'function')
       {
-        callback(documents, response);
+        callback(documents, response, xhr);
       }
     })
   },
@@ -50,10 +50,10 @@ o_O.rest = {
     $.ajax({
       type: 'DELETE',
       url: this.figure_url(original_callback, object) + '/' + object.id,
-      success: function(response){
+      success: function(response, textStatus, xhr){
         if(typeof callback === 'function')
         {
-          callback(object, response);
+          callback(object, response, xhr);
         }
       }
     })
@@ -67,7 +67,7 @@ o_O.rest = {
     {
       object_to_save[object.attributes[i]] = object[object.attributes[i]];
     }
-    var respond = function(response){
+    var respond = function(response, textStatus, xhr){
       try{
         if(typeof response === 'string') {
           response = JSON.parse(response);
@@ -92,7 +92,7 @@ o_O.rest = {
       }
       if(typeof callback === 'function')
       {
-        callback(object_to_save, response);
+        callback(object_to_save, response, xhr);
       }
     }
     url = this.figure_url(original_callback, object);
@@ -134,7 +134,7 @@ o_O.rest = {
   {
     var url = this.figure_url(options, model) + '/' + id;
     var include_json_root = this.include_json_root(model)
-    $.get(url, function(response){
+    $.get(url, function(response, textStatus, xhr){
       try{
         if(typeof response === 'object')
         {
@@ -155,7 +155,7 @@ o_O.rest = {
       if(typeof callback === 'function')
       {
         retrieved_object.new_record = false;
-        callback(retrieved_object, response);
+        callback(retrieved_object, response, xhr);
       }
     })
   }
