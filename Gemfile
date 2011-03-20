@@ -11,5 +11,5 @@ end
 
 group :test do
   gem 'rspec', '1.3.1'
-  gem 'ruby-debug19'
+  gem 'ruby-debug'
 end
