@@ -25,6 +25,10 @@ o_O.params = function(param, new_value){
   return o_O.params.collection;
 }
 
+o_O.extend = function(target, object) {
+  return $.extend(target, object);
+};
+
 o_O.params.collection = {}
 
 $(function(){

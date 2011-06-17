@@ -89,6 +89,12 @@
       equals(myReview.errors.length, 2, "should have 2 errors");
     });
     
+    test('setting attributes should work', 1, function() {
+      var myReview = Review.initialize();
+      myReview('title', 'Biscuit');
+      equals(myReview('title'), 'Biscuit');
+    });
+    
     test('editing a review', 2, function(){
       myReview = Review.find('paul');
       equals(myReview.title, 'Yeah!', 'should pull in title');

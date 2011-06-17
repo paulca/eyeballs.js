@@ -150,6 +150,23 @@ o_O.model = {
       instance_methods[method] = class_methods.methods[method]
     }
   
+    var buildGetterSetter = function() {
+      return function() {
+        var self = arguments.callee;
+        switch(arguments.length) {
+          case 0:
+            return self;
+          case 1:
+            return self[arguments[0]];
+          case 2:
+            self[arguments[0]] = arguments[1];
+            return arguments[1];
+          default:
+            throw "Too many parameters!";
+        }
+      };
+    };
+  
     initializer_methods = {
       adapter: o_O.model.adapter,
       all: function(callback){
@@ -162,7 +179,8 @@ o_O.model = {
         }
       },
       initialize: function(attributes){
-        if(!attributes) { var attributes = {}; };
+        if(!attributes) { attributes = {}; }
+        attributes = o_O.extend(buildGetterSetter(), attributes);
         var initialized_attributes = [];
         for( var attribute in attributes )
         {
