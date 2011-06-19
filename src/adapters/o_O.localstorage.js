@@ -16,7 +16,7 @@ if(typeof localStorage === 'object')
     },
     destroy: function(object, callback){
       var table = this.table(object)
-      delete table[object.id]
+      delete table[object('id')]
       localStorage.setItem(object.table_name, JSON.stringify(table))
       if(typeof callback === 'function')
       {
@@ -26,7 +26,7 @@ if(typeof localStorage === 'object')
     save: function(object, callback)
     {
       var all = this.table(object)
-      all[object.id] = object;
+      all[object('id')] = object.raw_attributes;
       localStorage.setItem(object.table_name, JSON.stringify(all))
       if(typeof callback === 'function')
       {
@@ -48,13 +48,14 @@ if(typeof localStorage === 'object')
     },
     find: function(model, id, callback)
     {
-      var object = this.table(model)[id]
-      object.id = id;
+      var object_json = this.table(model)[id]
+      object_json.id = id
+
       if(typeof callback === 'function')
       {
-        callback(object);
+        callback(object_json);
       }
-      return object;
+      return object_json;
     }
   }
 }

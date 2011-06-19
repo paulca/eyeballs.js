@@ -17,7 +17,7 @@ o_O.dom = {
     }
   },
   destroy: function(object, callback){
-    $('[data-model=' + object.model_name +'][data-id= ' + object.id + ']').remove()
+    $('[data-model=' + object.model_name +'][data-id= ' + object('id') + ']').remove()
     if(typeof callback === 'function')
     {
       callback(object);
@@ -29,7 +29,7 @@ o_O.dom = {
     if(typeof callback === 'function')
     {
       new_object = model.initialize(o_O.find_attributes(template, function(field){return field.text();}));
-      new_object.id = id;
+      new_object('id', id);
       callback(new_object);
     }
     return new_object;

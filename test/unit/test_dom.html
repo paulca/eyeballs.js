@@ -33,22 +33,22 @@
     asyncTest('storing a basic basic thing', 1, function(){
       var review = Review.initialize({title: 'Magic!'})
       review.save(function(saved_review){
-        equals(saved_review.title, 'Magic!', 'Should save the title')
+        equals(saved_review('title'), 'Magic!', 'Should save the title')
         start();
       });
     });
     
     asyncTest('pulling something in', 2, function(){
       Review.find('big-whoop', function(found_review){
-        equals(found_review.title, 'Whoop!', 'should be able to find stuff in the dom')
-        equals(found_review.id, 'big-whoop', 'should persist the id')
+        equals(found_review('title'), 'Whoop!', 'should be able to find stuff in the dom')
+        equals(found_review('id'), 'big-whoop', 'should persist the id')
         start();
       });
     })
     
     asyncTest('getting all', 1, function(){
         Review.all(function(all_reviews){
-          equals(all_reviews[0].title, 'Whoop!', 'It should pull in everything')
+          equals(all_reviews[0]('title'), 'Whoop!', 'It should pull in everything')
           start();
         })
     })

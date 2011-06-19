@@ -80,7 +80,10 @@ o_O.model = {
           {
             var model = this;
             this.adapter.save(this, function(returned_object, response){
-              var initialized_object = o_O.models[model.model_name].initialize(returned_object);
+              var initialized_object = returned_object;
+              if (typeof returned_object != 'function') {
+                initialized_object = o_O.models[model.model_name].initialize(returned_object);
+              }
               initialized_object.new_record = false;
               run_callback(callback, 'success', initialized_object, response);
             }, callback);
@@ -98,20 +101,15 @@ o_O.model = {
       },
       table_name: table_name,
       to_json: function(){
-        var serialized_object = {};
-        for(var i = 0; i < this.attributes.length; i++);
-        {
-          var index = i - 1;
-          var attribute_name = this.attributes[index];
-          serialized_object[this.attributes[index]] = this[this.attributes[index]];
-        }
+        var serialized_object = o_O.extend({}, this.raw_attributes);
         serialized_object._model_name = this.model_name;
+        
         return JSON.stringify(serialized_object);
       },
       update_attributes: function(attributes, callback){
         for(var attribute in attributes)
         {
-          this[attribute] = attributes[attribute];
+          this(attribute, attributes[attribute]);
         }
         this.save(callback);
       },
@@ -150,16 +148,19 @@ o_O.model = {
       instance_methods[method] = class_methods.methods[method]
     }
   
-    var buildGetterSetter = function() {
+    var buildModelBase = function() {
       return function() {
         var self = arguments.callee;
-        switch(arguments.length) {
+        if (!self.raw_attributes) {
+          self.raw_attributes = {};
+        }
+       switch(arguments.length) {
           case 0:
             return self;
           case 1:
-            return self[arguments[0]];
+            return self.raw_attributes[arguments[0]];
           case 2:
-            self[arguments[0]] = arguments[1];
+            self.raw_attributes[arguments[0]] = arguments[1];
             return arguments[1];
           default:
             throw "Too many parameters!";
@@ -180,25 +181,20 @@ o_O.model = {
       },
       initialize: function(attributes){
         if(!attributes) { attributes = {}; }
-        attributes = o_O.extend(buildGetterSetter(), attributes);
-        var initialized_attributes = [];
-        for( var attribute in attributes )
-        {
-          initialized_attributes.push(attribute);
-        }
-        attributes['attributes'] = initialized_attributes;
+        var model = buildModelBase();
+        model.raw_attributes = attributes;
         for ( var method in instance_methods ) {
-          attributes[method] = instance_methods[method];
+          model[method] = instance_methods[method];
         }
-        if(!attributes['id'])
+        if(!model('id'))
         {
-          attributes['id'] = o_O.uuid();
+          model('id', o_O.uuid());
         }
-        if(attributes['new_record'] !== false)
+        if(model('new_record') !== false)
         {
-          attributes['new_record'] = true;
+          model('new_record', true);
         }
-        return attributes;
+        return model;
       },
       create: function(attributes, callbacks){
         this.initialize(attributes).save(callbacks);
@@ -209,12 +205,15 @@ o_O.model = {
           run_callback(callback, 'loading', this.initialize({id: id}))
           var model = this;
           return this.adapter.find(this, id, function(returned_object, response, xhr){
-            found_object = model.initialize(returned_object);
-            if(!found_object['new_record'])
-            {
-              found_object['new_record'] = false;
+            var found_object = returned_object;
+            if (typeof returned_object != 'function') {
+              found_object = model.initialize(returned_object);
             }
-            if(found_object.id)
+            if(!found_object('new_record'))
+            {
+              found_object('new_record', false);
+            }
+            if(found_object('id'))
             {
               run_callback(callback, 'success', found_object, response, xhr);
             }

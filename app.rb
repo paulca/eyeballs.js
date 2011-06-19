@@ -41,6 +41,8 @@ post '/test_id' do
   if params[:alternate_object]
     if params[:id]
       'fail'
+    else
+      'ok'
     end
   else
     'ok'

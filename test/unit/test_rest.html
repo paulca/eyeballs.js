@@ -34,8 +34,8 @@
       var review = Review.initialize({title: 'Magic!'})
       review.save(function(saved_review){
         console.log(saved_review)
-        equals(saved_review.title, review.title, 'title should match');
-        equals(saved_review.id, '1', "Rails should give back the ID");
+        equals(saved_review('title'), review('title'), 'title should match');
+        equals(saved_review('id'), '1', "Rails should give back the ID");
         equals(saved_review.model_name, 'Review', 'should save the model name');
         start();
       });
@@ -44,8 +44,8 @@
     asyncTest('FakeReview.create() storing a basic basic thing with custom URL set in the model', function(){
       FakeReview.create({title: 'Magic!'}, function(saved_review){
         equals(FakeReview.url, '/reviews', 'Should be set');
-        equals(saved_review.title, 'Magic!', 'title should match');
-        equals(saved_review.id, '1', "Rails should give back the ID");
+        equals(saved_review('title'), 'Magic!', 'title should match');
+        equals(saved_review('id'), '1', "Rails should give back the ID");
         start();
       });
     });
@@ -55,8 +55,8 @@
       review.save({
         url: "/alternate_reviews",
         success: function(saved_review){
-          equals(saved_review.title, review.title, 'title should match');
-          equals(saved_review.id, '2', "Rails should give back the ID");
+          equals(saved_review('title'), review('title'), 'title should match');
+          equals(saved_review('id'), '2', "Rails should give back the ID");
           start();
         }
       });
@@ -72,21 +72,21 @@
     
     asyncTest('RailsReview.create() storing a basic basic thing with include_root', function(){
       RailsReview.create({title: "Awesome"},function(review, response){
-        equals(review.id, '1', 'should fetch a tasty RailsReview');
+        equals(review('id'), '1', 'should fetch a tasty RailsReview');
         start();
       });
     });
     
     asyncTest('fetching with include_root', function(){
       RailsReview.find(1,function(review, response){
-        equals(review.id, '1', 'should fetch a tasty RailsReview');
+        equals(review('id'), '1', 'should fetch a tasty RailsReview');
         start();
       });
     });
 
     asyncTest('fetching while specifying a custom json_root_name', function(){
       AlternateRailsReview.find(1,function(review, response){
-        equals(review.id, '1', 'should get an alternate_rails_review back');
+        equals(review('id'), '1', 'should get an alternate_rails_review back');
         start();
       });
     });
@@ -115,10 +115,12 @@
     
     asyncTest("ID shouldn't be sent", function(){
       var string_back_id;
+      console.log('blaaaa');
       AlternateRailsReview.create({},{
         url: "/test_id",
         success: function(saved_review, response){
-          equals('ok', response, 'it should not sent an ID');
+          console.log('blub');
+          equals(response, 'ok', 'it should not sent an ID');
           start();
       }
       });
@@ -156,9 +158,9 @@
     asyncTest('Review.initialize(...).save(...) pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'});
       review.save(function(){
-        found_review = Review.find(review.id, function(found_review){
-          equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
-          equals(found_review.id, '1', 'should persist the id')
+        found_review = Review.find(review('id'), function(found_review){
+          equals(found_review('title'), 'More Magic!', 'should be able to find stuff in local storage')
+          equals(found_review('id'), '1', 'should persist the id')
           start();
         });
       });
@@ -166,14 +168,14 @@
     
     asyncTest('Review.find(2) pulling something in by itself', 1, function(){
       Review.find(2, {success: function(found_review){
-        equals(found_review.title, 'funtimes');
+        equals(found_review('title'), 'funtimes');
         start();
       }})
     })
     
     asyncTest('pulling something in with prefix', 1, function(){
       Review.find(1, {url:'/my/reviews', success: function(found_review){
-        equals(found_review.title, 'Prefixed');
+        equals(found_review('title'), 'Prefixed');
         start();
       }})
     })
@@ -213,9 +215,9 @@
     
     asyncTest('setting new_record attribute', 2, function(){
       var review = Review.initialize()
-      equals(review.new_record, true, 'should be a new record review');
+      equals(review('new_record'), true, 'should be a new record review');
       review.save(function(saved_review){
-        equals(saved_review.new_record, false, 'should not be a new record after')
+        equals(saved_review('new_record'), false, 'should not be a new record after')
         start();
       });
     })
@@ -224,7 +226,7 @@
       var review = Review.initialize({title: 'Doomed!'});
       review.save(function(saved_review){
         saved_review.update_attributes({title: 'Tennessee'}, function(saved_review){
-          equals(saved_review.title, 'Updated', 'Title should have been updated');
+          equals(saved_review('title'), 'Updated', 'Title should have been updated');
           start();
         });
       });
@@ -234,7 +236,7 @@
       var review = FakeReview.initialize({title: 'Doomed!'});
       review.save(function(saved_review){
         saved_review.update_attributes({title: 'Tennessee'}, function(saved_review){
-          equals(saved_review.title, 'Updated', 'Title should have been updated');
+          equals(saved_review('title'), 'Updated', 'Title should have been updated');
           start();
         });
       });

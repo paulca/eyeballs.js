@@ -60,13 +60,10 @@ o_O.rest = {
   },
   save: function(object, callback, original_callback)
   {
-    var object_to_save = {};
+    var object_to_save = o_O.extend({}, object.raw_attributes);
     var url;
     var include_json_root = this.include_json_root(object)
-    for(var i = 0; i < object.attributes.length; i++)
-    {
-      object_to_save[object.attributes[i]] = object[object.attributes[i]];
-    }
+    
     var respond = function(response, textStatus, xhr){
       try{
         if(typeof response === 'string') {
@@ -116,7 +113,7 @@ o_O.rest = {
     {
       object_to_save['authenticity_token'] = o_O.config.authenticity_token;
     }
-    if(object.new_record)
+    if(object('new_record'))
     {
       $.post(url, object_to_save, respond);
     }
@@ -125,7 +122,7 @@ o_O.rest = {
       $.ajax({
         type: 'PUT',
         data: object_to_save,
-        url: url + '/' + object.id,
+        url: url + '/' + object('id'),
         success: respond
       })
     }

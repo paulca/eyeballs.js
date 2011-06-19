@@ -16,14 +16,14 @@ o_O.validations = {
       var field = object.validations.lengthliness[i].field;
       var max = object.validations.lengthliness[i].max
       var min = object.validations.lengthliness[i].min
-      if(object[field])
+      if(object(field))
       {
-        if(max && object[field].length > max)
+        if(max && object(field).length > max)
         {
           var message = field.capitalize() + ' should be less than ' + max + ' characters';
           object.errors.push({field: field, type: 'length', message: message});
         }
-        if(min && object[field].length < min)
+        if(min && object(field).length < min)
         {
           var message = field.capitalize() + ' should be greater than ' + min + ' characters';
           object.errors.push({field: field, type: 'length', message: message});
@@ -35,7 +35,7 @@ o_O.validations = {
     for(var i = 0; i < object.validations.presence.length; i++)
     {
       var field = object.validations.presence[i].field;
-      if(object[field] == null || (typeof object[field] === 'string' && object[field].blank()) )
+      if(object(field) == null || (typeof object(field) === 'string' && object(field).blank()) )
       {
         var message = field.capitalize() + ' should be present';
         object.errors.push({field: field, type: 'presence', message: message})

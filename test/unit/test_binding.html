@@ -25,7 +25,7 @@
     
     test('binding to a non-global object', 1, function(){
       var test_model = MyApp.Review.initialize({title: 'Delicious'})
-      equals(test_model.title, 'Delicious', 'should just work as normal')
+      equals(test_model('title'), 'Delicious', 'should just work as normal')
     })
 
   });

@@ -34,7 +34,7 @@
       var review = Review.initialize({title: 'Magic!'})
       review.save(function(saved_review){
         var all_reviews = JSON.parse(localStorage.getItem('reviews'));
-        equals(all_reviews[review.id].title, 'Magic!', 'it should have saved to local storage');
+        equals(all_reviews[review('id')].title, 'Magic!', 'it should have saved to local storage');
         start();
       });
     });
@@ -42,9 +42,9 @@
     asyncTest('pulling something in', 2, function(){
       var review = Review.initialize({title: 'More Magic!'})
       review.save(function(saved_review){
-        Review.find(review.id, function(found_review){
-          equals(found_review.title, 'More Magic!', 'should be able to find stuff in local storage')
-          equals(found_review.id, review.id, 'should persist the id')
+        Review.find(review('id'), function(found_review){
+          equals(found_review('title'), 'More Magic!', 'should be able to find stuff in local storage')
+          equals(found_review('id'), review('id'), 'should persist the id')
           start();
         });
       });
@@ -64,6 +64,7 @@
       var review = Review.initialize({title: 'Doomed!'});
       review.save(function(saved_review){
         equals(localStorage.length, 1, 'local storage should be used');
+        console.log(saved_review('id'));
         saved_review.destroy(function(){
           equals(localStorage.getItem('reviews'), '{}', 'local storage should be empty!');
           start();
@@ -76,7 +77,7 @@
   
 </head>
 <body>
-  <h1 id="qunit-header">Controller Tests</h1>
+  <h1 id="qunit-header">Local Storage Tests</h1>
   <h2 id="qunit-banner"></h2>
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>

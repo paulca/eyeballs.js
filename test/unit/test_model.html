@@ -24,13 +24,13 @@
     this.validates_presence_of('content');
     this.validates_length_of('title', {min: 5, max: 15});
     this.validates(function(review){
-      if(review.score != 99 && review.test === true)
+      if(review('score') != 99 && review('test') === true)
       {
         review.errors.push({message: 'Score should be 99'})
       }
     })
     this.methods.title_numbered = function(){
-      return '1. ' + this.title;
+      return '1. ' + this('title');
     }
     this.do_something = function(){
       return 'did something'
@@ -47,12 +47,12 @@
     
     test('binding to a non-global object', 1, function(){
       var test_model = MyApp.TestModel.initialize({title: 'Delicious'})
-      equals(test_model.title, 'Delicious', 'should just work as normal')
+      equals(test_model('title'), 'Delicious', 'should just work as normal')
     })
     
     test('functional syntax', 1, function(){
       var test_model = o_O('Review').initialize({title: 'Delicious'})
-      equals(test_model.title, 'Delicious', 'should just work as normal')
+      equals(test_model('title'), 'Delicious', 'should just work as normal')
     })
     
     test('class-ish method', function(){
@@ -61,7 +61,7 @@
 
     test('serialization',1, function(){
       var myReview = Review.initialize({title: 'Groovy'})
-      equals(myReview.to_json(), '{"title":"Groovy","_model_name":"Review"}', 'should serialize nicely')
+      equals(myReview.to_json(), '{"title":"Groovy","id":"' + myReview('id') + '","new_record":true,"_model_name":"Review"}', 'should serialize nicely')
     })
     
     test('useful attributes',2, function(){
@@ -72,15 +72,15 @@
     test('multiple initialization', 1, function(){
       a = Review.initialize()
       b = Review.initialize()
-      equals(a.id == b.id, false, 'they should have different ids')
+      equals(a('id') == b('id'), false, 'they should have different ids')
     })
     
     test('a valid review', 3, function(){
       var myReview = Review.initialize({title: "Biscuit", content: "Some Content"});
       myReview.save();
-      equals(myReview.title, 'Biscuit', 'Title should be Biscuit');
+      equals(myReview('title'), 'Biscuit', 'Title should be Biscuit');
       equals(myReview.valid(), true, 'valid() should return true');
-      equals(myReview.save().title, 'Biscuit', 'save() should return object');
+      equals(myReview.save()('title'), 'Biscuit', 'save() should return object');
     });
     
     test('an invalid review',1, function(){
@@ -89,7 +89,7 @@
       equals(myReview.errors.length, 2, "should have 2 errors");
     });
     
-    test('setting attributes should work', 1, function() {
+    test('setting and retrieving attributes should work', 1, function() {
       var myReview = Review.initialize();
       myReview('title', 'Biscuit');
       equals(myReview('title'), 'Biscuit');
@@ -97,15 +97,15 @@
     
     test('editing a review', 2, function(){
       myReview = Review.find('paul');
-      equals(myReview.title, 'Yeah!', 'should pull in title');
-      equals(myReview.content, 'Paris', 'should pull in content');
+      equals(myReview('title'), 'Yeah!', 'should pull in title');
+      equals(myReview('content'), 'Paris', 'should pull in content');
     })
     
     test('updating a review', 2, function(){
       myReview = Review.find('paul');
       myReview.update_attributes({title: 'No!', content: 'Dublin'});
-      equals(myReview.title, 'No!', 'should update the title');
-      equals(myReview.content, 'Dublin', 'should update the content');
+      equals(myReview('title'), 'No!', 'should update the title');
+      equals(myReview('content'), 'Dublin', 'should update the content');
     })
     
     test('updating a review invalid', function(){
@@ -128,7 +128,7 @@
       equals(myReview.errors[0].field, 'title', 'should be on title');
       equals(myReview.errors[0].type, 'length', 'should be length')
       equals(myReview.errors[0].message, 'Title should be less than 15 characters', 'should have an error message')
-      myReview.title = 'the'
+      myReview('title', 'the')
       myReview.save();
       equals(myReview.errors.length, 1, "should still only have one error");
       equals(myReview.errors[0].message, 'Title should be greater than 5 characters', 'should have an error message')
@@ -139,7 +139,7 @@
       myReview.save();
       equals(myReview.errors.length, 1, "should have an error");
       equals(myReview.errors[0].message, 'Score should be 99', "should give me my custom error message");
-      myReview.score = 99;
+      myReview('score', 99);
       myReview.save()
       equals(myReview.errors.length, 0, "should have no errors");
     })

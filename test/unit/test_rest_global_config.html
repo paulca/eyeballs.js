@@ -35,7 +35,7 @@
     
     asyncTest('RailsReview.create() storing a basic basic thing with include_root', function(){
       RailsReview.create({title: "Awesome"},function(review, response){
-        equals(review.id, '1', 'should send things with a root');
+        equals(review('id'), '1', 'should send things with a root');
         start();
       });
     });
