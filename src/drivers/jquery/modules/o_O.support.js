@@ -29,6 +29,10 @@ o_O.extend = function(target, object) {
   return $.extend(target, object);
 };
 
+o_O.event_handler = function() {
+  return $({});
+};
+
 o_O.params.collection = {}
 
 $(function(){

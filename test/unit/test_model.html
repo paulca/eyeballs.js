@@ -143,6 +143,60 @@
       myReview.save()
       equals(myReview.errors.length, 0, "should have no errors");
     })
+    
+    test('data change events', function() {
+      var callback = function() {
+        var self = arguments.callee;
+        self.counter ++;
+        self.last_arguments = arguments;
+      };
+      callback.counter = 0;
+
+      myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+      equals(callback.counter, 0);
+
+      myReview.data_changed(callback);
+      equals(callback.counter, 0);
+      
+      myReview('title');
+      equals(callback.counter, 0);
+      
+      myReview('title', 'yippieh');
+      equals(callback.counter, 1);
+      equals(callback.last_arguments[1], 'title');
+      equals(callback.last_arguments[2], 'yippieh');
+      
+      myReview.update_attributes({title: 'yeah', score: 4});
+      equals(callback.counter, 3);
+    });
+    
+    test("data change events don't interfere cross instance wise", function() {
+      var callback = function() {
+        var result = function() {
+          var self = arguments.callee;
+          self.counter ++;
+        };
+        result.counter = 0;
+        return result;
+      };
+      
+      var callback1 = callback();
+      var callback2 = callback();
+
+      myReview1 = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+      myReview2 = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+
+      myReview1.data_changed(callback1);
+      myReview2.data_changed(callback2);
+      
+      myReview1('title', 'blubber');
+      equals(callback1.counter, 1);
+      equals(callback2.counter, 0);
+      
+      myReview2('title', 'blubber');
+      equals(callback1.counter, 1);
+      equals(callback2.counter, 1);
+    });
 
   });
   </script>

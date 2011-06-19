@@ -130,6 +130,9 @@ o_O.model = {
           return false;
         }
       },
+      data_changed: function(callback) {  
+        this.event_handler.bind('changeData', callback);
+      },
       errors: [],
       validations: class_methods.validations
     }
@@ -154,14 +157,21 @@ o_O.model = {
         if (!self.raw_attributes) {
           self.raw_attributes = {};
         }
+        if (!self.event_handler) {
+          self.event_handler = o_O.event_handler();
+        }
+
        switch(arguments.length) {
           case 0:
             return self;
           case 1:
             return self.raw_attributes[arguments[0]];
           case 2:
-            self.raw_attributes[arguments[0]] = arguments[1];
-            return arguments[1];
+            var attribute = arguments[0];
+            var value     = arguments[1];
+            self.raw_attributes[attribute] = value;
+            self.event_handler.triggerHandler('changeData', [attribute, value]);
+            return value;
           default:
             throw "Too many parameters!";
         }
