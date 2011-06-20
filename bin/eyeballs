@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'eyeballs'
-
-if(ARGV.include?('generate'))
-  Eyeballs::CLI.start
-else
-  Eyeballs::AppGenerator.start
-end

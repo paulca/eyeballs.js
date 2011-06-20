@@ -1,4 +1,0 @@
-{
-  "a[href=#signup]" : {"click" : ["signupForm"]},
-   "a[href=#login]" : {"click" : ["loginForm"]}
-}
