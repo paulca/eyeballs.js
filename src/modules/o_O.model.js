@@ -152,14 +152,8 @@ o_O.model = {
     }
   
     var buildModelBase = function() {
-      return function() {
+      var result = function() {
         var self = arguments.callee;
-        if (!self.raw_attributes) {
-          self.raw_attributes = {};
-        }
-        if (!self.event_handler) {
-          self.event_handler = o_O.event_handler();
-        }
 
        switch(arguments.length) {
           case 0:
@@ -176,6 +170,11 @@ o_O.model = {
             throw "Too many parameters!";
         }
       };
+      
+      result.raw_attributes = {};
+      result.event_handler = o_O.event_handler();
+      
+      return result;
     };
   
     initializer_methods = {
