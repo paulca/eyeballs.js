@@ -360,7 +360,12 @@ The main things to note here are the way that the form binds automatically to th
 Notice also `o_O.alert_errors(...)` which displays an alert of all the errors on an invalid review.
 
 Finally, the o\_O.render function takes a template, which is a Mustache.js template stored in `views/`, the review object and a set of options.
-    
+
+Sample App
+----------
+Meview is a sample app for storing reviews:
+Demo: http://meview.heroku.com
+Code: https://github.com/paulca/meview
 
 Running the tests
 -----------------
@@ -378,6 +383,7 @@ To run all the tests, visit:
 Contributors
 ------------
 - Anthony Eden ([aeden](/aeden))
+- Thorben Schröder ([walski](/walski))
 
 About me
 --------
