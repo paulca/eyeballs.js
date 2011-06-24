@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="../../dist/jquery/jquery-1.4.2.min.js"></script>
+  <script src="../../src/o_O.js"></script>
+  <script src="../../src/modules/o_O.model.js"></script>
+  <script src="../../src/modules/o_O.bucket.js"></script>
+  <script src="../../src/drivers/jquery/adapters/o_O.dom.js"></script>
+  <script src="../../src/drivers/jquery/modules/o_O.support.js"></script>
+
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
+  <script type="text/javascript" src="qunit.js"></script>
+
+  <script>
+  
+  o_O.model.adapter = o_O.dom;
+
+  $(document).ready(function(){
+    
+    module("Buckets")
+    
+    test('can add stuff to a bucket and get it back out again', function(){
+      var bucket = o_O('TestBucket')
+      bucket.add(123)
+      equals(bucket.size(), 1)
+      equals(bucket.get(0), 123)
+    })
+    
+    test('can determine if an item is contained in itself', function() {
+      var bucket = o_O('TestBucket')
+      bucket.add(324)
+      bucket.add(245)
+      equals(bucket.contains(324), true)
+      equals(bucket.contains(245), true)
+      equals(bucket.contains(123), false)
+    })
+    
+    test('can initialize a pre-filled bucket', function() {
+      var bucket = o_O('TestBucket', [1,2,3,99])
+      equals(bucket.size(), 4);
+      equals(bucket.get(0), 1);
+      equals(bucket.get(1), 2);
+      equals(bucket.get(2), 3);
+      equals(bucket.get(3), 99);
+    })
+    
+    test('can iterate over a bucket', function() {
+      var bucket = o_O('TestBucket', [1,2,3])
+      var check = [];
+      bucket.each(function() {
+        check.push(this);
+      })
+      equals(check.length, 3)
+      equals(check[0], 1)
+      equals(check[1], 2)
+      equals(check[2], 3)
+    })
+    
+    function makeEventBoundBucket() {
+      var bucket = o_O('TestBucket')
+      bucket.check = false
+      var check = false
+      bucket.data_changed(function() {
+        bucket.check = arguments
+      })
+      equals(bucket.check, false)
+      return bucket
+    }
+    
+    test('fires event when adding', function() {
+      var bucket = makeEventBoundBucket();
+      bucket.add(123)
+      equals(bucket.check.length, 3)
+      equals(bucket.check[1], 'add')
+      equals(bucket.check[2], 123)
+    })
+  });
+  
+  </script>
+
+  </head>
+  <body>
+    <h1 id="qunit-header">Model Tests</h1>
+   <h2 id="qunit-banner"></h2>
+   <h2 id="qunit-userAgent"></h2>
+   <ol id="qunit-tests"></ol>
+
+   <div data-model="Review" data-id="paul">
+    <h1 data-attribute="title">Yeah!</h1>
+    <p data-attribute="content">Paris</p>
+   </div>
+  </body>
+</html>

@@ -5,12 +5,29 @@ var o_O = function(){
   
   bind_to = (object_to_bind_to) ? object_to_bind_to : o_O.config.default_bind_to();
 
+  var checkForBucket = function(argument) {
+    var name;
+    if (argument && argument.match) {
+      name = argument.match(/^(.*)Bucket$/)
+    }
+    return name;
+  }
+
   if(arguments.length === 1)
   {
-    return bind_to[arguments[0]]
+    var name = checkForBucket(arguments[0])
+    if (name) {
+      return o_O.bucket.initialize(name[1]);
+    } else {
+      return bind_to[arguments[0]]
+    }
   }
   else if(typeof arguments[1] === 'object')
   {
+    var name = checkForBucket(arguments[0]);
+    if (name && arguments.length == 2) {
+      return o_O.bucket.initialize(name[1], arguments[1]);
+    }
     var controller_name = arguments[0];
     bind_to[controller_name] = o_O.controller.initialize(controller_name, arguments[1]);
     return bind_to[controller_name];
