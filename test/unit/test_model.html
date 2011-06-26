@@ -165,6 +165,7 @@
       equals(callback.counter, 1);
       equals(callback.last_arguments[1], 'title');
       equals(callback.last_arguments[2], 'yippieh');
+      equals(callback.last_arguments[3]('title'), 'yippieh');
       
       myReview.update_attributes({title: 'yeah', score: 4});
       equals(callback.counter, 3);
@@ -197,7 +198,16 @@
       equals(callback1.counter, 1);
       equals(callback2.counter, 1);
     });
-
+    
+    test("can be translated to a simple hash", function() {
+      myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 123, test: true})
+      var hash = myReview.to_model_hash()
+      for (key in hash) {
+        if(hash.hasOwnProperty(key)) {
+          equals(hash[key], myReview(key));
+        }
+      }
+    })
   });
   </script>
   

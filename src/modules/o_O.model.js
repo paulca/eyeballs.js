@@ -133,6 +133,9 @@ o_O.model = {
       data_changed: function(callback) {  
         this.event_handler.bind('changeData', callback);
       },
+      to_model_hash: function() {
+        return this.raw_attributes;
+      },
       errors: [],
       validations: class_methods.validations
     }
@@ -164,7 +167,7 @@ o_O.model = {
             var attribute = arguments[0];
             var value     = arguments[1];
             self.raw_attributes[attribute] = value;
-            self.event_handler.triggerHandler('changeData', [attribute, value]);
+            self.event_handler.triggerHandler('changeData', [attribute, value, self]);
             return value;
           default:
             throw "Too many parameters!";

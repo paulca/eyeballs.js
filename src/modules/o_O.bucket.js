@@ -4,11 +4,13 @@ o_O.bucket = {
      backend: initial_data ? initial_data : [],
      event_handler: o_O.event_handler()
    }
+   bucket.bucket = bucket
+   bucket.event_handler.data('bucket', bucket)
    
    var instance_methods = {
      add: function(el) {
-       this.event_handler.triggerHandler('changeData', ['add', el]);
-       return this.backend.push(el)
+       this.backend.push(el)
+       this.event_handler.triggerHandler('changeData', ['add', el, this]);
      },
      
      get: function(index) {
@@ -21,14 +23,14 @@ o_O.bucket = {
      
      each: function(callback) {
        for (var i = 0; i <= this.backend.length - 1; i++){
-        callback.apply(this.backend[i])
+        callback(this.backend[i])
        }
      },
      
      contains: function(value) {
        var check = false
-       this.each(function() {
-         if (this == value) {
+       this.each(function(obj) {
+         if (obj == value) {
            check = true
            return
          }

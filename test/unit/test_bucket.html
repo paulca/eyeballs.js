@@ -48,8 +48,8 @@
     test('can iterate over a bucket', function() {
       var bucket = o_O('TestBucket', [1,2,3])
       var check = [];
-      bucket.each(function() {
-        check.push(this);
+      bucket.each(function(model) {
+        check.push(model);
       })
       equals(check.length, 3)
       equals(check[0], 1)
@@ -70,10 +70,13 @@
     
     test('fires event when adding', function() {
       var bucket = makeEventBoundBucket();
+      bucket.add(234)
       bucket.add(123)
-      equals(bucket.check.length, 3)
+      equals(bucket.check.length, 4)
       equals(bucket.check[1], 'add')
       equals(bucket.check[2], 123)
+      equals(bucket.check[3].get(1), 123)
+      equals(bucket.check[3].size(), 2)
     })
   });
   

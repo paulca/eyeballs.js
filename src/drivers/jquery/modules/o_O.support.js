@@ -44,35 +44,60 @@ $(function(){
   })
 })
   
-o_O.render = function(template, data, options){
-  o_O.get_template(template, data, function(data, template){ 
-    var rendered = Mustache.to_html(template, data);
-    if(typeof options === 'object')
+o_O.render_prepared_template = function(template, data, options) {
+  var rendered = Mustache.to_html(template, data);
+  if(options.append)
+  {
+    $(options.append).append(rendered);
+  }
+  if(options.prepend)
+  {
+    $(options.prepend).prepend(rendered);
+  }
+  if(options.replace)
+  {
+    $(options.replace).replaceWith(rendered);
+  }
+  if(options.html)
+  {
+    $(options.html).html(rendered);
+  }
+  if(options.before)
+  {
+    $(options.html).before(rendered);
+  }
+  if(options.after)
+  {
+    $(options.html).after(rendered);
+  }
+}
+  
+o_O.render = function(template_url, data, options, inner_element){
+  o_O.get_template(template_url, data, function(data, template){ 
+    if(typeof options === 'object' && !options.force_model_render)
     {
-      if(options.append)
-      {
-        $(options.append).append(rendered);
+      o_O.render_prepared_template(template, data, options);
+    } else if ((options && options.force_model_render) || typeof options === 'string') {
+      if (options.force_model_render) {
+        options = options.element
       }
-      if(options.prepend)
-      {
-        $(options.prepend).prepend(rendered);
+      var callback
+      if (data.bucket) {
+        callback = function(e, operation, added, bucket) {
+          $(options).html('')
+          bucket.each(function(model) {
+            var current_element = $(inner_element)
+            $(options).append(current_element)
+            o_O.render(template_url, model, {element: current_element, force_model_render: true});
+          })
+        }
+      } else {
+        callback = function() {
+          o_O.render_prepared_template(template, data.to_model_hash(), {html: options});
+        }
       }
-      if(options.replace)
-      {
-        $(options.replace).replaceWith(rendered);
-      }
-      if(options.html)
-      {
-        $(options.html).html(rendered);
-      }
-      if(options.before)
-      {
-        $(options.html).before(rendered);
-      }
-      if(options.after)
-      {
-        $(options.html).after(rendered);
-      }
+      data.data_changed(callback)
+      callback(null, null, null, data)
     }
   });
 }
@@ -98,4 +123,8 @@ o_O.get_template = function(template, data, callback){
       callback(data, response);
     });
   }
+}
+
+o_O.bind_form = function(object, model_class, element_selector) {
+  
 }
