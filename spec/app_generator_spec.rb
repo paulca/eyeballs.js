@@ -13,7 +13,7 @@ describe Eyeballs::AppGenerator do
     let(:eyeballs_dir) { file('test', 'vendor', 'eyeballs') }
     let(:mustache_dir) { file('test', 'vendor', 'mustache') }
     
-    let(:jquery_file) { file('test', 'vendor', 'jquery', 'jquery-1.4.2.min.js') }
+    let(:jquery_file) { file('test', 'vendor', 'jquery', 'jquery-1.6.1.min.js') }
     let(:bbq_file) { file('test', 'vendor', 'jquery', 'jquery.ba-bbq.min.js') }
     let(:mustache_file) { file('test', 'vendor', 'mustache', 'mustache.0.3.0.js') }
     let(:index_file) { file('test', 'index.html') }

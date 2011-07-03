@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
      "app.rb",
      "bin/eyeballs",
      "config.ru",
-     "dist/jquery/jquery-1.4.2.min.js",
+     "dist/jquery/jquery-1.6.1.min.js",
      "dist/jquery/jquery.ba-bbq.min.js",
      "dist/mustache/mustache.0.3.0.js",
      "eyeballs.gemspec",
