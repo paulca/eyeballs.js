@@ -144,6 +144,15 @@
       equals(myReview.errors.length, 0, "should have no errors");
     })
     
+    test('clear', function() {
+      myReview = Review.initialize({title: 'Badabing', content: 'Badaboom', score: 0, test: true})
+      myReview.clear()
+      equals(myReview('title'), null)
+      equals(myReview('content'), null)
+      equals(myReview('score'), null)
+      equals(myReview('test'), null)
+    })
+    
     test('data change events', function() {
       var callback = function() {
         var self = arguments.callee;

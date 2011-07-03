@@ -98,31 +98,73 @@
       }, 10)
     })
     
-    // asyncTest('form can be bound to a bucket', function() {
-    //   var model = o_O('Post', function() {});
-    //   var posts = o_O('PostsBucket')
-    //   o_O.bind_form(posts, Post, '#test-form')
-    //   $('#test-form :input[name=title]').val('bla')
-    //   $('#test-form :input[name=content]').val('blub')
-    //   $('#test-form').submit()
-    //   
-    //   equals(posts.size(), 1)
-    //   var post = posts.get(0);
-    //   equals(post('title'), 'bla')
-    //   equals(post('content'), 'blub')
-    //   
-    //   $('#test-form :input[name=title]').val('bla2')
-    //   $('#test-form :input[name=content]').val('blub2')
-    //   $('#test-form').submit()
-    //   
-    //   equals(posts.size(), 2)
-    //   var post = posts.get(0);
-    //   equals(post('title'), 'bla')
-    //   equals(post('content'), 'blub')
-    //   var post = posts.get(1);
-    //   equals(post('title'), 'bla2')
-    //   equals(post('content'), 'blub2')
-    // })
+    asyncTest('form can be bound to a model and gets populated by it', function() {
+      var model = o_O('Post', function() {});
+      var post = Post.initialize({})
+      post('title', 'blaa')
+      o_O.bind_form(post, '#test-form')
+      
+      setTimeout(function() {
+        equals($('#test-form :input[name=title]').val(), 'blaa')
+        start();
+      }, 10);
+    })
+    
+    asyncTest('form can be bound to a model and values of the form get copied to the model on submit', function() {
+      var model = o_O('Post', function() {});
+      var post = Post.initialize({})
+      o_O.bind_form(post, '#test-form')
+      $('#test-form :input[name=title]').val('Yippieh')
+      $('#test-form :input[name=body]').val('Yeah')
+      
+      setTimeout(function() {
+        $('#test-form input[type=submit]').click()
+        equals(post('title'), 'Yippieh')
+        equals(post('body'), 'Yeah')
+        start();
+      }, 10);
+    })
+    
+    asyncTest('form can be bound to a model and changes to the model are reflected in the form', function() {
+      var model = o_O('Post', function() {});
+      var post = Post.initialize({})
+      o_O.bind_form(post, '#test-form')
+      $('#test-form :input[name=title]').val('Yippieh')
+      $('#test-form :input[name=body]').val('Yeah')
+      post('body', 'Yoggo')
+      
+      setTimeout(function() {
+        equals($('#test-form :input[name=body]').val(), 'Yoggo')
+        start();
+      }, 10);
+    })
+    
+    asyncTest('form can be bound to a bucket', function() {
+      var model = o_O('Post', function() {});
+      var posts = o_O('PostsBucket')
+      o_O.bind_form(posts, Post, '#test-form')
+      $('#test-form :input[name=title]').val('bla')
+      $('#test-form :input[name=body]').val('blub')
+      $('#test-form').submit()
+      
+      equals(posts.size(), 1)
+      var post = posts.get(0);
+      equals(post('title'), 'bla')
+      equals(post('body'), 'blub')
+      
+      $('#test-form :input[name=title]').val('bla2')
+      $('#test-form :input[name=body]').val('blub2')
+      $('#test-form').submit()
+      
+      equals(posts.size(), 2)
+      var post = posts.get(0);
+      equals(post('title'), 'bla')
+      equals(post('body'), 'blub')
+      var post = posts.get(1);
+      equals(post('title'), 'bla2')
+      equals(post('body'), 'blub2')
+      start()
+    })
 
   });
   </script>
@@ -141,6 +183,6 @@
   
   <div id="test-container"></div>
   <ul id="test-ul"></ul>
-  <form id="test-form"><input type="hidden" name="title" /><input type="hidden" name="body" /></form>
+  <form id="test-form"><input type="hidden" name="title" /><input type="hidden" name="body" /><input type="submit" /></form>
 </body>
 </html>

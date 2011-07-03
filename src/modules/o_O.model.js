@@ -106,6 +106,9 @@ o_O.model = {
         
         return JSON.stringify(serialized_object);
       },
+      clear: function() {
+        this.raw_attributes = {}
+      },
       update_attributes: function(attributes, callback){
         for(var attribute in attributes)
         {
