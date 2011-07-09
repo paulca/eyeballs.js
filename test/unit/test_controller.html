@@ -89,7 +89,7 @@
     test('should bind multiple events',2, function(){
       $('div#shortcut').trigger('click');
       equals($("div#shortcut").html(), 'shortcut!', 'it should be bound with the data-bind keyword')
-      $('div#shortcut').trigger('mouseover');
+      $('div#shortcut').trigger('blur');
       equals($("div#shortcut").html(), 'shortcut! multi!', 'it should bind multiple events')
     })
     
@@ -137,7 +137,7 @@
   </a>
 
   <div id="myDiv" data-bind="mouseover:reviews#other">stuff</div>
-  <div id="shortcut" data-bind="click:reviews#shortcut; mouseover:reviews#multi">
+  <div id="shortcut" data-bind="click:reviews#shortcut; blur:reviews#multi">
     I'm a shortcut
   </div>
   <div id="anotherDiv">
