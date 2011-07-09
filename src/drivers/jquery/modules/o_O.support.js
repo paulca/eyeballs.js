@@ -83,7 +83,8 @@ o_O.render = function(template_url, data, options, inner_element){
         options = options.element
       }
       var callback
-      if (data.bucket) {
+      data.unbind()
+      if (data.bucket && inner_element) {
         callback = function(e, operation, added, bucket) {
           $(options).html('')
           bucket.each(function(model) {
@@ -95,7 +96,7 @@ o_O.render = function(template_url, data, options, inner_element){
       } else {
         callback = function() {
           o_O.render_prepared_template(template, data.to_model_hash(), {html: options});
-          $(options).find('[data-bind]').each(function() {
+          $(options).find(':input').each(function() {
             var self = $(this)
             if (!self.data('bound_model')) {
               self.change(function() {

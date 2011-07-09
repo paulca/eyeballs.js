@@ -3,6 +3,7 @@
 <html>
 <head>
   <script src="../../dist/jquery/jquery-1.6.1.min.js"></script>
+  <script src="../../dist/mustache/mustache.0.3.0.js" type="text/javascript"></script> 
   <script src="../../src/o_O.js"></script>
   <script src="../../src/modules/o_O.model.js"></script>
   <script src="../../src/modules/o_O.bucket.js"></script>
@@ -18,7 +19,14 @@
 
   $(document).ready(function(){
     
-    module("Buckets")
+    module("Buckets", {
+      setup: function(){
+        localStorage.clear();
+        o_O.config.template_path = '/test/support'
+      }
+    });
+    
+    o_O.model.adapter = o_O.dom;
     
     test('can add stuff to a bucket and get it back out again', function(){
       var bucket = o_O('TestBucket')
@@ -57,12 +65,25 @@
       equals(check[2], 3)
     })
     
+    test('can remove items with callback function', function() {
+      var bucket = o_O('TestBucket', [1,2,3,45,213,54,201,200])
+      bucket.remove(function(el) {
+        return el % 2 != 0
+      })
+      equals(bucket.size(), 3)
+      equals(bucket.contains(2), true)
+      equals(bucket.contains(54), true)
+      equals(bucket.contains(200), true)
+    })
+    
     function makeEventBoundBucket() {
       var bucket = o_O('TestBucket')
       bucket.check = false
+      bucket.check_count = 0
       var check = false
       bucket.data_changed(function() {
         bucket.check = arguments
+        bucket.check_count++
       })
       equals(bucket.check, false)
       return bucket
@@ -72,11 +93,44 @@
       var bucket = makeEventBoundBucket();
       bucket.add(234)
       bucket.add(123)
+      equals(bucket.check_count, 2)
       equals(bucket.check.length, 4)
       equals(bucket.check[1], 'add')
       equals(bucket.check[2], 123)
       equals(bucket.check[3].get(1), 123)
       equals(bucket.check[3].size(), 2)
+    })
+    
+    test('fires only one event when using batch_operation', function() {
+      var bucket = makeEventBoundBucket();
+      
+      bucket.batch_operation(function(b) {
+        b.add(234)
+        b.add(457)
+        b.add(123)
+      })
+      
+      equals(bucket.check_count, 1)
+      equals(bucket.check.length, 4)
+      equals(bucket.check[1], 'batch')
+      equals(bucket.check[2], null)
+      equals(bucket.check[3].get(2), 123)
+      equals(bucket.check[3].size(), 3)
+    })
+    
+    test('has size in to_model_hash', function() {
+      var bucket = o_O('TestBucket', [4,2,327])
+      var hash = bucket.to_model_hash();
+      equals(hash.size, 3);
+    })
+    
+    asyncTest('can be rendered with information about itself when not passing an inner element to render', function() {
+      var bucket = o_O('TestBucket', [4,2,327])
+      o_O.render('bucket_meta', bucket, '#test-meta');
+      setTimeout(function() {
+        equals($('#test-meta').text(), "Size: 3")
+        start()
+      }, 10)
     })
   });
   
@@ -88,10 +142,6 @@
    <h2 id="qunit-banner"></h2>
    <h2 id="qunit-userAgent"></h2>
    <ol id="qunit-tests"></ol>
-
-   <div data-model="Review" data-id="paul">
-    <h1 data-attribute="title">Yeah!</h1>
-    <p data-attribute="content">Paris</p>
-   </div>
+   <div id="test-meta"></div>
   </body>
 </html>

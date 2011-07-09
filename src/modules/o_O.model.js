@@ -136,6 +136,9 @@ o_O.model = {
       data_changed: function(callback) {  
         this.event_handler.bind('changeData', callback);
       },
+      unbind: function() {
+        this.event_handler.unbind()
+      },
       to_model_hash: function() {
         return this.raw_attributes;
       },

@@ -10,7 +10,9 @@ o_O.bucket = {
    var instance_methods = {
      add: function(el) {
        this.backend.push(el)
-       this.event_handler.triggerHandler('changeData', ['add', el, this]);
+       if (!this.in_batch_operation) {
+         this.event_handler.triggerHandler('changeData', ['add', el, this]);
+       }
      },
      
      get: function(index) {
@@ -22,8 +24,8 @@ o_O.bucket = {
      },
      
      each: function(callback) {
-       for (var i = 0; i <= this.backend.length - 1; i++){
-        callback(this.backend[i])
+       for (var i = 0; i < this.backend.length; i++){
+        callback(this.backend[i], i)
        }
      },
      
@@ -38,8 +40,42 @@ o_O.bucket = {
        return check
      },
      
+     remove: function(callback) {
+       var toRemove = []
+       
+       this.each(function(el, i) {
+         if (callback(el)) {
+           toRemove.push(i)
+         }
+       })
+       
+       for (var i = 0; i < toRemove.length; i++) {
+         this.backend.splice(toRemove[i] - i, 1)
+       }
+     },
+     
      data_changed: function(callback) {
        this.event_handler.bind('changeData', callback)
+     },
+     
+     to_model_hash: function() {
+       return {size: this.size()}
+     },
+     
+     batch_operation: function(callback) {
+       this.in_batch_operation = true
+       callback(this)
+       this.event_handler.triggerHandler('changeData', ['batch', null, this])
+       this.in_batch_operation = false
+     },
+     
+     unbind: function() {
+       // this.event_handler.unbind()
+       this.each(function(el) {
+         if (el.unbind) {
+           el.unbind()
+         }
+       })
      }
    }
    
