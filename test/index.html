@@ -14,7 +14,12 @@
 
     module("eyeballs")
     test("load", function(){
-      equals(document.getElementById('posts').innerHTML, 'No posts here.')
+      equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
+    })
+    
+    test("create", function(){
+      o_O('Post').create({title:"My New Post", content: "My Post Content"})
+      equals(document.getElementById('posts').innerHTML, 'title: My New Post, content: My Post Content')
     })
   </script>
 </head>
@@ -23,18 +28,6 @@
   <h2 id="qunit-banner"></h2>
   <h2 id="qunit-userAgent"></h2>
   <ol id="qunit-tests"></ol>
-  
-  <form data-bind="Post#create">
-    <label>
-      Title
-      <input type="text" name="post[title]">
-    </label>
-
-    <label>
-      Content
-      <textarea name="post[content]"></textarea>
-    </label>
-  </form>
 
   <div id="posts" data-collection="Post">
   </div>

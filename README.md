@@ -9,18 +9,6 @@ Let's start at the very start: a blog example.
 We start with the very basics: a "New Post" form and an empty collection:
 
 ```html
-<form data-bind="Post#create">
-  <label>
-    Title
-    <input type="text" name="post[title]">
-  </label>
-  
-  <label>
-    Content
-    <textarea name="post[content]"></textarea>
-  </label>
-</form>
-
 <div data-collection="Post">
 </div>
 ```
@@ -31,4 +19,10 @@ Now we tell eyeballs that we have a post model:
 o_O('Post')
 ```
 
-That's it! Now if we load the page, the defaults kick in and we can add, edit and remove posts.
+That's it! Now if we load the page, the defaults kick in and we can add, edit and remove posts:
+
+```javascript
+o_O('Post').create({title:"My New Post", content: "My New Post"})
+```
+
+This will add the post to the collection.
