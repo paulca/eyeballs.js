@@ -55,6 +55,19 @@ var eyeballs = {
     
     load_model = function(){
       return {
+        all: function(){
+          var records;
+          records = [];
+          for(record in eyeballs.registered_models[name]){
+            if(eyeballs.registered_models[name].hasOwnProperty(record))
+            {
+              records.push(
+                initialize(eyeballs.registered_models[name][record])
+              );
+            }
+          }
+          return records;
+        },
         empty_collection: function(){
           return '<p data-empty="true">No ' + name.toLowerCase() + 's here.</p>'
         },

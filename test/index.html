@@ -35,6 +35,11 @@
       post.set('title', 'My Really Old post')
       ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My Really Old post, content: My Old Post Content/), document.getElementById('posts').innerHTML)
     })
+    
+    test("all", function(){
+      var posts = o_O('Post').all();
+      ok(posts.length > 0)
+    })
  
     test("destroy", function(){
       var post = o_O('Post').find(post_id)
