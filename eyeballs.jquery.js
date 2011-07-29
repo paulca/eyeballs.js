@@ -3,7 +3,8 @@ eyeballs.dom_adapter = {
     jQuery(document).ready(function(){
       var selector;
       jQuery('[data-collection=' + name + ']').each(function(index, item){
-        if(jQuery(item).find('[data-model=' + name + ']').length == 0)
+        if(jQuery(item).find('[data-model=' + name + ']').length == 0 &&
+             jQuery(item).find('[data-empty=true').length == 0)
         {
           jQuery(item).html(eyeballs.initialize(name).empty_collection())
         }

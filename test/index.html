@@ -10,22 +10,34 @@
   <script type="text/javascript" src="../eyeballs.jquery.js"></script>
 
   <script type="text/javascript" charset="utf-8">
-    o_O('Post')
-
     module("eyeballs")
     test("load", function(){
+      o_O('Post');
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
     
-    test("create, update, destroy", function(){
+    var post_id;
+    test("create, get id", function(){
       var post = o_O('Post').create({title:"My New Post", content: "My Post Content"})
+      post_id = post.get('id')
+      ok(post_id, "Has an ID")
       ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My New Post, content: My Post Content/), document.getElementById('posts').innerHTML)
-      
-      ok(post.get('id'), "Has an ID")
+    })
 
+    test("update_attribute", function(){
+      var post = o_O('Post').find(post_id)
       post.update_attributes({title: "My Old Post", content: "My Old Post Content"})
       ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My Old Post, content: My Old Post Content/), document.getElementById('posts').innerHTML)
+    })
       
+    test("set", function(){
+      var post = o_O('Post').find(post_id)
+      post.set('title', 'My Really Old post')
+      ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My Really Old post, content: My Old Post Content/), document.getElementById('posts').innerHTML)
+    })
+ 
+    test("destroy", function(){
+      var post = o_O('Post').find(post_id)
       post.destroy()
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
