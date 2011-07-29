@@ -17,6 +17,7 @@ var eyeballs = {
         },
         destroy: function(){
           eyeballs.dom_adapter.destroy(this)
+          delete eyeballs.registered_models[name][attrs.id]
         },
         get: function(attr)
         {

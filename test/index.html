@@ -44,6 +44,7 @@
     test("destroy", function(){
       var post = o_O('Post').find(post_id)
       post.destroy()
+      ok(o_O('Post').all().length == 0, "Length is: " + o_O('Post').all().length)
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
   </script>
