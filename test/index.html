@@ -17,9 +17,17 @@
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
     
-    test("create", function(){
-      o_O('Post').create({title:"My New Post", content: "My Post Content"})
-      equals(document.getElementById('posts').innerHTML, 'title: My New Post, content: My Post Content')
+    test("create, update, destroy", function(){
+      var post = o_O('Post').create({title:"My New Post", content: "My Post Content"})
+      ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My New Post, content: My Post Content/), document.getElementById('posts').innerHTML)
+      
+      ok(post.get('id'), "Has an ID")
+
+      post.update_attributes({title: "My Old Post", content: "My Old Post Content"})
+      ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My Old Post, content: My Old Post Content/), document.getElementById('posts').innerHTML)
+      
+      post.destroy()
+      equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
   </script>
 </head>

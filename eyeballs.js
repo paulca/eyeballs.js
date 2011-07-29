@@ -7,21 +7,41 @@ var eyeballs = {
     var initialize, load, register;
     
     var initialize = function(attrs){
+      if(!attrs.hasOwnProperty('id'))
+      {
+        attrs.id = +new Date();
+      }
       return {
         collection_selector: function(){
           return "[data-collection=" + name + "]";
         },
+        destroy: function(){
+          eyeballs.dom_adapter.destroy(this)
+        },
+        get: function(attr)
+        {
+          return attrs[attr];
+        },
+        instance_selector: function(){
+          return "[data-model=" + name + "]";
+        },
+        model_name: function(){
+          return name;
+        },
         to_html: function(){
           var out;
           out = [];
-          for(attr in attrs)
-          {
-            if(attrs.hasOwnProperty(attr))
-            {
-              out.push(attr + ': ' + attrs[attr])
-            }
-          }
-          return out.join(', ')
+          for(attr in attrs) { if(attrs.hasOwnProperty(attr)){
+            out.push(attr + ': ' + attrs[attr])
+          }}
+          return '<p data-model="' + name + '"' + 
+                 'data-id="' + attrs.id + '">' + out.join(', ') + '</p>';
+        },
+        update_attributes: function(updated_attrs){
+          for(attr in updated_attrs) { if(attrs.hasOwnProperty(attr)){
+            attrs[attr] = updated_attrs[attr];
+          }}
+          eyeballs.dom_adapter.update(this)
         }
       }
     }
@@ -32,7 +52,10 @@ var eyeballs = {
           return '<p data-empty="true">No ' + name.toLowerCase() + 's here.</p>'
         },
         create: function(attrs){
-          eyeballs.dom_adapter.add_to_collection(initialize(attrs));
+          var model;
+          model = initialize(attrs)
+          eyeballs.dom_adapter.add_to_collection(model);
+          return model
         }
       };
     }
