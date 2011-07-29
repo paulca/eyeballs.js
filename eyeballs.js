@@ -45,10 +45,11 @@ var eyeballs = {
                  'data-id="' + attrs.id + '">' + out.join(', ') + '</p>';
         },
         update_attributes: function(updated_attrs){
-          for(attr in updated_attrs) { if(attrs.hasOwnProperty(attr)){
+          for(attr in updated_attrs) { if(updated_attrs.hasOwnProperty(attr)){
             attrs[attr] = updated_attrs[attr];
           }}
           eyeballs.dom_adapter.update(this)
+          return this;
         }
       }
     }
