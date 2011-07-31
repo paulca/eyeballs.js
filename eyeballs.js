@@ -16,15 +16,15 @@ var eyeballs = {
           return "[data-collection=" + name + "]";
         },
         destroy: function(){
-          eyeballs.dom_adapter.destroy(this)
-          delete eyeballs.registered_models[name][attrs.id]
+          eyeballs.dom_adapter.destroy(this);
+          delete eyeballs.registered_models[name][attrs.id];
         },
         get: function(attr)
         {
           return attrs[attr];
         },
         instance_selector: function(){
-          return "[data-model=" + name + "]";
+          return "[data-model=" + name + "][data-id=" + attrs.id + "]";
         },
         model_name: function(){
           return name;
@@ -81,7 +81,14 @@ var eyeballs = {
           return model;
         },
         find: function(id){
-          return initialize(eyeballs.registered_models[name][id])
+          if(eyeballs.registered_models[name].hasOwnProperty(id))
+          {
+            return initialize(eyeballs.registered_models[name][id])
+          }
+          else
+          {
+            return [];
+          }
         }
       };
     }
