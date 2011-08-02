@@ -49,7 +49,7 @@ var eyeballs = {
           for(attr in updated_attrs) { if(updated_attrs.hasOwnProperty(attr)){
             attrs[attr] = updated_attrs[attr];
           }}
-          eyeballs.dom_adapter.update(this)
+          eyeballs.dom_adapter.update(this);
           return this;
         }
       }
