@@ -26,3 +26,15 @@ o_O('Post').create({title:"My New Post", content: "My New Post"})
 ```
 
 This will add the post to the collection.
+
+Of course, this will just use default views. You'll want to specify the html for each element in the collection. It's pretty easy to specify that when you initialize the model:
+
+```javascript
+o_O('Post', function(){
+  this.to_html(function(model){
+    return '<span class="post" data-model="Post" data-id="' +
+            model.id +
+            '">' + model.title + '</span>';
+  })
+})
+```

@@ -35,14 +35,30 @@ var eyeballs = {
     },
     after_update_hooks: []
   },
-  initialize: function(name){
-    return eyeballs.register_or_load_model(name)
+  initialize: function(name, initializer){
+    return eyeballs.register_or_load_model(name, initializer)
   },
   registered_models: {},
-  register_or_load_model: function(name){
-    var initialize, load, register;
+  register_or_load_model: function(name, initializer){
+    var initialize_functions, initialize, load, register;
     
-    var initialize = function(attrs){
+    initialize_functions = {
+      to_html: function(){
+        if(arguments.length === 1)
+        {
+          callback = arguments[0];
+          context = 'default';
+        }
+        else
+        {
+          context = arguments[0];
+          callback = arguments[1];
+        }
+        eyeballs.registered_models[name]['html'][context] = callback;
+      }
+    }
+    
+    initialize = function(attrs){
       if(!attrs.hasOwnProperty('id'))
       {
         attrs.id = +new Date();
@@ -53,7 +69,7 @@ var eyeballs = {
         },
         destroy: function(){
           eyeballs.hooks.after_destroy(this);
-          delete eyeballs.registered_models[name][attrs.id];
+          delete eyeballs.registered_models[name]['data'][attrs.id];
         },
         get: function(attr)
         {
@@ -66,20 +82,32 @@ var eyeballs = {
           return name;
         },
         save: function(){
-          eyeballs.registered_models[name][attrs.id] = attrs;
+          eyeballs.registered_models[name]['data'][attrs.id] = attrs;
         },
         set: function(attr, value){
           attrs[attr] = value;
           eyeballs.hooks.after_update(this);
         },
-        to_html: function(){
+        to_html: function(context){
+          if(context === void(0))
+          {
+            context = 'default';
+          }
           var out;
           out = [];
           for(attr in attrs) { if(attrs.hasOwnProperty(attr)){
             out.push(attr + ': ' + attrs[attr])
           }}
-          return '<p data-model="' + name + '"' + 
-                 'data-id="' + attrs.id + '">' + out.join(', ') + '</p>';
+          if(typeof eyeballs.registered_models[name]['html'][context] ===
+             'function')
+          {
+            return eyeballs.registered_models[name]['html'][context](attrs)
+          }
+          else
+          {
+            return '<p data-model="' + name + '"' + 
+                   'data-id="' + attrs.id + '">' + out.join(', ') + '</p>';
+          }
         },
         update_attributes: function(updated_attrs){
           for(attr in updated_attrs) { if(updated_attrs.hasOwnProperty(attr)){
@@ -96,11 +124,11 @@ var eyeballs = {
         all: function(){
           var records;
           records = [];
-          for(record in eyeballs.registered_models[name]){
-            if(eyeballs.registered_models[name].hasOwnProperty(record))
+          for(record in eyeballs.registered_models[name]['data']){
+            if(eyeballs.registered_models[name]['data'].hasOwnProperty(record))
             {
               records.push(
-                initialize(eyeballs.registered_models[name][record])
+                initialize(eyeballs.registered_models[name]['data'][record])
               );
             }
           }
@@ -117,9 +145,9 @@ var eyeballs = {
           return model;
         },
         find: function(id){
-          if(eyeballs.registered_models[name].hasOwnProperty(id))
+          if(eyeballs.registered_models[name]['data'].hasOwnProperty(id))
           {
-            return initialize(eyeballs.registered_models[name][id])
+            return initialize(eyeballs.registered_models[name]['data'][id])
           }
           else
           {
@@ -131,6 +159,12 @@ var eyeballs = {
     
     register_model = function(){
       eyeballs.registered_models[name] = {}
+      eyeballs.registered_models[name]['data'] = {}
+      eyeballs.registered_models[name]['html'] = {}
+      if(typeof initializer === 'function')
+      {
+        initializer.apply(initialize_functions)
+      }
       eyeballs.hooks.after_initialize(name)
       return load_model(name);
     }

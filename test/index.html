@@ -60,6 +60,24 @@
       ok(o_O('Post').all().length == 0, "Length is: " + o_O('Post').all().length)
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
     })
+    
+    test('to_html', function(){
+      o_O('Review', function(){
+        this.to_html(function(model){
+          return '<p data-model="Review" data-id="' + model.id + '">hello ' + model.title + '</p>';
+        })
+        this.to_html('goodbye', function(model){
+          return '<p data-model="Review" data-id="' + model.id + '">goodbye ' + model.title + '</p>'
+        })
+      })
+      var review = o_O('Review').create({title: 'world'})
+      ok(document.getElementById('reviews').innerHTML.match(/^<p data-model="Review" data-id="\d+">hello world/), document.getElementById('reviews').innerHTML)
+      ok(document.getElementById('goodbye-reviews').innerHTML.match(/^<p data-model="Review" data-id="\d+">goodbye world/), document.getElementById('goodbye-reviews').innerHTML)
+      
+      review.set('title', 'everybody!')
+      ok(document.getElementById('reviews').innerHTML.match(/^<p data-model="Review" data-id="\d+">hello everybody!/), document.getElementById('reviews').innerHTML)
+      ok(document.getElementById('goodbye-reviews').innerHTML.match(/^<p data-model="Review" data-id="\d+">goodbye everybody!/), document.getElementById('goodbye-reviews').innerHTML)
+    })
   </script>
 </head>
 <body>
@@ -69,6 +87,12 @@
   <ol id="qunit-tests"></ol>
 
   <div id="posts" data-collection="Post">
+  </div>
+  
+  <div id="reviews" data-collection="Review">
+  </div>
+  
+  <div id="goodbye-reviews" data-collection="Review" data-context="goodbye">
   </div>
   
 </body>
