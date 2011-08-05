@@ -1,4 +1,40 @@
 var eyeballs = {
+  hooks: {
+    run_hooks: function(context, arg){
+      var i;
+      for(i = 0; i < eyeballs.hooks[context].length; i = i+1)
+      {
+        if(typeof eyeballs.hooks[context][i] === 'function')
+        {
+          eyeballs.hooks[context][i](arg);
+        }
+      }
+    },
+    add: function(methods){
+      for(method in methods){ if(methods.hasOwnProperty(method)){
+        if(eyeballs.hooks.hasOwnProperty(method))
+        {
+          eyeballs.hooks[method + '_hooks'].push(methods[method]);
+        }
+      }}
+    },
+    after_initialize: function(name){
+      this.run_hooks('after_initialize_hooks', name);
+    },
+    after_initialize_hooks: [],
+    after_create: function(name){
+      this.run_hooks('after_create_hooks', name);
+    },
+    after_create_hooks: [],
+    after_destroy: function(name){
+      this.run_hooks('after_destroy_hooks', name);
+    },
+    after_destroy_hooks: [],
+    after_update: function(name){
+      this.run_hooks('after_update_hooks', name);
+    },
+    after_update_hooks: []
+  },
   initialize: function(name){
     return eyeballs.register_or_load_model(name)
   },
@@ -16,7 +52,7 @@ var eyeballs = {
           return "[data-collection=" + name + "]";
         },
         destroy: function(){
-          eyeballs.dom_adapter.destroy(this);
+          eyeballs.hooks.after_destroy(this);
           delete eyeballs.registered_models[name][attrs.id];
         },
         get: function(attr)
@@ -34,7 +70,7 @@ var eyeballs = {
         },
         set: function(attr, value){
           attrs[attr] = value;
-          eyeballs.dom_adapter.update(this);
+          eyeballs.hooks.after_update(this);
         },
         to_html: function(){
           var out;
@@ -49,7 +85,7 @@ var eyeballs = {
           for(attr in updated_attrs) { if(updated_attrs.hasOwnProperty(attr)){
             attrs[attr] = updated_attrs[attr];
           }}
-          eyeballs.dom_adapter.update(this);
+          eyeballs.hooks.after_update(this);
           return this;
         }
       }
@@ -77,7 +113,7 @@ var eyeballs = {
           var model;
           model = initialize(attrs);
           model.save();
-          eyeballs.dom_adapter.add_to_collection(model);
+          eyeballs.hooks.after_create(model);
           return model;
         },
         find: function(id){
@@ -95,7 +131,7 @@ var eyeballs = {
     
     register_model = function(){
       eyeballs.registered_models[name] = {}
-      eyeballs.dom_adapter.initialize_collections(name)
+      eyeballs.hooks.after_initialize(name)
       return load_model(name);
     }
     

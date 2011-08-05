@@ -1,5 +1,5 @@
-eyeballs.dom_adapter = {
-  initialize_collections: function(name){
+eyeballs.hooks.add({
+  after_initialize: function(name){
     jQuery(document).ready(function(){
       var selector;
       jQuery('[data-collection=' + name + ']').each(function(index, item){
@@ -11,7 +11,7 @@ eyeballs.dom_adapter = {
       })
     })
   },
-  add_to_collection: function(model){
+  after_create: function(model){
     jQuery(document).ready(function(){
       jQuery(model.collection_selector()).each(function(index, item){
         jQuery(item).find('[data-empty=true]').remove().end()
@@ -19,19 +19,19 @@ eyeballs.dom_adapter = {
       })
     })
   },
-  destroy: function(model){
+  after_destroy: function(model){
     jQuery(document).ready(function(){
       jQuery(model.instance_selector()).each(function(index, item){
         jQuery(item).remove();
       })
-      eyeballs.dom_adapter.initialize_collections(model.model_name())
+      eyeballs.hooks.after_initialize(model.model_name())
     })
   },
-  update: function(model){
+  after_update: function(model){
     jQuery(document).ready(function(){
       jQuery(model.instance_selector()).each(function(index, item){
         jQuery(item).replaceWith(model.to_html())
       })
     })
   }
-}
+})
