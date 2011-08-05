@@ -38,3 +38,13 @@ o_O('Post', function(){
   })
 })
 ```
+
+Within this, it's pretty straightforward to use the view engine of your choice, eg. for [Mustache](https://github.com/janl/mustache.js):
+
+```javascript
+o_O('Post', function(){
+  this.to_html(function(model){
+    return Mustache.to_html(MyTemplate, model);
+  })
+})
+```
