@@ -6,7 +6,7 @@ eyeballs is a client side javascript framework for associating html views with j
 
 Let's start at the very start: a blog example.
 
-We start with the very basics: a "New Post" form and an empty collection:
+We start with the very basics: an empty collection:
 
 ```html
 <div data-collection="Post">
