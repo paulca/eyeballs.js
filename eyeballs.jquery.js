@@ -4,12 +4,12 @@ eyeballs.hooks.add({
     jQuery(document).ready(function(){
       var selector;
       jQuery(model.collection_selector()).each(function(index, item){
-        if(jQuery(item).find('[data-model=' + name + ']').length === 0 &&
-             jQuery(item).find('[data-empty=true]').length === 0)
+        if(jQuery(item).find(model.model_selector()).length === 0 &&
+             jQuery(item).find(model.empty_selector()).length === 0)
         {
           jQuery(item).html(eyeballs.initialize(name).empty_collection())
         }
-        else if(jQuery(item).find('[data-model=' + name + ']').length === 0)
+        else if(jQuery(item).find(model.empty_selector()).length === 1)
         {
           o_O(name).all(function(item){
             eyeballs.hooks.after_create(item);
@@ -39,6 +39,7 @@ eyeballs.hooks.add({
   after_destroy: function(model){
     jQuery(document).ready(function(){
       jQuery(model.instance_selector()).each(function(index, item){
+        console.log('removing', $(item).html())
         jQuery(item).remove();
       })
       eyeballs.initialize(model.model_name()).initialize()

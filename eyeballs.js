@@ -40,17 +40,26 @@ var eyeballs = {
   },
   registered_models: {},
   register_or_load_model: function(name, initializer){
-    var collection_selector, initialize_functions, initialize, load, register;
-    collection_selector = function(){
-      if(typeof eyeballs.registered_models[name]['collection_selector'] ===
-         'function')
-      {
-        return eyeballs.registered_models[name]['collection_selector'](
-                 name);
-      }
-      else
-      {
-        return "[data-collection=" + name + "]";
+    var initialize_functions, initialize, load, register, selector_defaults;
+        
+    selector_defaults = {
+      'collection': "[data-collection=" + name + "]",
+      'empty': '[data-empty=true]',
+      'model': "[data-model=" + name + "]"      
+    }
+
+    selector = function(type){
+      return function(){
+        if(typeof eyeballs.registered_models[name][type + '_selector'] ===
+           'function')
+        {
+          return eyeballs.registered_models[name][type + '_selector'](
+                   name);
+        }
+        else
+        {
+          return selector_defaults[type];
+        }
       }
     }
     
@@ -74,9 +83,15 @@ var eyeballs = {
       empty_collection: function(callback){
         eyeballs.registered_models[name]['empty_collection'] = callback;
       },
+      empty_selector: function(callback){
+        eyeballs.registered_models[name]['empty_selector'] = callback;
+      },
       instance_selector: function(callback){
         eyeballs.registered_models[name]['instance_selector'] = callback;
-      }
+      },
+      model_selector: function(callback){
+        eyeballs.registered_models[name]['model_selector'] = callback;
+      },
     }
     
     initialize = function(attrs){
@@ -85,7 +100,7 @@ var eyeballs = {
         attrs.id = +new Date();
       }
       return {
-        collection_selector: collection_selector,
+        collection_selector: selector('collection'),
         destroy: function(){
           delete eyeballs.registered_models[name]['data'][attrs.id];
           eyeballs.hooks.after_destroy(this);
@@ -199,7 +214,12 @@ var eyeballs = {
           }
         },
         initialize: function(){
-          eyeballs.hooks.after_initialize({model_name: name, collection_selector: collection_selector})
+          eyeballs.hooks.after_initialize({
+            model_name: name,
+            collection_selector: selector('collection'),
+            empty_selector: selector('empty'),
+            model_selector: selector('model')
+          })
         }
       };
     }
