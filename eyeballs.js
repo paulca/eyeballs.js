@@ -64,6 +64,9 @@ var eyeballs = {
     }
     
     initialize_functions = {
+      as_json: function(callback){
+        eyeballs.registered_models[name]['as_json'] = callback;
+      },
       to_html: function(){
         if(arguments.length === 1)
         {
@@ -100,6 +103,17 @@ var eyeballs = {
         attrs.id = +new Date();
       }
       return {
+        as_json: function(){
+          if(typeof eyeballs.registered_models[name]['as_json'] ===
+             'function')
+          {
+            return eyeballs.registered_models[name]['as_json'](attrs);
+          }
+          else
+          {
+            return attrs;
+          }
+        },
         collection_selector: selector('collection'),
         destroy: function(){
           delete eyeballs.registered_models[name]['data'][attrs.id];

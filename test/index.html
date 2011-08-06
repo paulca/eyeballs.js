@@ -116,6 +116,21 @@
       post.destroy()
       equals(document.getElementById('blogs').innerHTML, 'we are out of blogs')
     })
+    
+    test('as json', function(){
+      o_O('Exercise', function(){
+        this.as_json(function(attrs){
+          return {
+            exercise: {
+              id: attrs.id,
+              title: attrs.title
+            }
+          }
+        })
+      })
+      
+      equals('My Exercise', o_O('Exercise').create({title: "My Exercise"}).as_json().exercise.title)
+    })
   </script>
 </head>
 <body>
