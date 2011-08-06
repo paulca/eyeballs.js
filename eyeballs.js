@@ -114,6 +114,7 @@ var eyeballs = {
             return attrs;
           }
         },
+        attributes: attrs,
         collection_selector: selector('collection'),
         destroy: function(){
           delete eyeballs.registered_models[name]['data'][attrs.id];
