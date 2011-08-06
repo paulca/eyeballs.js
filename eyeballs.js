@@ -40,7 +40,20 @@ var eyeballs = {
   },
   registered_models: {},
   register_or_load_model: function(name, initializer){
-    var initialize_functions, initialize, load, register;
+    var collection_selector, initialize_functions, initialize, load, register;
+    
+    collection_selector = function(){
+      if(typeof eyeballs.registered_models[name]['collection_selector'] ===
+         'function')
+      {
+        return eyeballs.registered_models[name]['collection_selector'](
+                 name);
+      }
+      else
+      {
+        return "[data-collection=" + name + "]";
+      }
+    }
     
     initialize_functions = {
       to_html: function(){
@@ -70,18 +83,7 @@ var eyeballs = {
         attrs.id = +new Date();
       }
       return {
-        collection_selector: function(){
-          if(typeof eyeballs.registered_models[name]['collection_selector'] ===
-             'function')
-          {
-            return eyeballs.registered_models[name]['collection_selector'](
-                     name, attrs);
-          }
-          else
-          {
-            return "[data-collection=" + name + "]";
-          }
-        },
+        collection_selector: collection_selector,
         destroy: function(){
           eyeballs.hooks.after_destroy(this);
           delete eyeballs.registered_models[name]['data'][attrs.id];
@@ -195,7 +197,8 @@ var eyeballs = {
       {
         initializer.apply(initialize_functions)
       }
-      eyeballs.hooks.after_initialize(name)
+      
+      eyeballs.hooks.after_initialize({model_name: name, collection_selector: collection_selector})
       return load_model(name);
     }
     

@@ -1,12 +1,19 @@
 eyeballs.hooks.add({
-  after_initialize: function(name){
+  after_initialize: function(model){
+    name = model.model_name;
     jQuery(document).ready(function(){
       var selector;
-      jQuery('[data-collection=' + name + ']').each(function(index, item){
-        if(jQuery(item).find('[data-model=' + name + ']').length == 0 &&
-             jQuery(item).find('[data-empty=true').length == 0)
+      jQuery(model.collection_selector()).each(function(index, item){
+        if(jQuery(item).find('[data-model=' + name + ']').length === 0 &&
+             jQuery(item).find('[data-empty=true]').length === 0)
         {
           jQuery(item).html(eyeballs.initialize(name).empty_collection())
+        }
+        else if(jQuery(item).find('[data-model=' + name + ']').length === 0)
+        {
+          o_O(name).all(function(item){
+            eyeballs.hooks.after_create(item);
+          })
         }
       })
     })
@@ -34,7 +41,10 @@ eyeballs.hooks.add({
       jQuery(model.instance_selector()).each(function(index, item){
         jQuery(item).remove();
       })
-      eyeballs.hooks.after_initialize(model.model_name())
+      eyeballs.hooks.after_initialize({
+        model_name: model.model_name(),
+        collection_selector: model.collection_selector
+      })
     })
   },
   after_update: function(model){
