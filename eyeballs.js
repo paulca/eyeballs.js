@@ -185,11 +185,15 @@ var eyeballs = {
           {
             return [];
           }
+        },
+        initialize: function(){
+          eyeballs.hooks.after_initialize({model_name: name, collection_selector: collection_selector})
         }
       };
     }
     
     register_model = function(){
+      var loaded_model;
       eyeballs.registered_models[name] = {}
       eyeballs.registered_models[name]['data'] = {}
       eyeballs.registered_models[name]['html'] = {}
@@ -197,9 +201,9 @@ var eyeballs = {
       {
         initializer.apply(initialize_functions)
       }
-      
-      eyeballs.hooks.after_initialize({model_name: name, collection_selector: collection_selector})
-      return load_model(name);
+      loaded_model = load_model(name)
+      loaded_model.initialize()
+      return loaded_model;
     }
     
     if(this.registered_models.hasOwnProperty(name))

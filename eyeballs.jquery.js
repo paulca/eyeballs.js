@@ -41,10 +41,7 @@ eyeballs.hooks.add({
       jQuery(model.instance_selector()).each(function(index, item){
         jQuery(item).remove();
       })
-      eyeballs.hooks.after_initialize({
-        model_name: model.model_name(),
-        collection_selector: model.collection_selector
-      })
+      eyeballs.initialize(model.model_name()).initialize()
     })
   },
   after_update: function(model){
