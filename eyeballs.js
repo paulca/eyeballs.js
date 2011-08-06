@@ -129,8 +129,7 @@ var eyeballs = {
           if(typeof eyeballs.registered_models[name]['instance_selector'] ===
              'function')
           {
-            return eyeballs.registered_models[name]['instance_selector'](
-                     name, attrs);
+            return eyeballs.registered_models[name]['instance_selector'](this);
           }
           else
           {

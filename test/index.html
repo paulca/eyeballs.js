@@ -84,9 +84,9 @@
           //eg. '#articles'
           return '#' + model_name.toLowerCase() + 's';
         })
-        this.instance_selector(function(model_name, attrs){
+        this.instance_selector(function(model){
           // eg. '.article-1'
-          return '.' + model_name.toLowerCase() + '_' + attrs.id;
+          return '.' + model.model_name().toLowerCase() + '_' + model.get('id');
         })
         this.to_html(function(model){
           return '<p class="article_' + model.id + '">' + model.title + '</p>';
