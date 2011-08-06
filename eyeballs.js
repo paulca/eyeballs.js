@@ -41,7 +41,6 @@ var eyeballs = {
   registered_models: {},
   register_or_load_model: function(name, initializer){
     var collection_selector, initialize_functions, initialize, load, register;
-    
     collection_selector = function(){
       if(typeof eyeballs.registered_models[name]['collection_selector'] ===
          'function')
@@ -71,6 +70,9 @@ var eyeballs = {
       },
       collection_selector: function(callback){
         eyeballs.registered_models[name]['collection_selector'] = callback;
+      },
+      empty_collection: function(callback){
+        eyeballs.registered_models[name]['empty_collection'] = callback;
       },
       instance_selector: function(callback){
         eyeballs.registered_models[name]['instance_selector'] = callback;
@@ -167,7 +169,17 @@ var eyeballs = {
           return records;
         },
         empty_collection: function(){
-          return '<p data-empty="true">No ' + name.toLowerCase() + 's here.</p>'
+          if(typeof eyeballs.registered_models[name]['empty_collection'] ===
+             'function')
+          {
+            return eyeballs.registered_models[name]['empty_collection']();
+          }
+          else
+          {
+            return '<p data-empty="true">No ' +
+                   name.toLowerCase() + 
+                   's here.</p>';
+          }
         },
         create: function(attrs){
           var model;

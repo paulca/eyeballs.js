@@ -107,6 +107,16 @@
       })
       ok(document.getElementById('posts').innerHTML.match(/All Change/), document.getElementById('posts').innerHTML)
     })
+    
+    test('custom empty collection', function(){
+      o_O('Blog', function(){
+        this.empty_collection(function(){
+          return 'we are out of blogs'
+        })
+      })
+      post.destroy()
+      equals(document.getElementById('blogs').innerHTML, 'we are out of blogs')
+    })
   </script>
 </head>
 <body>
@@ -125,6 +135,9 @@
   </div>
   
   <div id="articles">
+  </div>
+  
+  <div id="blogs" data-collection="Blog">
   </div>
   
 </body>
