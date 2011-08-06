@@ -55,6 +55,12 @@ var eyeballs = {
           callback = arguments[1];
         }
         eyeballs.registered_models[name]['html'][context] = callback;
+      },
+      collection_selector: function(callback){
+        eyeballs.registered_models[name]['collection_selector'] = callback;
+      },
+      instance_selector: function(callback){
+        eyeballs.registered_models[name]['instance_selector'] = callback;
       }
     }
     
@@ -65,7 +71,16 @@ var eyeballs = {
       }
       return {
         collection_selector: function(){
-          return "[data-collection=" + name + "]";
+          if(typeof eyeballs.registered_models[name]['collection_selector'] ===
+             'function')
+          {
+            return eyeballs.registered_models[name]['collection_selector'](
+                     name, attrs);
+          }
+          else
+          {
+            return "[data-collection=" + name + "]";
+          }
         },
         destroy: function(){
           eyeballs.hooks.after_destroy(this);
@@ -76,7 +91,16 @@ var eyeballs = {
           return attrs[attr];
         },
         instance_selector: function(){
-          return "[data-model=" + name + "][data-id=" + attrs.id + "]";
+          if(typeof eyeballs.registered_models[name]['instance_selector'] ===
+             'function')
+          {
+            return eyeballs.registered_models[name]['instance_selector'](
+                     name, attrs);
+          }
+          else
+          {
+            return "[data-model=" + name + "][data-id=" + attrs.id + "]";
+          }
         },
         model_name: function(){
           return name;
