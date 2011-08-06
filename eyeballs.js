@@ -85,8 +85,8 @@ var eyeballs = {
       return {
         collection_selector: collection_selector,
         destroy: function(){
-          eyeballs.hooks.after_destroy(this);
           delete eyeballs.registered_models[name]['data'][attrs.id];
+          eyeballs.hooks.after_destroy(this);
         },
         get: function(attr)
         {
