@@ -145,15 +145,21 @@ var eyeballs = {
     
     load_model = function(){
       return {
-        all: function(){
+        all: function(callback){
           var records;
           records = [];
           for(record in eyeballs.registered_models[name]['data']){
             if(eyeballs.registered_models[name]['data'].hasOwnProperty(record))
             {
-              records.push(
-                initialize(eyeballs.registered_models[name]['data'][record])
-              );
+              var initialized_record;
+              initialized_record = initialize(
+                eyeballs.registered_models[name]['data'][record]
+              )
+              if(typeof callback === 'function')
+              {
+                callback(initialized_record)
+              }
+              records.push(initialized_record);
             }
           }
           return records;
