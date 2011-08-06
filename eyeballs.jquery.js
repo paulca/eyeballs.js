@@ -31,7 +31,7 @@ eyeballs.hooks.add({
         {
           context = 'default';
         }
-        jQuery(item).find('[data-empty=true]').remove().end()
+        jQuery(item).find(model.empty_selector()).remove().end()
                     .append(model.to_html(context))
       })
     })
@@ -39,7 +39,6 @@ eyeballs.hooks.add({
   after_destroy: function(model){
     jQuery(document).ready(function(){
       jQuery(model.instance_selector()).each(function(index, item){
-        console.log('removing', $(item).html())
         jQuery(item).remove();
       })
       eyeballs.initialize(model.model_name()).initialize()

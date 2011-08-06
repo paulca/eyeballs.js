@@ -109,6 +109,7 @@ var eyeballs = {
         {
           return attrs[attr];
         },
+        empty_selector: selector('empty'),
         instance_selector: function(){
           if(typeof eyeballs.registered_models[name]['instance_selector'] ===
              'function')
