@@ -121,9 +121,14 @@ var eyeballs = {
         },
         attributes: attrs,
         collection_selector: selector('collection'),
-        destroy: function(){
+        destroy: function(options){
           delete eyeballs.registered_models[name]['data'][attrs.id];
-          eyeballs.hooks.after_destroy(this);
+          
+          if((typeof options === 'object' && !options.silent) ||
+              typeof options === 'undefined')
+          {
+            eyeballs.hooks.after_destroy(this);
+          }
         },
         get: function(attr)
         {
@@ -147,9 +152,13 @@ var eyeballs = {
         save: function(){
           eyeballs.registered_models[name]['data'][attrs.id] = attrs;
         },
-        set: function(attr, value){
+        set: function(attr, value, options){
           attrs[attr] = value;
-          eyeballs.hooks.after_update(this);
+          if((typeof options === 'object' && !options.silent) ||
+              typeof options === 'undefined')
+          {
+            eyeballs.hooks.after_update(this);
+          }
         },
         to_html: function(context){
           if(context === void(0))
@@ -172,11 +181,15 @@ var eyeballs = {
                    'data-id="' + attrs.id + '">' + out.join(', ') + '</p>';
           }
         },
-        update_attributes: function(updated_attrs){
+        update_attributes: function(updated_attrs, options){
           for(attr in updated_attrs) { if(updated_attrs.hasOwnProperty(attr)){
             attrs[attr] = updated_attrs[attr];
           }}
-          eyeballs.hooks.after_update(this);
+          if((typeof options === 'object' && !options.silent) ||
+              typeof options === 'undefined')
+          {
+            eyeballs.hooks.after_update(this);
+          }
           return this;
         }
       }
@@ -216,11 +229,15 @@ var eyeballs = {
                    's here.</p>';
           }
         },
-        create: function(attrs){
+        create: function(attrs, options){
           var model;
           model = initialize(attrs);
           model.save();
-          eyeballs.hooks.after_create(model);
+          if((typeof options === 'object' && !options.silent) ||
+              typeof options === 'undefined')
+          {
+            eyeballs.hooks.after_create(model);
+          }
           return model;
         },
         find: function(id){

@@ -37,15 +37,25 @@
       ok(other_post.get('id') != post.get('id'));
       other_post.destroy();
       equals(document.getElementById('posts').innerHTML, '<p data-model="Post" data-id="' + post.get('id') + '">title: My New Post, content: My Post Content, id: ' + post.get('id') +'</p>')
+      
+      var another_post = o_O('Post').create({title:"Another Post"}, {silent: true});
+      ok(!document.getElementById('posts').innerHTML.match(/Another/), document.getElementById('posts').innerHTML)
+      another_post.destroy();
     })
 
     test("update_attribute", function(){
       post.update_attributes({title: "My Old Post", content: "My Old Post Content"})
       ok(document.getElementById('posts').innerHTML.match(/^<p data-model="Post" data-id="\d+">title: My Old Post, content: My Old Post Content/), document.getElementById('posts').innerHTML)
+      
+      post.update_attributes({title: "My New Old Post", content: "My Old Post Content"}, {silent: true})
+            ok(!document.getElementById('posts').innerHTML.match(/My New Old Post/), document.getElementById('posts').innerHTML)
     })
       
     test("set", function(){
       post.set('title', 'My Really Old post')
+      equals(document.getElementById('posts').innerHTML, '<p data-model="Post" data-id="' + post.get('id') + '">title: My Really Old post, content: My Post Content, id: ' + post.get('id') + '</p>')
+      
+      post.set('title', 'My Not Really Old post', {silent: true})
       equals(document.getElementById('posts').innerHTML, '<p data-model="Post" data-id="' + post.get('id') + '">title: My Really Old post, content: My Post Content, id: ' + post.get('id') + '</p>')
     })
     
@@ -58,6 +68,10 @@
       post.destroy()
       ok(o_O('Post').all().length == 0, "Length is: " + o_O('Post').all().length)
       equals(document.getElementById('posts').innerHTML, '<p data-empty="true">No posts here.</p>')
+      
+      var new_post = o_O('Post').create({title: "I'll stick around"})
+      new_post.destroy({silent: true})
+      ok(document.getElementById('posts').innerHTML.match(/stick around/))
     })
     
     test('to_html', function(){
