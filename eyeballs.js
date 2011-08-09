@@ -56,6 +56,11 @@ var eyeballs = {
           return eyeballs.registered_models[name][type + '_selector'](
                    name);
         }
+        else if(typeof eyeballs.registered_models[name][type + '_selector'] ===
+           'string')
+        {
+          return eyeballs.registered_models[name][type + '_selector']
+        }
         else
         {
           return selector_defaults[type];
@@ -265,3 +270,4 @@ var eyeballs = {
 }
 
 var o_O = eyeballs.initialize;
+var oo = eyeballs.initialize;
