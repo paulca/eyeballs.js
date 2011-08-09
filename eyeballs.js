@@ -190,6 +190,7 @@ var eyeballs = {
           {
             eyeballs.hooks.after_update(this);
           }
+          this.save();
           return this;
         }
       }
