@@ -145,6 +145,19 @@
       
       equals('My Exercise', o_O('Exercise').create({title: "My Exercise"}).as_json().exercise.title)
     })
+    
+    test('extending', function(){
+      oo('Television', function(){
+        this.extend({
+          title_with_tv: function(){
+            return this.get('title') + '.tv'
+          }
+        })
+      })
+      
+      var television = oo('Television').create({title: 'sharptelly'})
+      equals(television.title_with_tv(), 'sharptelly.tv')
+    })
   </script>
 </head>
 <body>

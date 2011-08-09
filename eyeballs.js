@@ -93,21 +93,25 @@ var eyeballs = {
       },
       empty_selector: function(callback){
         eyeballs.registered_models[name]['empty_selector'] = callback;
+      } ,
+      extend: function(methods){
+        eyeballs.registered_models[name]['extensions'] = methods;
       },
       instance_selector: function(callback){
         eyeballs.registered_models[name]['instance_selector'] = callback;
       },
       model_selector: function(callback){
         eyeballs.registered_models[name]['model_selector'] = callback;
-      },
+      }
     }
     
     initialize = function(attrs){
+      var instance_methods;
       if(!attrs.hasOwnProperty('id'))
       {
         attrs.id = +new Date();
       }
-      return {
+      instance_methods = {
         as_json: function(){
           if(typeof eyeballs.registered_models[name]['as_json'] ===
              'function')
@@ -194,6 +198,20 @@ var eyeballs = {
           return this;
         }
       }
+      if(typeof eyeballs.registered_models[name]['extensions'] === 'object')
+      {
+        for(method in eyeballs.registered_models[name]['extensions'])
+        {
+          if(eyeballs.registered_models[name]['extensions']
+                     .hasOwnProperty(method))
+          {
+            instance_methods[method] = eyeballs.registered_models[name][
+              'extensions'
+            ][method]
+          }
+        }
+      }
+      return instance_methods;
     }
     
     load_model = function(){
